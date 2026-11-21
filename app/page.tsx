@@ -48,7 +48,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="bg-[#F8F5F0] text-[#191715] overflow-hidden">
+    <div className="bg-[#F8F5F0] text-[#191715]">
       {/* ========================================================= */}
       {/* 1. CINEMATIC FULL-BLEED HERO WITH CAROUSEL (5 SLIDES)     */}
       {/* ========================================================= */}

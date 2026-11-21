@@ -51,7 +51,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
     >
       {/* Image Container with rounded-xl / rounded-2xl */}
       <div className="relative aspect-[3/4] sm:aspect-[4/5] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-[#EFEAE2] shadow-xs">
-        <Link href={`/products/${product.slug}`} className="block w-full h-full">
+        <Link href={`/products/${product.slug}`} scroll={true} className="block w-full h-full">
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -154,7 +154,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
       {/* Details Container */}
       <div className="pt-2.5 sm:pt-3.5 flex flex-col gap-0.5 sm:gap-1 text-left">
-        <Link href={`/products/${product.slug}`} className="group-hover:text-[#8C6B4F] transition">
+        <Link href={`/products/${product.slug}`} scroll={true} className="group-hover:text-[#8C6B4F] transition">
           <h3 className="text-[13px] sm:text-[15px] font-medium text-[#191715] leading-snug line-clamp-1">
             {product.name}
           </h3>

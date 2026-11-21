@@ -10,6 +10,7 @@ import WishlistDrawer from "@/components/WishlistDrawer";
 import SearchOverlay from "@/components/SearchOverlay";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ToastNotifications from "@/components/ToastNotifications";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -48,10 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${jakarta.variable} scroll-smooth`}>
+    <html lang="en" className={`${playfair.variable} ${jakarta.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#F8F5F0] text-[#191715] antialiased selection:bg-[#EFEAE2] selection:text-[#191715]">
         <CartProvider>
           <WishlistProvider>
+            <ScrollToTop />
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

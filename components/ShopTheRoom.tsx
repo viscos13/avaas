@@ -262,6 +262,7 @@ export default function ShopTheRoom() {
                       </button>
                       <Link
                         href={`/products/${realProduct.slug}`}
+                        scroll={true}
                         className="p-2 border border-[#191715]/20 hover:border-[#191715] rounded-full transition text-[#191715] cursor-pointer"
                         aria-label="View product details"
                       >

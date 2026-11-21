@@ -47,6 +47,17 @@ export default function ProductDetailClient({
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isAddedFeedback, setIsAddedFeedback] = useState(false);
 
+  // Instantly force page scroll to top whenever product loads or switches
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (document.documentElement) {
+      document.documentElement.scrollTop = 0;
+    }
+    if (document.body) {
+      document.body.scrollTop = 0;
+    }
+  }, [product.slug]);
+
   // Pincode checker state
   const [pincodeInput, setPincodeInput] = useState("110001");
   const [pincodeResult, setPincodeResult] = useState<PincodeInfo | null>(() =>
