@@ -69,12 +69,12 @@ export default function Header() {
               : "bg-[#F8F5F0]/95 backdrop-blur-md text-[#191715] border-b border-[#191715]/10 shadow-[0_8px_30px_rgba(25,23,21,0.06)]"
           }`}
         >
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 h-full flex items-center justify-between">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 h-full relative flex items-center justify-between">
             {/* Left: Mobile Hamburger & Desktop Links */}
-            <div className="flex items-center gap-4 lg:gap-7 justify-start">
+            <div className="flex items-center gap-3 lg:gap-7 justify-start z-10">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="lg:hidden p-2 -ml-2 transition-colors hover:text-[#8C6B4F] flex items-center justify-center touch-manipulation cursor-pointer"
+                className="lg:hidden p-2 -ml-1 transition-colors hover:text-[#8C6B4F] flex items-center justify-center touch-manipulation cursor-pointer"
                 aria-label="Open navigation menu"
               >
                 <Menu className="w-5 h-5" />
@@ -185,17 +185,17 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Center: AAVAAS Serif Wordmark */}
-            <div className="flex flex-col items-center justify-center text-center">
+            {/* Center: AAVAAS Serif Wordmark - MATHEMATICALLY DEAD-CENTERED ON ALL SCREENS */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-center pointer-events-auto z-20">
               <Link href="/" className="inline-block group focus:outline-none">
-                <span className="font-serif text-xl sm:text-2xl lg:text-[28px] tracking-[0.25em] sm:tracking-[0.28em] font-medium leading-none block uppercase">
+                <span className="font-serif text-[20px] sm:text-2xl lg:text-[28px] tracking-[0.24em] sm:tracking-[0.28em] pl-[0.24em] sm:pl-[0.28em] font-medium leading-none block uppercase">
                   AAVAAS
                 </span>
               </Link>
             </div>
 
             {/* Right: Our Story + Utilities */}
-            <div className="flex items-center gap-3 sm:gap-6 justify-end">
+            <div className="flex items-center gap-1.5 sm:gap-6 justify-end z-10">
               <Link
                 href="/our-story"
                 className="hidden xl:inline-block text-[13px] tracking-[0.12em] uppercase font-medium transition-colors hover:text-[#8C6B4F]"
@@ -205,7 +205,7 @@ export default function Header() {
 
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
+                className="p-1.5 sm:p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label="Search Catalog"
               >
                 <Search className="w-5 h-5 stroke-[1.5]" />
@@ -213,7 +213,7 @@ export default function Header() {
 
               <button
                 onClick={() => setIsWishlistOpen(true)}
-                className="relative p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
+                className="relative p-1.5 sm:p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label={`Wishlist (${wishlistCount})`}
               >
                 <Heart className="w-5 h-5 stroke-[1.5]" />
@@ -226,7 +226,7 @@ export default function Header() {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
+                className="relative p-1.5 sm:p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label={`Shopping Bag (${cartCount})`}
               >
                 <ShoppingBag className="w-5 h-5 stroke-[1.5]" />

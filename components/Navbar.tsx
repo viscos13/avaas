@@ -43,7 +43,7 @@ export default function Navbar() {
             : "bg-[#FAF8F5]/95 backdrop-blur-md text-[#1C1917] border-b border-[#1C1917]/10 shadow-xs py-4 sm:py-5"
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 relative flex items-center justify-between">
           {/* LEFT: Clean Minimal Nav Links */}
           <div className="flex items-center gap-6">
             <button
@@ -127,8 +127,8 @@ export default function Navbar() {
             </nav>
           </div>
 
-          {/* CENTER: Refined Serif Wordmark */}
-          <div className="text-center absolute left-1/2 -translate-x-1/2">
+          {/* CENTER: Refined Serif Wordmark - Absolute Centered */}
+          <div className="text-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto">
             <Link href="/" className="inline-block group text-center">
               <span className="font-serif text-2xl sm:text-3xl font-light tracking-[0.25em] uppercase block">
                 AAVAAS
