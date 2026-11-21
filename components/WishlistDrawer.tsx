@@ -37,13 +37,13 @@ export default function WishlistDrawer() {
             className="absolute inset-0 bg-black/60 backdrop-blur-xs"
           />
 
-          <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
+          <div className="absolute inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: "0%" }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="w-screen max-w-md bg-[#F8F5F0] shadow-2xl flex flex-col border-l border-[#191715]/10 text-left"
+              className="w-screen max-w-full sm:max-w-md bg-[#F8F5F0] shadow-2xl flex flex-col border-l border-[#191715]/10 text-left"
             >
               {/* Header */}
               <div className="p-6 sm:p-7 border-b border-[#191715]/10 flex items-center justify-between">

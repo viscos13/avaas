@@ -96,7 +96,7 @@ export default function ProductDetailClient({
   };
 
   return (
-    <div className="pt-32 pb-32 max-w-[1440px] mx-auto px-6 lg:px-14 text-left">
+    <div className="pt-24 sm:pt-28 lg:pt-32 pb-28 sm:pb-32 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 text-left">
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#5E5850] mb-8 overflow-x-auto whitespace-nowrap font-medium">
         <Link href="/" className="hover:text-[#191715] transition">Home</Link>
@@ -619,13 +619,60 @@ export default function ProductDetailClient({
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
             {relatedProducts.slice(0, 4).map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </section>
       )}
+
+      {/* MOBILE STICKY BOTTOM ACTION BAR */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-[#F8F5F0]/95 backdrop-blur-xl border-t border-[#191715]/10 px-4 py-3 shadow-[0_-8px_25px_rgba(25,23,21,0.08)] flex items-center justify-between gap-3">
+        <div className="flex flex-col text-left">
+          <span className="text-[10px] text-[#5E5850] uppercase tracking-wider font-semibold">
+            {selectedSize} · Total
+          </span>
+          <span className="text-base font-semibold text-[#191715]">
+            {formatINR(unitPrice * quantity)}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => toggleWishlist(product)}
+            className={`w-11 h-11 rounded-full border flex items-center justify-center transition cursor-pointer touch-manipulation ${
+              inWishlist
+                ? "border-[#8C6B4F] bg-[#8C6B4F] text-white"
+                : "border-[#191715]/20 text-[#191715]"
+            }`}
+            aria-label="Wishlist"
+          >
+            <Heart className={`w-4 h-4 ${inWishlist ? "fill-current" : "stroke-[1.5]"}`} />
+          </button>
+
+          <button
+            onClick={handleAddToBag}
+            className={`py-3 px-5 sm:px-6 text-xs uppercase tracking-[0.16em] font-semibold rounded-full transition flex items-center justify-center gap-2 shadow-md cursor-pointer touch-manipulation ${
+              isAddedFeedback
+                ? "bg-emerald-900 text-white"
+                : "bg-[#191715] active:bg-[#8C6B4F] text-[#F8F5F0]"
+            }`}
+          >
+            {isAddedFeedback ? (
+              <>
+                <Check className="w-4 h-4" />
+                <span>Added</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
+                <span>Add to Bag</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

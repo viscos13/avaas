@@ -47,13 +47,13 @@ function ShopContent() {
   const activeCategoryObj = CATEGORIES.find((c) => c.slug === selectedCategory);
 
   return (
-    <div className="pt-32 pb-32 max-w-[1440px] mx-auto px-6 lg:px-14 text-left">
+    <div className="pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-32 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 text-left">
       {/* Editorial Header */}
-      <div className="mb-10">
-        <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+      <div className="mb-8 sm:mb-10">
+        <span className="text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
           Panipat Master Catalog
         </span>
-        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#191715] font-normal tracking-tight">
+        <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#191715] font-normal tracking-tight">
           {activeCategoryObj
             ? activeCategoryObj.name
             : onlyWinter
@@ -74,7 +74,7 @@ function ShopContent() {
       {/* Filter Bar with Sleek Pills */}
       <div className="space-y-4 pb-8 mb-10 border-b border-[#191715]/10">
         {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => {
               setSelectedCategory("all");
@@ -210,7 +210,7 @@ function ShopContent() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-8 sm:gap-y-12">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

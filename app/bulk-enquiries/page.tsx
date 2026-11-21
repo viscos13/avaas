@@ -82,14 +82,14 @@ export default function BulkEnquiriesPage() {
   };
 
   return (
-    <div className="bg-[#F8F5F0] text-[#191715] pt-32 pb-32">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
+    <div className="bg-[#F8F5F0] text-[#191715] pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-32">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14">
         {/* Editorial B2B Header */}
-        <div className="max-w-3xl mb-16 text-left">
-          <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+        <div className="max-w-3xl mb-10 sm:mb-16 text-left">
+          <span className="text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
             KT International · Institutional &amp; Export Division
           </span>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#191715] font-normal leading-[1.1] tracking-tight">
+          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#191715] font-normal leading-[1.1] tracking-tight">
             Direct Mill Procurement for Hospitality &amp; Enterprise
           </h1>
           <p className="text-[15px] text-[#5E5850] mt-4 leading-relaxed font-normal">

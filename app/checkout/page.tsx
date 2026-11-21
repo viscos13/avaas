@@ -190,8 +190,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="pt-32 pb-32 max-w-[1440px] mx-auto px-6 lg:px-14 text-left">
-      <div className="mb-8">
+    <div className="pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-32 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 text-left">
+      <div className="mb-6 sm:mb-8">
         <Link
           href="/shop"
           className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#5E5850] hover:text-[#191715] transition font-semibold"
@@ -201,11 +201,11 @@ export default function CheckoutPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
         {/* LEFT 7 COLS: Address, GST, Payment */}
-        <div className="lg:col-span-7 space-y-10">
+        <div className="lg:col-span-7 space-y-8 sm:space-y-10">
           {/* 1. Delivery Address */}
-          <div className="p-8 bg-[#EFEAE2] rounded-3xl border border-[#191715]/10 space-y-6">
+          <div className="p-5 sm:p-8 bg-[#EFEAE2] rounded-2xl sm:rounded-3xl border border-[#191715]/10 space-y-5 sm:space-y-6">
             <h2 className="font-serif text-2xl text-[#191715] font-normal border-b border-[#191715]/10 pb-3">
               1. Delivery Address
             </h2>

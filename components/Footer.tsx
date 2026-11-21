@@ -51,11 +51,11 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email for the journal"
-                  className="w-full bg-transparent px-5 py-2.5 text-xs text-white placeholder-stone-400 focus:outline-none tracking-wider"
+                  className="w-full min-w-0 bg-transparent px-4 sm:px-5 py-2.5 text-xs text-white placeholder-stone-400 focus:outline-none tracking-wider"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-white text-[#191715] hover:bg-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition flex items-center gap-1.5 shrink-0 shadow-md"
+                  className="px-4 sm:px-6 py-2.5 bg-white text-[#191715] hover:bg-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition flex items-center gap-1.5 shrink-0 shadow-md cursor-pointer"
                 >
                   <span>Subscribe</span>
                   <ArrowRight className="w-3.5 h-3.5" />

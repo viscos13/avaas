@@ -35,13 +35,13 @@ export default function OurStoryPage() {
   ];
 
   return (
-    <div className="bg-[#F8F5F0] text-[#191715] pt-32 pb-32 text-left">
+    <div className="bg-[#F8F5F0] text-[#191715] pt-24 sm:pt-28 lg:pt-32 pb-24 sm:pb-32 text-left">
       {/* Editorial Hero Header */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-14 mb-16">
-        <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 mb-10 sm:mb-16">
+        <span className="text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
           Heritage &amp; Lineage
         </span>
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal text-[#191715] leading-[1.08] max-w-4xl tracking-tight">
+        <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl font-normal text-[#191715] leading-[1.08] max-w-4xl tracking-tight">
           The Weave of Panipat. The Soul of AAVAAS.
         </h1>
         <p className="text-[15px] sm:text-base text-[#5E5850] mt-4 max-w-2xl font-normal leading-relaxed">

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { CATEGORIES } from "@/data/categories";
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight } from "lucide-react";
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, Phone, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -22,9 +22,6 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // On the homepage, remain seamlessly transparent over the hero carousel
-      // until the user actually scrolls past the hero banner (~75vh).
-      // On other pages (which don't have a full-bleed dark hero), transition immediately.
       const threshold = isHomePage
         ? typeof window !== "undefined"
           ? Math.max(window.innerHeight * 0.75, 450)
@@ -39,33 +36,45 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomePage]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [mobileMenuOpen]);
+
   // Transparent over hero on homepage until user scrolls past hero section
   const isTransparent = isHomePage && !isScrolled;
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40">
-        {/* Top Announcement Bar */}
-        <div className="h-9 bg-[#191715] text-[#F8F5F0] flex items-center justify-center px-4 text-center border-b border-white/5">
-          <p className="text-[11px] tracking-[0.18em] uppercase font-medium truncate">
+        {/* Top Announcement Bar - Optimized for mobile width */}
+        <div className="h-8 sm:h-9 bg-[#191715] text-[#F8F5F0] flex items-center justify-center px-3 text-center border-b border-white/5 overflow-hidden">
+          <p className="text-[10px] sm:text-[11px] tracking-wider sm:tracking-[0.18em] uppercase font-medium truncate">
             COMPLIMENTARY PAN-INDIA SHIPPING ABOVE ₹2,999 &nbsp;•&nbsp; CRAFTED IN PANIPAT
           </p>
         </div>
 
-        {/* Main Navigation Bar - Zero delay, instant crisp text */}
+        {/* Main Navigation Bar - Height & spacing tuned for mobile and desktop */}
         <nav
-          className={`h-20 w-full transition-colors duration-150 ease-out ${
+          className={`h-16 sm:h-20 w-full transition-colors duration-150 ease-out ${
             isTransparent
               ? "bg-gradient-to-b from-black/60 via-black/25 to-transparent text-white"
               : "bg-[#F8F5F0]/95 backdrop-blur-md text-[#191715] border-b border-[#191715]/10 shadow-[0_8px_30px_rgba(25,23,21,0.06)]"
           }`}
         >
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-14 h-full grid grid-cols-3 items-center">
-            {/* Left Column: Mobile Menu Toggle + 4 Clean Links */}
-            <div className="flex items-center gap-7 justify-start">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 h-full flex items-center justify-between">
+            {/* Left: Mobile Hamburger & Desktop Links */}
+            <div className="flex items-center gap-4 lg:gap-7 justify-start">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="lg:hidden p-1.5 transition-colors hover:text-[#8C6B4F]"
+                className="lg:hidden p-2 -ml-2 transition-colors hover:text-[#8C6B4F] flex items-center justify-center touch-manipulation cursor-pointer"
                 aria-label="Open navigation menu"
               >
                 <Menu className="w-5 h-5" />
@@ -80,7 +89,7 @@ export default function Header() {
                 >
                   <Link
                     href="/shop"
-                    className="h-full flex items-center transition-colors hover:text-[#8C6B4F] whitespace-nowrap"
+                    className="h-full flex items-center transition-colors hover:text-[#8C6B4F] whitespace-nowrap cursor-pointer"
                   >
                     <span>Shop</span>
                   </Link>
@@ -176,17 +185,17 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Center Column: AAVAAS Serif Wordmark */}
+            {/* Center: AAVAAS Serif Wordmark */}
             <div className="flex flex-col items-center justify-center text-center">
               <Link href="/" className="inline-block group focus:outline-none">
-                <span className="font-serif text-2xl lg:text-[28px] tracking-[0.28em] font-medium leading-none block uppercase">
+                <span className="font-serif text-xl sm:text-2xl lg:text-[28px] tracking-[0.25em] sm:tracking-[0.28em] font-medium leading-none block uppercase">
                   AAVAAS
                 </span>
               </Link>
             </div>
 
-            {/* Right Column: Our Story + Utilities - Instant rendering with 0 delay */}
-            <div className="flex items-center gap-6 justify-end">
+            {/* Right: Our Story + Utilities */}
+            <div className="flex items-center gap-3 sm:gap-6 justify-end">
               <Link
                 href="/our-story"
                 className="hidden xl:inline-block text-[13px] tracking-[0.12em] uppercase font-medium transition-colors hover:text-[#8C6B4F]"
@@ -196,7 +205,7 @@ export default function Header() {
 
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-1.5 transition-colors hover:text-[#8C6B4F]"
+                className="p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label="Search Catalog"
               >
                 <Search className="w-5 h-5 stroke-[1.5]" />
@@ -204,12 +213,12 @@ export default function Header() {
 
               <button
                 onClick={() => setIsWishlistOpen(true)}
-                className="relative p-1.5 transition-colors hover:text-[#8C6B4F]"
+                className="relative p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label={`Wishlist (${wishlistCount})`}
               >
                 <Heart className="w-5 h-5 stroke-[1.5]" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-[#8C6B4F] text-white text-[10px] font-semibold rounded-full flex items-center justify-center">
+                  <span className="absolute top-0.5 right-0.5 min-w-[17px] h-[17px] px-1 bg-[#8C6B4F] text-white text-[9px] font-semibold rounded-full flex items-center justify-center shadow-xs">
                     {wishlistCount}
                   </span>
                 )}
@@ -217,12 +226,12 @@ export default function Header() {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-1.5 transition-colors hover:text-[#8C6B4F]"
+                className="relative p-2 transition-colors hover:text-[#8C6B4F] cursor-pointer touch-manipulation"
                 aria-label={`Shopping Bag (${cartCount})`}
               >
                 <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-[#191715] text-[#F8F5F0] text-[10px] font-semibold rounded-full flex items-center justify-center">
+                  <span className="absolute top-0.5 right-0.5 min-w-[17px] h-[17px] px-1 bg-[#191715] text-[#F8F5F0] text-[9px] font-semibold rounded-full flex items-center justify-center shadow-xs">
                     {cartCount}
                   </span>
                 )}
@@ -232,7 +241,7 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Mobile Animated Slide-Out Drawer */}
+      {/* Mobile Animated Slide-Out Drawer - Optimized with Full Department Nav */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-50 lg:hidden">
@@ -248,9 +257,10 @@ export default function Header() {
               animate={{ x: "0%" }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="absolute inset-y-0 left-0 max-w-sm w-full bg-[#F8F5F0] text-[#191715] shadow-2xl flex flex-col border-r border-[#191715]/10"
+              className="absolute inset-y-0 left-0 w-[85vw] max-w-sm bg-[#F8F5F0] text-[#191715] shadow-2xl flex flex-col border-r border-[#191715]/10"
             >
-              <div className="p-6 border-b border-[#191715]/10 flex items-center justify-between">
+              {/* Drawer Top Header */}
+              <div className="p-5 border-b border-[#191715]/10 flex items-center justify-between">
                 <div>
                   <span className="font-serif text-2xl tracking-[0.25em] uppercase block font-medium">
                     AAVAAS
@@ -261,69 +271,138 @@ export default function Header() {
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1.5 text-[#5E5850] hover:text-[#191715] transition rounded-full"
+                  className="w-10 h-10 flex items-center justify-center text-[#5E5850] hover:text-[#191715] transition rounded-full cursor-pointer touch-manipulation -mr-2"
                   aria-label="Close menu"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-6 space-y-6 text-sm">
-                <div className="space-y-4 text-left">
+              {/* Quick Search Tap */}
+              <div className="px-5 pt-4">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsSearchOpen(true);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 rounded-full bg-[#EFEAE2] text-[#5E5850] text-xs font-normal text-left"
+                >
+                  <Search className="w-4 h-4 shrink-0 text-[#8C6B4F]" />
+                  <span>Search bedsheets, blankets...</span>
+                </button>
+              </div>
+
+              {/* Scrollable Navigation Body */}
+              <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6 text-sm">
+                {/* Main Navigation Links */}
+                <div className="space-y-3.5 text-left">
                   <Link
                     href="/shop"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-serif text-xl text-[#191715] block font-normal"
+                    className="font-serif text-xl text-[#191715] block font-normal py-1"
                   >
                     Shop All
                   </Link>
                   <Link
                     href="/shop?winter=true"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-serif text-xl text-[#8C6B4F] block font-normal"
+                    className="font-serif text-xl text-[#8C6B4F] flex items-center justify-between py-1"
                   >
-                    Winter &apos;26 Edition
+                    <span>Winter &apos;26 Edition</span>
+                    <span className="text-[9px] font-sans font-semibold uppercase tracking-wider bg-[#8C6B4F]/15 px-2 py-0.5 rounded-full">
+                      New
+                    </span>
                   </Link>
                   <Link
                     href="/shop?category=gifting"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-serif text-xl text-[#191715] block font-normal"
+                    className="font-serif text-xl text-[#191715] block font-normal py-1"
                   >
                     Gifting Suites
                   </Link>
                   <Link
                     href="/bulk-enquiries"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-serif text-xl text-[#191715] block font-normal"
+                    className="font-serif text-xl text-[#191715] block font-normal py-1"
                   >
                     Bulk &amp; Trade Portal
                   </Link>
                   <Link
                     href="/our-story"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-serif text-xl text-[#191715] block font-normal"
+                    className="font-serif text-xl text-[#191715] block font-normal py-1"
                   >
                     Our Panipat Story
                   </Link>
                 </div>
 
-                <div className="pt-6 border-t border-[#191715]/10 text-left">
+                {/* 6 Living Departments Grid */}
+                <div className="pt-5 border-t border-[#191715]/10 text-left">
                   <p className="text-[10px] uppercase tracking-[0.22em] text-[#5E5850] mb-3 font-semibold">
                     Living Departments
                   </p>
-                  <div className="space-y-2.5">
+                  <div className="grid grid-cols-2 gap-2">
                     {CATEGORIES.map((cat) => (
                       <Link
                         key={cat.id}
                         href={`/shop?category=${cat.slug}`}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block text-[13px] text-[#191715] hover:text-[#8C6B4F] transition-colors"
+                        className="p-2.5 rounded-xl bg-[#EFEAE2]/60 hover:bg-[#EFEAE2] transition text-left block"
                       >
-                        {cat.name}
+                        <span className="block text-xs font-medium text-[#191715]">
+                          {cat.name}
+                        </span>
+                        <span className="text-[10px] text-[#5E5850]">
+                          {cat.itemCount} Items
+                        </span>
                       </Link>
                     ))}
                   </div>
                 </div>
+
+                {/* Collections Tiers */}
+                <div className="pt-4 border-t border-[#191715]/10 text-left">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-[#5E5850] mb-2 font-semibold">
+                    Curated Collections
+                  </p>
+                  <div className="space-y-2">
+                    <Link
+                      href="/shop?collection=essential"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-xs text-[#191715] hover:text-[#8C6B4F]"
+                    >
+                      Essential Everyday Living
+                    </Link>
+                    <Link
+                      href="/shop?collection=signature"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-xs text-[#191715] hover:text-[#8C6B4F]"
+                    >
+                      Signature Heirloom Comfort
+                    </Link>
+                    <Link
+                      href="/shop?collection=reserve"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-xs text-[#191715] hover:text-[#8C6B4F]"
+                    >
+                      Reserve Small-Batch Jacquards
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Quick Support Row */}
+              <div className="p-5 border-t border-[#191715]/10 bg-[#EFEAE2]/40 flex items-center justify-between">
+                <a
+                  href="https://wa.me/919812000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#191715] hover:text-[#8C6B4F]"
+                >
+                  <MessageSquare className="w-4 h-4 text-[#8C6B4F]" />
+                  <span>WhatsApp Concierge</span>
+                </a>
+                <span className="text-[11px] text-[#5E5850]">Panipat, India</span>
               </div>
             </motion.div>
           </div>
