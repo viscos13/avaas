@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { CATEGORIES } from "@/data/categories";
-import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, Phone, MessageSquare } from "lucide-react";
+import { Search, Heart, ShoppingBag, Menu, X, ArrowRight, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
@@ -54,24 +54,50 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-40">
-        {/* Top Announcement Bar - Optimized for mobile width */}
-        <div className="h-8 sm:h-9 bg-[#191715] text-[#F8F5F0] flex items-center justify-center px-3 text-center border-b border-white/5 overflow-hidden">
-          <p className="text-[10px] sm:text-[11px] tracking-wider sm:tracking-[0.18em] uppercase font-medium truncate">
-            COMPLIMENTARY PAN-INDIA SHIPPING ABOVE ₹2,999 &nbsp;•&nbsp; CRAFTED IN PANIPAT
-          </p>
+        {/* Top Running Announcement Ribbon (Continuous Editorial Marquee) */}
+        <div className="h-8 bg-[#191715] text-[#F8F5F0] flex items-center overflow-hidden border-b border-white/5 select-none">
+          <div className="flex w-max animate-ribbon">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-6 sm:gap-8 px-4 text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-medium shrink-0 whitespace-nowrap"
+              >
+                <span>COMPLIMENTARY PAN-INDIA SHIPPING ON ORDERS ABOVE ₹2,999</span>
+                <span className="text-[#8C6B4F]">✦</span>
+                <span>CRAFTED IN PANIPAT BY KT INTERNATIONAL</span>
+                <span className="text-[#8C6B4F]">✦</span>
+                <span>DIRECT MILL-GATE LINEAGE</span>
+                <span className="text-[#8C6B4F]">✦</span>
+                <span>100% OEKO-TEX STANDARD 100 CERTIFIED</span>
+                <span className="text-[#8C6B4F]">✦</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Main Navigation Bar - Height & spacing tuned for mobile and desktop */}
+        {/* Main Navigation Bar - Height tuned with EXACT screen-width center alignment */}
         <nav
-          className={`h-16 sm:h-20 w-full transition-colors duration-150 ease-out ${
+          className={`relative h-16 sm:h-20 w-full transition-colors duration-150 ease-out ${
             isTransparent
               ? "bg-gradient-to-b from-black/60 via-black/25 to-transparent text-white"
               : "bg-[#F8F5F0]/95 backdrop-blur-md text-[#191715] border-b border-[#191715]/10 shadow-[0_8px_30px_rgba(25,23,21,0.06)]"
           }`}
         >
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 h-full relative flex items-center justify-between">
+          {/* Centered Brand Wordmark: Pinned across 100vw for absolute optical & mathematical center */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+            <Link
+              href="/"
+              className="pointer-events-auto group focus:outline-none flex items-center justify-center"
+            >
+              <span className="font-serif text-[21px] sm:text-2xl lg:text-[28px] tracking-[0.25em] font-medium leading-none block uppercase select-none text-center">
+                AAVAAS
+              </span>
+            </Link>
+          </div>
+
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-14 h-full relative z-10 flex items-center justify-between">
             {/* Left: Mobile Hamburger & Desktop Links */}
-            <div className="flex items-center gap-3 lg:gap-7 justify-start z-10">
+            <div className="flex items-center gap-3 lg:gap-7 justify-start">
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 className="lg:hidden p-2 -ml-1 transition-colors hover:text-[#8C6B4F] flex items-center justify-center touch-manipulation cursor-pointer"
@@ -185,17 +211,8 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Center: AAVAAS Serif Wordmark - MATHEMATICALLY DEAD-CENTERED ON ALL SCREENS */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-center pointer-events-auto z-20">
-              <Link href="/" className="inline-block group focus:outline-none">
-                <span className="font-serif text-[20px] sm:text-2xl lg:text-[28px] tracking-[0.24em] sm:tracking-[0.28em] pl-[0.24em] sm:pl-[0.28em] font-medium leading-none block uppercase">
-                  AAVAAS
-                </span>
-              </Link>
-            </div>
-
             {/* Right: Our Story + Utilities */}
-            <div className="flex items-center gap-1.5 sm:gap-6 justify-end z-10">
+            <div className="flex items-center gap-1.5 sm:gap-6 justify-end">
               <Link
                 href="/our-story"
                 className="hidden xl:inline-block text-[13px] tracking-[0.12em] uppercase font-medium transition-colors hover:text-[#8C6B4F]"

@@ -51,6 +51,25 @@ body {
   animation-play-state: paused;
 }
 
+/* Running Top Ribbon Marquee */
+@keyframes ribbonMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ribbon {
+  animation: ribbonMarquee 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-ribbon:hover {
+  animation-play-state: paused;
+}
+
 /* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
