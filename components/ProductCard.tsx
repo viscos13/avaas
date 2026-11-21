@@ -5,7 +5,7 @@ import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatINR } from "@/lib/utils";
-import { Heart, Star, ShoppingBag, Check } from "lucide-react";
+import { Heart, Star, ShoppingBag, Check, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -26,7 +26,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const inWishlist = isInWishlist(product.id);
   const hasMultipleImages = product.images.length > 1;
 
-  // Selected size modifier
   const currentSizeObj = product.sizes.find((s) => s.name === selectedSize);
   const displayPrice = product.price + (currentSizeObj?.priceModifier || 0);
   const displayOriginalPrice = product.originalPrice + (currentSizeObj?.priceModifier || 0);
@@ -49,23 +48,22 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const getCollectionBadgeStyle = (collection: string) => {
     switch (collection) {
       case "reserve":
-        return "bg-[#5A6349]/10 text-[#474E39] border-[#5A6349]/30";
+        return "bg-[#141210] text-[#D4AF37] border-[#D4AF37]/50";
       case "signature":
-        return "bg-[#B95D41]/10 text-[#9F4D34] border-[#B95D41]/30";
+        return "bg-[#FAF7F2] text-[#B95D41] border-[#B95D41]/40";
       default:
-        return "bg-stone-200/80 text-stone-700 border-stone-300";
+        return "bg-[#EFE8DD] text-stone-800 border-[#CEC0AD]";
     }
   };
 
   return (
     <div
-      className="group relative flex flex-col justify-between bg-white border border-[#E5DFD5] hover:border-stone-400 transition-all duration-300 rounded-xs overflow-hidden"
+      className="group relative flex flex-col justify-between bg-[#FDFBF8] border border-[#E2D7C7] hover:border-stone-800 hover:shadow-[0_15px_30px_-10px_rgba(20,18,16,0.1)] transition-all duration-500 rounded-xs overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Visual Container */}
-      <div className="relative aspect-3/4 w-full bg-[#FAF8F5] overflow-hidden">
-        {/* Main & Secondary Image with smooth crossfade */}
+      {/* Visual Image Container with Rich Aspect Ratio */}
+      <div className="relative aspect-4/5 w-full bg-[#EFE8DD] overflow-hidden">
         <Link href={`/products/${product.slug}`} className="block w-full h-full">
           <Image
             src={product.images[0]}
@@ -73,17 +71,17 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             priority={priority}
-            className={`object-cover transition-all duration-700 ${
+            className={`object-cover transition-all duration-700 ease-out ${
               isHovered && hasMultipleImages ? "opacity-0 scale-105" : "opacity-100 scale-100"
             }`}
           />
           {hasMultipleImages && (
             <Image
               src={product.images[1]}
-              alt={`${product.name} lifestyle detail`}
+              alt={`${product.name} styled angle`}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={`object-cover absolute inset-0 transition-all duration-700 ${
+              className={`object-cover absolute inset-0 transition-all duration-700 ease-out ${
                 isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
               }`}
             />
@@ -91,14 +89,14 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         </Link>
 
         {/* Top Badges */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10 pointer-events-none">
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 pointer-events-none">
           {product.badge && (
-            <span className="bg-[#FAF8F5]/95 backdrop-blur-xs text-[#1C1917] px-2 py-0.5 text-[10px] uppercase font-semibold tracking-wider border border-[#E5DFD5] shadow-xs">
+            <span className="bg-[#141210]/95 backdrop-blur-xs text-[#FAF6F0] px-2.5 py-1 text-[9px] uppercase font-semibold tracking-[0.2em] border border-stone-700 shadow-md">
               {product.badge}
             </span>
           )}
           <span
-            className={`px-2 py-0.5 text-[9px] uppercase tracking-widest font-medium border rounded-xs self-start backdrop-blur-xs ${getCollectionBadgeStyle(
+            className={`px-2 py-0.5 text-[8px] uppercase tracking-[0.25em] font-medium border rounded-xs self-start backdrop-blur-xs ${getCollectionBadgeStyle(
               product.collection
             )}`}
           >
@@ -106,33 +104,35 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           </span>
         </div>
 
-        {/* Wishlist Heart Button */}
+        {/* Wishlist Button */}
         <button
           onClick={handleWishlistToggle}
-          aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-          className={`absolute top-2.5 right-2.5 z-10 p-2 rounded-full backdrop-blur-md transition-all duration-200 ${
+          aria-label={inWishlist ? "Saved in wishlist" : "Add to wishlist"}
+          className={`absolute top-3 right-3 z-10 p-2.5 rounded-full backdrop-blur-md transition-all duration-300 shadow-xs ${
             inWishlist
-              ? "bg-[#FAF8F5] text-[#B95D41] shadow-md"
-              : "bg-[#FAF8F5]/80 text-stone-500 hover:text-stone-900 hover:bg-[#FAF8F5]"
+              ? "bg-[#141210] text-[#B95D41] shadow-md scale-105"
+              : "bg-[#FAF7F2]/90 text-stone-700 hover:text-black hover:bg-[#FAF7F2] hover:scale-105"
           }`}
         >
           <Heart
             className={`w-4 h-4 transition ${
-              inWishlist ? "fill-[#B95D41] stroke-[#B95D41]" : "stroke-stone-700"
+              inWishlist ? "fill-[#B95D41] stroke-[#B95D41]" : "stroke-stone-800"
             }`}
           />
         </button>
 
-        {/* Hover Size Quick Select & Add to Bag Drawer on Desktop */}
+        {/* Hover Drawer: Quick Select & Refined Luxury Action Button */}
         <div
-          className={`hidden md:flex absolute bottom-0 inset-x-0 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#E5DFD5] p-3 flex-col gap-2 transition-transform duration-300 ${
+          className={`hidden md:flex absolute bottom-0 inset-x-0 bg-[#FAF7F2]/98 backdrop-blur-md border-t border-[#E2D7C7] p-3.5 flex-col gap-2.5 transition-transform duration-300 ease-out ${
             isHovered ? "translate-y-0" : "translate-y-full"
           }`}
         >
           {product.sizes.length > 1 && (
             <div className="flex items-center justify-between gap-1">
-              <span className="text-[10px] text-stone-500 uppercase tracking-wider">Size:</span>
-              <div className="flex gap-1">
+              <span className="text-[10px] text-stone-500 uppercase tracking-widest font-medium">
+                Size:
+              </span>
+              <div className="flex gap-1.5">
                 {product.sizes.map((s) => (
                   <button
                     key={s.name}
@@ -140,10 +140,10 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
                       e.preventDefault();
                       setSelectedSize(s.name);
                     }}
-                    className={`px-2 py-0.5 text-[10px] font-medium transition rounded-xs border ${
+                    className={`px-2.5 py-1 text-[10px] font-medium transition rounded-xs border ${
                       selectedSize === s.name
-                        ? "bg-[#1C1917] text-white border-[#1C1917]"
-                        : "bg-white text-stone-700 border-stone-200 hover:border-stone-400"
+                        ? "bg-[#141210] text-white border-[#141210]"
+                        : "bg-white text-stone-800 border-[#E2D7C7] hover:border-stone-800"
                     }`}
                   >
                     {s.name}
@@ -153,73 +153,76 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             </div>
           )}
 
+          {/* Luxury Add to Bag button */}
           <button
             onClick={handleQuickAdd}
             disabled={isAdded}
-            className={`w-full py-2 px-3 text-xs uppercase tracking-widest font-medium transition flex items-center justify-center gap-2 rounded-xs ${
+            className={`w-full py-2.5 px-4 text-[11px] uppercase tracking-[0.22em] font-medium transition-all duration-300 flex items-center justify-center gap-2 rounded-xs border shadow-sm ${
               isAdded
-                ? "bg-emerald-800 text-white"
-                : "bg-[#1C1917] hover:bg-stone-800 text-white"
+                ? "bg-emerald-900 text-white border-emerald-900"
+                : "bg-[#141210] hover:bg-[#25221F] hover:border-[#C5A880] text-[#FAF6F0] border-[#141210]"
             }`}
           >
             {isAdded ? (
               <>
-                <Check className="w-3.5 h-3.5" />
+                <Check className="w-3.5 h-3.5 text-emerald-300" />
                 <span>Added to Bag</span>
               </>
             ) : (
               <>
                 <ShoppingBag className="w-3.5 h-3.5" />
-                <span>Quick Add</span>
+                <span>Add to Bag</span>
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* Information Details */}
-      <div className="p-3.5 md:p-4 flex flex-col justify-between flex-1">
+      {/* Information Section */}
+      <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 space-y-3">
         <div>
           <div className="flex items-center justify-between text-[11px] text-stone-500 mb-1">
-            <span className="uppercase tracking-wider">{product.subcategory}</span>
-            <div className="flex items-center gap-1 text-stone-600">
-              <Star className="w-3 h-3 fill-amber-500 stroke-amber-500" />
-              <span className="font-medium text-[11px]">{product.rating}</span>
+            <span className="uppercase tracking-[0.18em] text-[10px] font-medium">
+              {product.subcategory}
+            </span>
+            <div className="flex items-center gap-1 text-stone-700">
+              <Star className="w-3 h-3 fill-[#D4AF37] stroke-[#D4AF37]" />
+              <span className="font-semibold text-[11px]">{product.rating}</span>
               <span className="text-stone-400">({product.reviewsCount})</span>
             </div>
           </div>
 
           <Link href={`/products/${product.slug}`} className="block">
-            <h3 className="font-serif text-sm md:text-base font-normal text-stone-900 group-hover:underline line-clamp-1 leading-snug">
+            <h3 className="font-serif text-base sm:text-lg font-normal text-stone-900 group-hover:underline line-clamp-1 leading-snug">
               {product.name}
             </h3>
           </Link>
 
-          <p className="text-[11px] text-stone-500 line-clamp-1 mt-0.5">
+          <p className="text-xs text-stone-500 line-clamp-1 mt-1 font-serif italic">
             {product.fabric}
           </p>
         </div>
 
-        {/* Price & Mobile Add to Bag */}
-        <div className="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xs md:text-sm font-semibold text-stone-900">
+        {/* Pricing & Mobile Action */}
+        <div className="pt-3 border-t border-[#EAE3D7] flex items-center justify-between">
+          <div className="flex items-baseline gap-2.5">
+            <span className="font-serif text-base sm:text-lg font-medium text-stone-900">
               {formatINR(displayPrice)}
             </span>
             {displayOriginalPrice > displayPrice && (
-              <span className="text-[11px] text-stone-400 line-through">
+              <span className="text-xs text-stone-400 line-through">
                 {formatINR(displayOriginalPrice)}
               </span>
             )}
           </div>
 
-          {/* Mobile Quick Add Button */}
+          {/* Mobile Button */}
           <button
             onClick={handleQuickAdd}
-            className="md:hidden p-1.5 bg-stone-900 text-white rounded-xs hover:bg-stone-800 transition"
+            className="md:hidden p-2 bg-[#141210] text-white rounded-xs hover:bg-stone-800 transition"
             aria-label="Add to bag"
           >
-            {isAdded ? <Check className="w-3.5 h-3.5" /> : <ShoppingBag className="w-3.5 h-3.5" />}
+            {isAdded ? <Check className="w-4 h-4 text-emerald-300" /> : <ShoppingBag className="w-4 h-4" />}
           </button>
         </div>
       </div>

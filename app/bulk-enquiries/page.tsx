@@ -87,77 +87,77 @@ export default function BulkEnquiriesPage() {
   };
 
   return (
-    <div className="pb-24">
+    <div className="pb-36">
       {/* Hero Header */}
-      <section className="relative bg-[#1C1917] text-[#FAF8F5] py-20 md:py-28 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-800 border border-stone-700 rounded-full text-[10px] uppercase tracking-widest text-amber-300">
+      <section className="relative bg-[#141210] text-[#FAF6F0] py-28 md:py-36 overflow-hidden border-b border-stone-800">
+        <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
+          <div className="max-w-3xl space-y-5">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-stone-900 border border-[#D4AF37]/40 rounded-full text-[10px] uppercase tracking-[0.3em] text-[#D4AF37]">
               <Award className="w-3.5 h-3.5" />
               <span>KT International B2B &amp; Institutional Division</span>
             </div>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight">
+            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-light text-white leading-[1.08]">
               Direct Mill Procurement for Hospitality &amp; Enterprise
             </h1>
-            <p className="text-sm sm:text-base text-stone-300 max-w-2xl leading-relaxed">
+            <p className="text-sm sm:text-base text-stone-300 max-w-2xl leading-relaxed font-light">
               Leverage 35+ years of Panipat textile manufacturing scale. From luxury boutique resorts to corporate gifting and multi-property hospitality chains — access factory-direct pricing with verified GST input credit and export certifications.
             </p>
           </div>
 
           {/* Quick Metrics */}
-          <div className="mt-12 pt-8 border-t border-stone-800 grid grid-cols-2 md:grid-cols-4 gap-6 text-xs text-stone-400">
+          <div className="mt-16 pt-10 border-t border-stone-800 grid grid-cols-2 md:grid-cols-4 gap-8 text-xs text-stone-400">
             <div>
-              <span className="font-serif text-2xl sm:text-3xl text-white block">50,000+</span>
-              <span className="uppercase tracking-wider text-[10px]">Monthly Loom Capacity</span>
+              <span className="font-serif text-3xl sm:text-4xl text-[#D4AF37] block font-light">50,000+</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] block mt-1">Monthly Loom Capacity</span>
             </div>
             <div>
-              <span className="font-serif text-2xl sm:text-3xl text-white block">Panipat</span>
-              <span className="uppercase tracking-wider text-[10px]">Integrated Weaving Mill</span>
+              <span className="font-serif text-3xl sm:text-4xl text-white block font-light">Panipat</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] block mt-1">Integrated Weaving Mill</span>
             </div>
             <div>
-              <span className="font-serif text-2xl sm:text-3xl text-white block">20+ Nations</span>
-              <span className="uppercase tracking-wider text-[10px]">Global Export Presence</span>
+              <span className="font-serif text-3xl sm:text-4xl text-white block font-light">20+ Nations</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] block mt-1">Global Export Presence</span>
             </div>
             <div>
-              <span className="font-serif text-2xl sm:text-3xl text-white block">100% GST</span>
-              <span className="uppercase tracking-wider text-[10px]">Input Credit Compliant</span>
+              <span className="font-serif text-3xl sm:text-4xl text-emerald-400 block font-light">100% GST</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] block mt-1">Input Credit Compliant</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Target Buyer Categories */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#B95D41] font-semibold">
+      <section className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16 py-24">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <span className="text-[11px] uppercase tracking-[0.3em] text-[#B95D41] font-semibold block">
             Tailored Programs
           </span>
-          <h2 className="font-serif text-3xl text-stone-900 mt-1">
+          <h2 className="font-serif text-4xl sm:text-5xl text-stone-900 font-light">
             Who We Partner With
           </h2>
-          <p className="text-xs text-stone-600 mt-2">
+          <p className="text-xs sm:text-sm text-stone-600 font-serif italic">
             Engineered institutional specifications for every commercial requirement.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {buyerTypes.map((b) => {
             const Icon = b.icon;
             return (
               <div
                 key={b.title}
-                className="p-5 bg-white border border-[#E5DFD5] rounded-xs space-y-3 hover:border-stone-900 transition flex flex-col justify-between"
+                className="p-7 bg-[#FDFBF8] border border-[#E2D7C7] rounded-xs space-y-4 hover:border-stone-900 transition-all duration-300 flex flex-col justify-between shadow-xs hover:shadow-lg"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-stone-200 flex items-center justify-center text-stone-800 mb-3">
-                    <Icon className="w-5 h-5 stroke-1" />
+                  <div className="w-12 h-12 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center text-stone-900 mb-4">
+                    <Icon className="w-6 h-6 stroke-[1.25]" />
                   </div>
-                  <h3 className="font-serif text-lg text-stone-900">{b.title}</h3>
-                  <p className="text-xs text-stone-600 leading-relaxed mt-2">{b.desc}</p>
+                  <h3 className="font-serif text-2xl text-stone-900 font-light">{b.title}</h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed mt-2 font-light">{b.desc}</p>
                 </div>
-                <div className="pt-3 border-t border-stone-100 text-[11px] text-[#B95D41] font-medium flex items-center gap-1">
-                  <span>Customizable Specs</span>
-                  <ArrowRight className="w-3 h-3" />
+                <div className="pt-4 border-t border-[#EAE3D7] text-xs text-[#B95D41] font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Custom Specs</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </div>
             );
@@ -165,95 +165,87 @@ export default function BulkEnquiriesPage() {
         </div>
       </section>
 
-      {/* Main Interactive Form & Credentials */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* LEFT: KT International Manufacturing Strengths */}
+      {/* Form & Credentials with Generous Spacing */}
+      <section className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          {/* LEFT: Manufacturing Strengths */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="p-8 bg-[#EDE8E0] border border-[#E5DFD5] rounded-xs space-y-6">
+            <div className="p-8 sm:p-10 bg-[#EFE8DD] border border-[#E2D7C7] rounded-xs space-y-8 shadow-sm">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-[#B95D41] font-semibold">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#B95D41] font-semibold block mb-1">
                   Factory Direct Assurance
                 </span>
-                <h3 className="font-serif text-2xl text-stone-900 mt-1">
+                <h3 className="font-serif text-3xl text-stone-900 font-light">
                   KT International Infrastructure
                 </h3>
               </div>
 
-              <div className="space-y-4 text-xs text-stone-700">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+              <div className="space-y-5 text-xs sm:text-sm text-stone-700 font-light">
+                <div className="flex items-start gap-3.5">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-stone-900">End-to-End Panipat Loom Complex:</strong> In-house yarn dyeing, automated circular raschel warp-knits, wide-width shuttleless air-jet looms, and computerized box quilting.
+                    <strong className="text-stone-900 font-medium">End-to-End Panipat Loom Complex:</strong> In-house yarn dyeing, automated circular raschel warp-knits, wide-width shuttleless air-jet looms, and computerized box quilting.
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-stone-900">Custom Sizing &amp; Deep Mattresses:</strong> Seamless manufacturing of 108&quot; × 108&quot;, 120&quot; × 120&quot;, and 15&quot; fitted sheet depths for heavy hospitality mattresses.
+                    <strong className="text-stone-900 font-medium">Custom Sizing &amp; Deep Mattresses:</strong> Seamless manufacturing of 108&quot; × 108&quot;, 120&quot; × 120&quot;, and 15&quot; fitted sheet depths for heavy hospitality mattresses.
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-stone-900">Private Labeling &amp; Brand Embossing:</strong> Custom woven damask labels, gold-foil gift trunks, and barcode tagging ready for retail shelves.
+                    <strong className="text-stone-900 font-medium">Private Labeling &amp; Brand Embossing:</strong> Custom woven damask labels, gold-foil gift trunks, and barcode tagging ready for retail distribution.
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3.5">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-800 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-stone-900">Rapid Pan-India Logistics:</strong> Central logistics hub in Panipat with dedicated container loading bays and express air-cargo connectivity to all metros.
+                    <strong className="text-stone-900 font-medium">Pan-India Cargo Logistics:</strong> Direct central logistics hub in Panipat with dedicated container loading bays and express air-cargo connectivity to all metros.
                   </div>
                 </div>
               </div>
 
               {/* Direct WhatsApp Callout */}
-              <div className="pt-4 border-t border-stone-300">
-                <p className="text-xs text-stone-600 mb-2 font-medium">Need immediate project pricing?</p>
+              <div className="pt-6 border-t border-[#CEC0AD]">
+                <p className="text-xs text-stone-600 mb-3 font-medium uppercase tracking-wider">Need immediate project pricing?</p>
                 <a
                   href="https://wa.me/919812000000?text=Hello%20KT%20International%20B2B%20Desk,%20I%20have%20an%20urgent%20bulk%20enquiry"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 bg-[#1C1917] hover:bg-stone-800 text-white text-xs uppercase tracking-wider font-medium rounded-xs flex items-center justify-center gap-2 transition"
+                  className="w-full py-4 px-6 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs uppercase tracking-[0.22em] font-semibold rounded-xs flex items-center justify-center gap-2.5 transition shadow-md"
                 >
-                  <MessageCircle className="w-4 h-4 text-emerald-400" />
-                  <span>Connect with B2B Director on WhatsApp</span>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  <span>Connect via WhatsApp</span>
                 </a>
               </div>
             </div>
-
-            {/* Client Testimonial */}
-            <div className="p-6 bg-white border border-[#E5DFD5] rounded-xs space-y-2">
-              <p className="text-xs italic font-serif text-stone-700 leading-relaxed">
-                &ldquo;KT International has supplied our boutique chain in Goa and Rajasthan for over 4 years. Their 400TC Supima sheets survive 200+ commercial wash cycles with zero pilling.&rdquo;
-              </p>
-              <p className="text-[11px] font-semibold text-stone-900 pt-1">
-                — Hospitality Procurement Lead, Heritage Villas Goa
-              </p>
-            </div>
           </div>
 
-          {/* RIGHT: Interactive Working Enquiry Form */}
+          {/* RIGHT: RFQ Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white border border-[#E5DFD5] p-6 sm:p-10 rounded-xs shadow-xs">
+            <div className="bg-[#FDFBF8] border border-[#E2D7C7] p-8 sm:p-12 rounded-xs shadow-md">
               {submitted ? (
-                <div className="text-center py-12 space-y-6 animate-in fade-in">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="text-center py-16 space-y-6 animate-in fade-in">
+                  <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto shadow-inner">
+                    <CheckCircle2 className="w-10 h-10" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-emerald-800 font-semibold">
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-emerald-800 font-semibold block mb-1">
                       RFQ Successfully Submitted
                     </span>
-                    <h3 className="font-serif text-3xl text-stone-900 mt-1">
+                    <h3 className="font-serif text-4xl text-stone-900 font-light">
                       Thank You, {formData.fullName}
                     </h3>
-                    <p className="text-xs text-stone-600 max-w-md mx-auto mt-2 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto mt-2 leading-relaxed font-serif italic">
                       Your commercial requirement has been routed directly to KT International&apos;s Panipat Institutional Desk.
                     </p>
                   </div>
 
-                  <div className="bg-[#FAF8F5] border border-stone-200 p-4 max-w-sm mx-auto rounded-xs text-left text-xs space-y-1 font-mono">
+                  <div className="bg-[#FAF7F2] border border-[#E2D7C7] p-5 max-w-sm mx-auto rounded-xs text-left text-xs space-y-1.5 font-mono">
                     <div className="flex justify-between">
                       <span className="text-stone-500">RFQ Reference:</span>
                       <strong className="text-stone-900">{rfqNumber}</strong>
@@ -268,46 +260,44 @@ export default function BulkEnquiriesPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-stone-500">Response SLA:</span>
-                      <span className="text-emerald-700 font-bold">Within 4 Business Hours</span>
+                      <span className="text-emerald-800 font-bold">Within 4 Business Hours</span>
                     </div>
                   </div>
 
-                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="px-6 py-2.5 border border-stone-800 text-stone-900 text-xs uppercase tracking-wider hover:bg-stone-100 transition rounded-xs"
+                      className="px-8 py-3.5 border border-stone-800 text-stone-900 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-stone-100 transition rounded-xs"
                     >
-                      Submit Another Requirement
+                      Submit Another RFQ
                     </button>
                     <a
                       href={`https://wa.me/919812000000?text=Hello,%20I%20just%20submitted%20RFQ%20${rfqNumber}%20for%20${formData.companyName}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-2.5 bg-[#1C1917] text-white text-xs uppercase tracking-wider hover:bg-stone-800 transition rounded-xs flex items-center gap-2"
+                      className="px-8 py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs uppercase tracking-[0.2em] font-semibold transition rounded-xs flex items-center gap-2 shadow-md"
                     >
-                      <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Track RFQ via WhatsApp</span>
+                      <span>Track via WhatsApp</span>
                     </a>
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-7">
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-[#B95D41] font-semibold">
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-[#B95D41] font-semibold block mb-1">
                       Request for Quote (RFQ)
                     </span>
-                    <h3 className="font-serif text-2xl text-stone-900 mt-1">
+                    <h3 className="font-serif text-3xl text-stone-900 font-light">
                       Direct Institutional Enquiry
                     </h3>
-                    <p className="text-xs text-stone-500 mt-1">
+                    <p className="text-xs text-stone-500 mt-1 font-serif italic">
                       Fill out your requirements below to receive wholesale pricing sheets and fabric swatch portfolios.
                     </p>
                   </div>
 
-                  {/* Name & Company */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         Full Name *
                       </label>
                       <input
@@ -316,11 +306,11 @@ export default function BulkEnquiriesPage() {
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                         placeholder="e.g. Vikramaditya Mehta"
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         Company / Organisation *
                       </label>
                       <input
@@ -329,21 +319,20 @@ export default function BulkEnquiriesPage() {
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                         placeholder="e.g. Royal Heritage Resort Pvt Ltd"
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       />
                     </div>
                   </div>
 
-                  {/* Buyer Type & Order Volume */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         Buyer Type *
                       </label>
                       <select
                         value={formData.buyerType}
                         onChange={(e) => setFormData({ ...formData, buyerType: e.target.value })}
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       >
                         <option value="Hotels & Resorts">Hotels, Resorts &amp; Homestays</option>
                         <option value="Retailer / Wholesaler">Retail Store / Regional Wholesaler</option>
@@ -355,13 +344,13 @@ export default function BulkEnquiriesPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         Estimated Order Volume *
                       </label>
                       <select
                         value={formData.orderVolume}
                         onChange={(e) => setFormData({ ...formData, orderVolume: e.target.value })}
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       >
                         <option value="50 – 150 pcs (Sample / Boutique)">50 – 150 pcs (Sample / Boutique)</option>
                         <option value="200 – 500 pcs">200 – 500 pcs (Standard)</option>
@@ -371,12 +360,12 @@ export default function BulkEnquiriesPage() {
                     </div>
                   </div>
 
-                  {/* Product Category Interest Multi-Select */}
+                  {/* Multi-Select Category Checkboxes */}
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-2">
-                      Product Categories of Interest (Select all that apply)
+                    <label className="block text-xs font-semibold text-stone-700 mb-2.5 uppercase tracking-wider text-[11px]">
+                      Product Categories of Interest
                     </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {[
                         "Bedroom (Bedsheets, Dohars, Blankets)",
                         "Winter Mink & Polar Fleece Blankets",
@@ -387,13 +376,13 @@ export default function BulkEnquiriesPage() {
                       ].map((cat) => (
                         <label
                           key={cat}
-                          className="flex items-center gap-2 p-2 bg-[#FAF8F5] border border-stone-200 rounded-xs cursor-pointer hover:bg-stone-100 text-xs text-stone-800"
+                          className="flex items-center gap-2.5 p-3 bg-[#FAF7F2] border border-[#E2D7C7] rounded-xs cursor-pointer hover:bg-[#EFE8DD] text-xs text-stone-800 transition"
                         >
                           <input
                             type="checkbox"
                             checked={formData.productCategories.includes(cat)}
                             onChange={() => handleCategoryToggle(cat)}
-                            className="rounded-xs text-stone-900 focus:ring-stone-800"
+                            className="rounded-xs text-stone-900 focus:ring-stone-900"
                           />
                           <span>{cat}</span>
                         </label>
@@ -401,10 +390,9 @@ export default function BulkEnquiriesPage() {
                     </div>
                   </div>
 
-                  {/* Contact Info (Phone / Email / GSTIN) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         Phone / WhatsApp *
                       </label>
                       <input
@@ -413,12 +401,12 @@ export default function BulkEnquiriesPage() {
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+91 98765 43210"
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
-                        Official Email *
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
+                        Work Email *
                       </label>
                       <input
                         type="email"
@@ -426,11 +414,11 @@ export default function BulkEnquiriesPage() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="procurement@company.com"
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                      <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                         GSTIN (Optional)
                       </label>
                       <input
@@ -438,14 +426,13 @@ export default function BulkEnquiriesPage() {
                         value={formData.gstin}
                         onChange={(e) => setFormData({ ...formData, gstin: e.target.value })}
                         placeholder="07AAAAA0000A1Z5"
-                        className="w-full bg-[#FAF8F5] border border-stone-300 px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs uppercase"
+                        className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs uppercase font-mono"
                       />
                     </div>
                   </div>
 
-                  {/* Detailed Requirements Message */}
                   <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                    <label className="block text-xs font-semibold text-stone-700 mb-1.5 uppercase tracking-wider text-[11px]">
                       Detailed Specifications or Project Notes
                     </label>
                     <textarea
@@ -453,20 +440,19 @@ export default function BulkEnquiriesPage() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Mention thread counts required, custom sizes, target delivery date, or branding requirements..."
-                      className="w-full bg-[#FAF8F5] border border-stone-300 p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
+                      className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 text-xs text-stone-900 focus:outline-none focus:border-stone-900 rounded-xs"
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-4 bg-[#1C1917] hover:bg-stone-800 text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition shadow-md flex items-center justify-center gap-2"
+                      className="w-full py-4.5 bg-[#141210] hover:bg-stone-800 text-white text-xs uppercase tracking-[0.25em] font-semibold rounded-xs transition-all duration-300 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2.5"
                     >
                       <Send className="w-4 h-4" />
                       <span>Submit Commercial RFQ</span>
                     </button>
-                    <p className="text-[10px] text-stone-500 text-center mt-2">
+                    <p className="text-[10px] text-stone-500 text-center mt-3 font-serif italic">
                       🔒 Your commercial details are protected under NDA. KT International directly manufactures and fulfills all institutional contracts.
                     </p>
                   </div>

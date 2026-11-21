@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 export default function OurStoryPage() {
   return (
-    <div className="pb-24">
+    <div className="pb-36">
       {/* Hero Header */}
-      <section className="relative bg-[#EDE8E0] py-20 md:py-28 border-b border-[#E5DFD5]">
-        <div className="max-w-4xl mx-auto px-6 text-center space-y-4">
-          <span className="text-[10px] uppercase tracking-[0.28em] text-[#B95D41] font-semibold bg-[#B95D41]/10 px-3 py-1 rounded-xs">
+      <section className="relative bg-[#EFE8DD] py-28 md:py-36 border-b border-[#E2D7C7]">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 text-center space-y-5">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-[#B95D41] font-semibold bg-[#B95D41]/10 px-4 py-1.5 rounded-xs border border-[#B95D41]/20">
             Heritage &amp; Lineage
           </span>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#1C1917] font-normal leading-tight">
+          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl text-[#141210] font-light leading-tight">
             The Weave of Panipat. The Soul of AAVAAS.
           </h1>
           <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto font-serif italic">
@@ -28,30 +28,30 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* Main Narrative Split */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* Main Narrative Split with Generous Spacing */}
+      <section className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16 py-24 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
           <div className="lg:col-span-6 relative">
-            <div className="relative aspect-4/5 w-full bg-stone-200 rounded-xs overflow-hidden shadow-xl border border-stone-300">
+            <div className="relative aspect-4/5 w-full bg-[#E5DDCF] rounded-xs overflow-hidden shadow-2xl border border-[#CEC0AD]">
               <Image
-                src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?q=80&w=1200&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?q=90&w=1400&auto=format&fit=crop"
                 alt="Panipat Textile Loom Artistry"
                 fill
-                className="object-cover"
+                className="object-cover brightness-[0.95]"
               />
             </div>
-            <div className="absolute -bottom-6 -left-4 sm:left-6 bg-[#1C1917] text-white p-6 max-w-xs rounded-xs shadow-2xl hidden sm:block">
-              <p className="text-[10px] uppercase tracking-widest text-amber-300 font-semibold">
+            <div className="absolute -bottom-8 -left-4 sm:left-6 bg-[#141210] text-[#FAF6F0] p-8 max-w-sm rounded-xs shadow-2xl hidden sm:block border border-stone-700">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold">
                 Since 1989
               </p>
-              <p className="font-serif text-lg mt-1">
+              <p className="font-serif text-2xl mt-1 leading-snug">
                 From Panipat Looms to Discerning Global Bedrooms
               </p>
             </div>
           </div>
 
-          <div className="lg:col-span-6 space-y-6 text-stone-700 text-sm sm:text-base leading-relaxed">
-            <h2 className="font-serif text-3xl sm:text-4xl text-stone-900 leading-snug">
+          <div className="lg:col-span-6 space-y-7 text-stone-700 text-sm sm:text-base leading-relaxed font-light">
+            <h2 className="font-serif text-4xl sm:text-5xl text-[#141210] font-light leading-snug">
               Why AAVAAS Was Born
             </h2>
             <p>
@@ -63,7 +63,7 @@ export default function OurStoryPage() {
             <p>
               Yet, when shopping within India, we observed an undeniable disconnect: consumers were forced to choose between dated, overly ornate traditional linen shops, or pay exorbitant 400% markups for European lifestyle brands selling goods that were often woven right here in Haryana.
             </p>
-            <p className="font-serif italic text-lg text-stone-900 border-l-2 border-[#B95D41] pl-4 my-4">
+            <p className="font-serif italic text-xl text-stone-900 border-l-2 border-[#B95D41] pl-5 my-6 leading-relaxed">
               &ldquo;We created AAVAAS to dismantle that paradox — to deliver honest, world-class loom mastery directly from Panipat into Indian living rooms.&rdquo;
             </p>
           </div>
@@ -71,54 +71,54 @@ export default function OurStoryPage() {
       </section>
 
       {/* The 4 Principles of AAVAAS */}
-      <section className="bg-white border-y border-[#E5DFD5] py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#B95D41] font-semibold">
+      <section className="bg-[#EFE8DD] border-y border-[#E2D7C7] py-28">
+        <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="text-center max-w-2xl mx-auto mb-20 space-y-3">
+            <span className="text-[11px] uppercase tracking-[0.3em] text-[#B95D41] font-semibold block">
               Uncompromising Standards
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-stone-900 mt-1">
+            <h2 className="font-serif text-4xl sm:text-5xl text-[#141210] font-light">
               The Four Pillars of Our Craft
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-stone-300 flex items-center justify-center text-stone-900">
-                <Award className="w-5 h-5 stroke-1" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div className="space-y-4 p-8 bg-[#FDFBF8] border border-[#E2D7C7] rounded-xs shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center text-stone-900">
+                <Award className="w-6 h-6 stroke-[1.25]" />
               </div>
-              <h3 className="font-serif text-xl text-stone-900">Panipat Mill Mastery</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <h3 className="font-serif text-2xl text-stone-900 font-light">Panipat Mill Mastery</h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
                 Direct integration with KT International&apos;s automated looms, circular raschel knitting divisions, and eco-certified dye houses.
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-stone-300 flex items-center justify-center text-stone-900">
-                <Compass className="w-5 h-5 stroke-1" />
+            <div className="space-y-4 p-8 bg-[#FDFBF8] border border-[#E2D7C7] rounded-xs shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center text-stone-900">
+                <Compass className="w-6 h-6 stroke-[1.25]" />
               </div>
-              <h3 className="font-serif text-xl text-stone-900">Thoughtful Proportions</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <h3 className="font-serif text-2xl text-stone-900 font-light">Thoughtful Proportions</h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
                 Generous 108&quot; × 108&quot; bedsheet tuck-ins that grip 14-inch heavy Indian mattresses and reversible color combinations.
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-stone-300 flex items-center justify-center text-stone-900">
-                <ShieldCheck className="w-5 h-5 stroke-1" />
+            <div className="space-y-4 p-8 bg-[#FDFBF8] border border-[#E2D7C7] rounded-xs shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center text-stone-900">
+                <ShieldCheck className="w-6 h-6 stroke-[1.25]" />
               </div>
-              <h3 className="font-serif text-xl text-stone-900">OEKO-TEX Certified</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <h3 className="font-serif text-2xl text-stone-900 font-light">OEKO-TEX Certified</h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
                 100% AZO-free water-based reactive pigments and zero formaldehyde finishes, safe for sensitive skin and baby nursery rooms.
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-full bg-[#FAF8F5] border border-stone-300 flex items-center justify-center text-stone-900">
-                <HeartHandshake className="w-5 h-5 stroke-1" />
+            <div className="space-y-4 p-8 bg-[#FDFBF8] border border-[#E2D7C7] rounded-xs shadow-xs">
+              <div className="w-12 h-12 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center text-stone-900">
+                <HeartHandshake className="w-6 h-6 stroke-[1.25]" />
               </div>
-              <h3 className="font-serif text-xl text-stone-900">Honest Value</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
+              <h3 className="font-serif text-2xl text-stone-900 font-light">Honest Value</h3>
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
                 Pure factory-direct pricing without distributor margins. True five-star luxury fabrics accessible to every home.
               </p>
             </div>
@@ -126,24 +126,24 @@ export default function OurStoryPage() {
         </div>
       </section>
 
-      {/* Call to Action to Explore */}
-      <section className="max-w-4xl mx-auto px-6 text-center pt-20">
-        <h2 className="font-serif text-3xl sm:text-4xl text-stone-900">
+      {/* Call to Action */}
+      <section className="max-w-4xl mx-auto px-6 text-center pt-28">
+        <h2 className="font-serif text-4xl sm:text-5xl text-stone-900 font-light">
           Begin Your Sanctuary Experience
         </h2>
-        <p className="text-xs sm:text-sm text-stone-600 mt-2 max-w-md mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-stone-600 mt-3 max-w-lg mx-auto leading-relaxed font-serif italic">
           Explore our newly unveiled Winter 2026–27 collection or our signature 400TC Supima sateen bedsheets.
         </p>
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
           <Link
             href="/shop"
-            className="w-full sm:w-auto px-8 py-3.5 bg-[#1C1917] text-white text-xs uppercase tracking-widest font-semibold rounded-xs hover:bg-stone-800 transition"
+            className="w-full sm:w-auto px-10 py-4.5 bg-[#141210] text-[#FAF6F0] text-xs uppercase tracking-[0.25em] font-semibold rounded-xs hover:bg-stone-800 transition shadow-xl"
           >
             Explore All Pieces
           </Link>
           <Link
             href="/bulk-enquiries"
-            className="w-full sm:w-auto px-8 py-3.5 bg-[#EDE8E0] text-stone-900 text-xs uppercase tracking-widest font-semibold rounded-xs hover:bg-stone-300 transition"
+            className="w-full sm:w-auto px-10 py-4.5 bg-[#EFE8DD] text-stone-900 border border-[#CEC0AD] text-xs uppercase tracking-[0.25em] font-semibold rounded-xs hover:bg-[#141210] hover:text-[#FAF6F0] transition shadow-xs"
           >
             Institutional &amp; Hotel Enquiries
           </Link>
