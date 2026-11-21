@@ -77,7 +77,7 @@ export const PRODUCTS: Product[] = [
     isWinterLaunch: true,
     isFeatured: true,
     images: [
-      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1200&auto=format&fit=crop",
+      "/images/hero-gen-1.jpg",
       "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=85&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=85&w=1200&auto=format&fit=crop",
     ],
@@ -143,7 +143,7 @@ export const PRODUCTS: Product[] = [
     isWinterLaunch: true,
     images: [
       "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=85&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?q=85&w=1200&auto=format&fit=crop",
     ],
     colors: [
       { name: "Warm Linen Ivory", hex: "#EBE3D7" },

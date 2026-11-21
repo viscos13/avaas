@@ -55,7 +55,7 @@ export default function OurStoryPage() {
           <div className="lg:col-span-6 relative">
             <div className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1400&auto=format&fit=crop"
+                src="/images/panipat-craft.jpg"
                 alt="Panipat Textile Loom Artistry"
                 fill
                 priority

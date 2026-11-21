@@ -8,7 +8,8 @@ import { CATEGORIES } from "@/data/categories";
 import { COLLECTIONS } from "@/data/collections";
 import ProductCard from "@/components/ProductCard";
 import ShopTheRoom from "@/components/ShopTheRoom";
-import { ParallaxHero, FadeIn, StaggerContainer, staggerChildVariant } from "@/components/MotionPrimitives";
+import HeroCarousel from "@/components/HeroCarousel";
+import { FadeIn, StaggerContainer, staggerChildVariant } from "@/components/MotionPrimitives";
 import {
   ArrowRight,
   ShieldCheck,
@@ -53,25 +54,15 @@ export default function HomePage() {
   return (
     <div className="bg-[#F8F5F0] text-[#191715] overflow-hidden">
       {/* ========================================================= */}
-      {/* 1. CINEMATIC FULL-BLEED HERO WITH SUBTLE PARALLAX        */}
+      {/* 1. CINEMATIC FULL-BLEED HERO WITH CAROUSEL (5 SLIDES)     */}
       {/* ========================================================= */}
       <section className="relative min-h-[92vh] flex items-end overflow-hidden">
-        <ParallaxHero className="w-full h-full">
-          <Image
-            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=90&w=2000&auto=format&fit=crop"
-            alt="Warm sunlit luxury bedroom curated by AAVAAS"
-            fill
-            priority
-            className="object-cover object-center"
-          />
-        </ParallaxHero>
-
-        {/* Bottom-Up Cinematic Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#191715]/80 via-[#191715]/30 to-transparent pointer-events-none" />
+        {/* Dynamic Multi-Image Carousel Background */}
+        <HeroCarousel />
 
         {/* Content Container (Bottom-Left) */}
-        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-14 pb-16 lg:pb-24 text-left">
-          <div className="max-w-2xl">
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-14 pb-16 lg:pb-24 text-left pointer-events-none">
+          <div className="max-w-2xl pointer-events-auto">
             {/* Frosted Glass Eyebrow Pill */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -512,11 +503,11 @@ export default function HomePage() {
       {/* ========================================================= */}
       <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
         <div className="bg-[#EFEAE2] rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 shadow-sm">
-          {/* Left Photo */}
+          {/* Left Photo (Bespoke Panipat Master Weaving Heritage) */}
           <div className="lg:col-span-6 relative min-h-[440px] lg:min-h-full">
             <Image
-              src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1400&auto=format&fit=crop"
-              alt="Panipat weaving loom mastery"
+              src="/images/panipat-craft.jpg"
+              alt="Panipat weaving loom mastery by KT International"
               fill
               className="object-cover"
             />

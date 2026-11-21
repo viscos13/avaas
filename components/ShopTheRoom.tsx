@@ -3,97 +3,71 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PRODUCTS } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { formatINR } from "@/lib/utils";
-import { Plus, X, ShoppingBag, ArrowUpRight } from "lucide-react";
+import { Plus, X, ShoppingBag, ArrowUpRight, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface HotspotItem {
+interface HotspotConfig {
   id: string;
-  name: string;
-  subtitle: string;
-  price: number;
   slug: string;
-  image: string;
+  label: string;
+  part: string;
   top: string;
   left: string;
-  badge: string;
+  popoverPlacement: "top" | "bottom" | "left" | "right";
 }
 
-const HOTSPOTS: HotspotItem[] = [
+const HOTSPOT_CONFIGS: HotspotConfig[] = [
   {
-    id: "hotspot-1",
-    name: "Aura 400TC Supima Bedsheet Set",
-    subtitle: "Long-staple sateen in Oatmeal Stone",
-    price: 2199,
-    slug: "aura-400tc-supima-cotton-sateen-bedsheet",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=85&w=600&auto=format&fit=crop",
-    top: "62%",
-    left: "48%",
-    badge: "100% Supima Cotton",
-  },
-  {
-    id: "hotspot-2",
-    name: "Kashmir Cloud Mink Blanket",
-    subtitle: "550 GSM sculpted thermal weave",
-    price: 2499,
-    slug: "kashmir-cloud-embossed-mink-blanket",
-    image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=85&w=600&auto=format&fit=crop",
-    top: "45%",
-    left: "72%",
-    badge: "Winter '26 Edition",
-  },
-  {
-    id: "hotspot-3",
-    name: "Bouclé Loop Cushion Pair",
-    subtitle: "Hand-tufted organic wool loops",
-    price: 1499,
+    id: "hotspot-cushions",
     slug: "panipat-hand-tufted-boucle-cushion-cover-pair",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=85&w=600&auto=format&fit=crop",
-    top: "35%",
-    left: "28%",
-    badge: "Handloom Craft",
+    label: "01 · Pillows & Cushions",
+    part: "Head of Bed",
+    top: "43%",
+    left: "44%",
+    popoverPlacement: "bottom",
+  },
+  {
+    id: "hotspot-bedsheet",
+    slug: "aura-400tc-supima-cotton-sateen-bedsheet",
+    label: "02 · Sateen Bedsheet",
+    part: "Mattress Bedding",
+    top: "60%",
+    left: "50%",
+    popoverPlacement: "top",
+  },
+  {
+    id: "hotspot-blanket",
+    slug: "nordic-luxury-ultra-plush-mink-blanket",
+    label: "03 · Mink Blanket",
+    part: "Foot of Bed Throw",
+    top: "76%",
+    left: "67%",
+    popoverPlacement: "top",
   },
 ];
 
 export default function ShopTheRoom() {
-  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  const [activeHotspot, setActiveHotspot] = useState<string | null>("hotspot-bedsheet");
   const { addItem } = useCart();
   const [addedId, setAddedId] = useState<string | null>(null);
 
-  const handleQuickAdd = (item: HotspotItem, e: React.MouseEvent) => {
+  const handleQuickAdd = (slug: string, hotspotId: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    // Mock product shape for CartContext
-    const mockProduct = {
-      id: item.slug,
-      slug: item.slug,
-      name: item.name,
-      subtitle: item.subtitle,
-      category: "bedroom" as const,
-      subcategory: "Bedroom",
-      collection: "signature" as const,
-      price: item.price,
-      originalPrice: item.price + 800,
-      discountPercent: 25,
-      rating: 4.9,
-      reviewsCount: 120,
-      inStock: true,
-      images: [item.image],
-      colors: [{ name: "Standard", hex: "#D9D0C3" }],
-      sizes: [{ name: "Standard", label: "Standard", dimensions: "Standard", dimensionsMetric: "Standard", inStock: true, priceModifier: 0 }],
-      fabric: "Premium Weave",
-      leadParagraph: item.subtitle,
-      materialCraft: "Panipat loom weave",
-      specifications: {},
-      careInstructions: [],
-      reviews: [],
-    };
+    const realProduct = PRODUCTS.find((p) => p.slug === slug);
+    if (!realProduct) return;
 
-    addItem(mockProduct, "Standard", "Standard", 1, item.price);
-    setAddedId(item.id);
-    setTimeout(() => setAddedId(null), 1500);
+    const defaultSize = realProduct.sizes[0]?.name || "Standard";
+    const defaultColor = realProduct.colors[0]?.name || "Default";
+    const price = realProduct.price;
+
+    addItem(realProduct, defaultSize, defaultColor, 1, price);
+    setAddedId(hotspotId);
+    setTimeout(() => setAddedId(null), 1800);
   };
 
   return (
@@ -122,13 +96,14 @@ export default function ShopTheRoom() {
       </div>
 
       {/* Hero Room Canvas with Hotspots */}
-      <div className="relative w-full h-[560px] lg:h-[640px] rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl group">
+      <div className="relative w-full h-[560px] lg:h-[640px] rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl group select-none">
+        {/* Local Verified Room Image for 0ms Instant Loading */}
         <Image
-          src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=90&w=1800&auto=format&fit=crop"
+          src="/images/hero-1.jpg"
           alt="Curated AAVAAS bedroom sanctuary room look"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-center"
         />
 
         {/* Soft vignette scrim */}
@@ -147,27 +122,55 @@ export default function ShopTheRoom() {
         </div>
 
         {/* Interactive Hotspot Dots */}
-        {HOTSPOTS.map((spot) => {
+        {HOTSPOT_CONFIGS.map((spot) => {
+          const realProduct = PRODUCTS.find((p) => p.slug === spot.slug);
+          if (!realProduct) return null;
+
           const isActive = activeHotspot === spot.id;
+          const isAdded = addedId === spot.id;
+
           return (
             <div
               key={spot.id}
               className="absolute z-20"
               style={{ top: spot.top, left: spot.left }}
             >
-              {/* Pulsing Hotspot Button */}
-              <button
-                onClick={() => setActiveHotspot(isActive ? null : spot.id)}
-                className="relative -translate-x-1/2 -translate-y-1/2 group focus:outline-none"
-                aria-label={`View ${spot.name}`}
-              >
-                {/* Ping ripple effect */}
-                <span className="absolute inset-0 rounded-full bg-white/70 animate-ping opacity-75" />
-                {/* Outer Glass Ring */}
-                <span className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow-lg border border-white/60 transition-transform duration-300 group-hover:scale-115">
-                  <span className="w-3.5 h-3.5 rounded-full bg-[#191715] group-hover:bg-[#8C6B4F] transition-colors" />
-                </span>
-              </button>
+              {/* Pulsing Hotspot Button with Visible Label Pill */}
+              <div className="relative -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+                <button
+                  onClick={() => setActiveHotspot(isActive ? null : spot.id)}
+                  className="relative group focus:outline-none"
+                  aria-label={`View ${realProduct.name}`}
+                >
+                  {/* Ping ripple effect */}
+                  <span className="absolute inset-0 rounded-full bg-white/70 animate-ping opacity-75" />
+                  {/* Outer Glass Ring */}
+                  <span
+                    className={`relative flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-md shadow-xl border border-white/70 transition-transform duration-300 ${
+                      isActive ? "bg-[#191715] scale-110" : "bg-white/90 hover:scale-115"
+                    }`}
+                  >
+                    <span
+                      className={`w-3.5 h-3.5 rounded-full transition-colors ${
+                        isActive ? "bg-white" : "bg-[#191715]"
+                      }`}
+                    />
+                  </span>
+                </button>
+
+                {/* Permanent Micro Pill on Canvas */}
+                <button
+                  onClick={() => setActiveHotspot(isActive ? null : spot.id)}
+                  className={`hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-md border shadow-md transition-all whitespace-nowrap ${
+                    isActive
+                      ? "bg-[#191715] text-white border-[#191715]"
+                      : "bg-white/85 text-[#191715] border-white/60 hover:bg-white"
+                  }`}
+                >
+                  <span>{spot.label}</span>
+                  <span className="font-mono text-[10px] opacity-75">· {formatINR(realProduct.price)}</span>
+                </button>
+              </div>
 
               {/* Floating Frosted Card Modal */}
               <AnimatePresence>
@@ -177,15 +180,20 @@ export default function ShopTheRoom() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 8 }}
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute -top-4 left-6 -translate-y-full w-72 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/60 text-left z-30"
+                    className="absolute -top-4 left-6 -translate-y-full w-80 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/70 text-left z-30"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2.5">
-                      <span className="text-[9px] uppercase tracking-[0.16em] font-semibold text-[#8C6B4F] bg-[#EFEAE2] px-2 py-0.5 rounded-full">
-                        {spot.badge}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[9px] uppercase tracking-[0.16em] font-semibold text-[#8C6B4F] bg-[#EFEAE2] px-2.5 py-0.5 rounded-full">
+                          {spot.part}
+                        </span>
+                        <span className="text-[9px] uppercase tracking-wider text-[#5E5850]">
+                          {realProduct.collection} Tier
+                        </span>
+                      </div>
                       <button
                         onClick={() => setActiveHotspot(null)}
-                        className="text-[#5E5850] hover:text-[#191715] p-0.5 transition"
+                        className="text-[#5E5850] hover:text-[#191715] p-1 transition rounded-full"
                         aria-label="Close"
                       >
                         <X className="w-4 h-4" />
@@ -193,36 +201,61 @@ export default function ShopTheRoom() {
                     </div>
 
                     <div className="flex gap-3 items-center">
-                      <div className="relative w-16 h-18 rounded-xl overflow-hidden bg-[#EFEAE2] shrink-0">
-                        <Image src={spot.image} alt={spot.name} fill className="object-cover" />
+                      <div className="relative w-20 h-22 rounded-xl overflow-hidden bg-[#EFEAE2] shrink-0 shadow-xs">
+                        <Image
+                          src={realProduct.images[0]}
+                          alt={realProduct.name}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[13px] font-medium text-[#191715] truncate">
-                          {spot.name}
+                        <h4 className="text-[13px] font-medium text-[#191715] line-clamp-1">
+                          {realProduct.name}
                         </h4>
                         <p className="text-[11px] text-[#5E5850] line-clamp-1 mt-0.5">
-                          {spot.subtitle}
+                          {realProduct.subtitle}
                         </p>
-                        <p className="text-sm font-semibold text-[#191715] mt-1">
-                          {formatINR(spot.price)}
-                        </p>
+                        <div className="flex items-baseline gap-2 mt-1">
+                          <span className="text-sm font-semibold text-[#191715]">
+                            {formatINR(realProduct.price)}
+                          </span>
+                          {realProduct.originalPrice > realProduct.price && (
+                            <span className="text-[11px] text-[#5E5850] line-through">
+                              {formatINR(realProduct.originalPrice)}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
 
                     <div className="mt-3.5 pt-3 border-t border-[#191715]/10 flex items-center gap-2">
                       <button
-                        onClick={(e) => handleQuickAdd(spot, e)}
-                        className="flex-1 py-2 px-3 bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0] text-xs uppercase tracking-wider font-semibold rounded-full transition flex items-center justify-center gap-1.5"
+                        onClick={(e) => handleQuickAdd(spot.slug, spot.id, e)}
+                        className={`flex-1 py-2 px-3 text-xs uppercase tracking-wider font-semibold rounded-full transition flex items-center justify-center gap-1.5 shadow-md ${
+                          isAdded
+                            ? "bg-emerald-800 text-white"
+                            : "bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0]"
+                        }`}
                       >
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>{addedId === spot.id ? "Added!" : "Add to Bag"}</span>
+                        {isAdded ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Added to Bag!</span>
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <span>Add to Bag</span>
+                          </>
+                        )}
                       </button>
                       <Link
-                        href={`/products/${spot.slug}`}
+                        href={`/products/${realProduct.slug}`}
                         className="p-2 border border-[#191715]/20 hover:border-[#191715] rounded-full transition text-[#191715]"
                         aria-label="View product details"
                       >
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <ArrowUpRight className="w-4 h-4" />
                       </Link>
                     </div>
                   </motion.div>

@@ -61,16 +61,16 @@ export default function Header() {
                 <Menu className="w-5 h-5" />
               </button>
 
-              <div className="hidden lg:flex items-center gap-6 xl:gap-8 text-[13px] tracking-[0.12em] uppercase font-medium">
-                {/* Shop dropdown trigger */}
+              <div className="hidden lg:flex items-center h-full gap-7 xl:gap-8 text-[13px] tracking-[0.12em] uppercase font-medium whitespace-nowrap">
+                {/* 1. Shop dropdown trigger */}
                 <div
-                  className="relative py-6"
+                  className="relative h-full flex items-center"
                   onMouseEnter={() => setShopMenuOpen(true)}
                   onMouseLeave={() => setShopMenuOpen(false)}
                 >
                   <Link
                     href="/shop"
-                    className="transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F] flex items-center gap-1"
+                    className="h-full flex items-center transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F] whitespace-nowrap"
                   >
                     <span>Shop</span>
                   </Link>
@@ -140,25 +140,28 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
 
+                {/* 2. Winter '26 */}
                 <Link
                   href="/shop?winter=true"
-                  className="transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F]"
+                  className="h-full flex items-center transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F] whitespace-nowrap"
                 >
-                  Winter &apos;26
+                  <span>Winter &apos;26</span>
                 </Link>
 
+                {/* 3. Collections */}
                 <Link
                   href="/shop"
-                  className="transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F]"
+                  className="h-full flex items-center transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F] whitespace-nowrap"
                 >
-                  Collections
+                  <span>Collections</span>
                 </Link>
 
+                {/* 4. Bulk & Trade */}
                 <Link
                   href="/bulk-enquiries"
-                  className="transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F]"
+                  className="h-full flex items-center transition opacity-90 hover:opacity-100 hover:text-[#8C6B4F] whitespace-nowrap"
                 >
-                  Bulk &amp; Trade
+                  <span>Bulk &amp; Trade</span>
                 </Link>
               </div>
             </div>
