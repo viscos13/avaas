@@ -1,58 +1,67 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { formatINR } from "@/lib/utils";
-import { Plus, X, ShoppingBag, ArrowUpRight, Check } from "lucide-react";
+import { X, ShoppingBag, ArrowUpRight, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface HotspotConfig {
   id: string;
   slug: string;
-  label: string;
   part: string;
   top: string;
   left: string;
-  popoverPlacement: "top" | "bottom" | "left" | "right";
+  placement: "bottom-left" | "bottom-right" | "top-left" | "top-right";
 }
 
 const HOTSPOT_CONFIGS: HotspotConfig[] = [
   {
     id: "hotspot-cushions",
     slug: "panipat-hand-tufted-boucle-cushion-cover-pair",
-    label: "01 · Pillows & Cushions",
-    part: "Head of Bed",
-    top: "43%",
-    left: "44%",
-    popoverPlacement: "bottom",
-  },
-  {
-    id: "hotspot-bedsheet",
-    slug: "aura-400tc-supima-cotton-sateen-bedsheet",
-    label: "02 · Sateen Bedsheet",
-    part: "Mattress Bedding",
-    top: "60%",
-    left: "50%",
-    popoverPlacement: "top",
+    part: "Sofa Cushions",
+    top: "58%",
+    left: "46%",
+    placement: "top-right",
   },
   {
     id: "hotspot-blanket",
     slug: "nordic-luxury-ultra-plush-mink-blanket",
-    label: "03 · Mink Blanket",
-    part: "Foot of Bed Throw",
-    top: "76%",
-    left: "67%",
-    popoverPlacement: "top",
+    part: "Chaise Throw",
+    top: "72%",
+    left: "74%",
+    placement: "top-left",
+  },
+  {
+    id: "hotspot-sherpa",
+    slug: "chamonix-reversible-sherpa-fleece",
+    part: "Accent Chair Throw",
+    top: "62%",
+    left: "22%",
+    placement: "top-right",
   },
 ];
 
 export default function ShopTheRoom() {
-  const [activeHotspot, setActiveHotspot] = useState<string | null>("hotspot-bedsheet");
+  // Starts strictly with null - does NOT open automatically on page load
+  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
   const { addItem } = useCart();
   const [addedId, setAddedId] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Close modal when clicking outside the canvas
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setActiveHotspot(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleQuickAdd = (slug: string, hotspotId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -82,7 +91,7 @@ export default function ShopTheRoom() {
             Style the Sanctuary
           </h2>
           <p className="text-[15px] text-[#5E5850] mt-2 font-normal max-w-lg">
-            Tap the interactive hotspot pins on the bedding to explore and shop the curated bedroom aesthetic.
+            Tap the interactive hotspot pins on the room to explore and shop the curated living aesthetic.
           </p>
         </div>
 
@@ -96,13 +105,17 @@ export default function ShopTheRoom() {
       </div>
 
       {/* Hero Room Canvas with Hotspots */}
-      <div className="relative w-full h-[560px] lg:h-[640px] rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl group select-none">
-        {/* Local Verified Room Image for 0ms Instant Loading */}
+      <div
+        ref={containerRef}
+        className="relative w-full h-[560px] lg:h-[640px] rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl group select-none"
+      >
+        {/* Curated Sanctuary Living Room Photo */}
         <Image
-          src="/images/hero-1.jpg"
-          alt="Curated AAVAAS bedroom sanctuary room look"
+          src="/images/style-the-sanctuary.jpg"
+          alt="Curated AAVAAS Earth & Stone Suite room look"
           fill
           priority
+          sizes="(max-width: 1440px) 100vw, 1440px"
           className="object-cover object-center"
         />
 
@@ -121,7 +134,7 @@ export default function ShopTheRoom() {
           </div>
         </div>
 
-        {/* Interactive Hotspot Dots */}
+        {/* Interactive Hotspot Dots - Clean without labels */}
         {HOTSPOT_CONFIGS.map((spot) => {
           const realProduct = PRODUCTS.find((p) => p.slug === spot.slug);
           if (!realProduct) return null;
@@ -129,58 +142,57 @@ export default function ShopTheRoom() {
           const isActive = activeHotspot === spot.id;
           const isAdded = addedId === spot.id;
 
+          // Responsive placement alignment so card stays on screen
+          const cardPlacementClasses =
+            spot.placement === "top-left"
+              ? "bottom-12 right-0 sm:-right-4"
+              : spot.placement === "top-right"
+              ? "bottom-12 left-0 sm:-left-4"
+              : spot.placement === "bottom-left"
+              ? "top-12 right-0 sm:-right-4"
+              : "top-12 left-0 sm:-left-4";
+
           return (
             <div
               key={spot.id}
               className="absolute z-20"
               style={{ top: spot.top, left: spot.left }}
             >
-              {/* Pulsing Hotspot Button with Visible Label Pill */}
-              <div className="relative -translate-x-1/2 -translate-y-1/2 flex items-center gap-2">
+              {/* Only the circular pulsing dot (NO persistent text label) */}
+              <div className="relative -translate-x-1/2 -translate-y-1/2">
                 <button
                   onClick={() => setActiveHotspot(isActive ? null : spot.id)}
-                  className="relative group focus:outline-none"
-                  aria-label={`View ${realProduct.name}`}
+                  className="relative group focus:outline-none cursor-pointer block"
+                  aria-label={`Explore product at ${spot.part}`}
                 >
                   {/* Ping ripple effect */}
                   <span className="absolute inset-0 rounded-full bg-white/70 animate-ping opacity-75" />
                   {/* Outer Glass Ring */}
                   <span
-                    className={`relative flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-md shadow-xl border border-white/70 transition-transform duration-300 ${
-                      isActive ? "bg-[#191715] scale-110" : "bg-white/90 hover:scale-115"
+                    className={`relative flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-md shadow-xl border border-white/80 transition-all duration-300 ${
+                      isActive
+                        ? "bg-[#191715] scale-110"
+                        : "bg-white/90 hover:scale-115 hover:bg-white"
                     }`}
                   >
                     <span
                       className={`w-3.5 h-3.5 rounded-full transition-colors ${
-                        isActive ? "bg-white" : "bg-[#191715]"
+                        isActive ? "bg-white" : "bg-[#191715] group-hover:bg-[#8C6B4F]"
                       }`}
                     />
                   </span>
                 </button>
-
-                {/* Permanent Micro Pill on Canvas */}
-                <button
-                  onClick={() => setActiveHotspot(isActive ? null : spot.id)}
-                  className={`hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-md border shadow-md transition-all whitespace-nowrap ${
-                    isActive
-                      ? "bg-[#191715] text-white border-[#191715]"
-                      : "bg-white/85 text-[#191715] border-white/60 hover:bg-white"
-                  }`}
-                >
-                  <span>{spot.label}</span>
-                  <span className="font-mono text-[10px] opacity-75">· {formatINR(realProduct.price)}</span>
-                </button>
               </div>
 
-              {/* Floating Frosted Card Modal */}
+              {/* Floating Frosted Product Card Modal - Appears ONLY when clicked */}
               <AnimatePresence>
                 {isActive && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                    initial={{ opacity: 0, scale: 0.92, y: 8 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: 8 }}
+                    exit={{ opacity: 0, scale: 0.92, y: 8 }}
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute -top-4 left-6 -translate-y-full w-80 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/70 text-left z-30"
+                    className={`absolute ${cardPlacementClasses} w-72 sm:w-80 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl border border-white/70 text-left z-30`}
                   >
                     <div className="flex items-start justify-between gap-2 mb-2.5">
                       <div className="flex items-center gap-1.5">
@@ -193,7 +205,7 @@ export default function ShopTheRoom() {
                       </div>
                       <button
                         onClick={() => setActiveHotspot(null)}
-                        className="text-[#5E5850] hover:text-[#191715] p-1 transition rounded-full"
+                        className="text-[#5E5850] hover:text-[#191715] p-1 transition rounded-full cursor-pointer"
                         aria-label="Close"
                       >
                         <X className="w-4 h-4" />
@@ -201,7 +213,7 @@ export default function ShopTheRoom() {
                     </div>
 
                     <div className="flex gap-3 items-center">
-                      <div className="relative w-20 h-22 rounded-xl overflow-hidden bg-[#EFEAE2] shrink-0 shadow-xs">
+                      <div className="relative w-18 h-20 rounded-xl overflow-hidden bg-[#EFEAE2] shrink-0 shadow-xs">
                         <Image
                           src={realProduct.images[0]}
                           alt={realProduct.name}
@@ -232,7 +244,7 @@ export default function ShopTheRoom() {
                     <div className="mt-3.5 pt-3 border-t border-[#191715]/10 flex items-center gap-2">
                       <button
                         onClick={(e) => handleQuickAdd(spot.slug, spot.id, e)}
-                        className={`flex-1 py-2 px-3 text-xs uppercase tracking-wider font-semibold rounded-full transition flex items-center justify-center gap-1.5 shadow-md ${
+                        className={`flex-1 py-2 px-3 text-xs uppercase tracking-wider font-semibold rounded-full transition flex items-center justify-center gap-1.5 shadow-md cursor-pointer ${
                           isAdded
                             ? "bg-emerald-800 text-white"
                             : "bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0]"
@@ -252,10 +264,10 @@ export default function ShopTheRoom() {
                       </button>
                       <Link
                         href={`/products/${realProduct.slug}`}
-                        className="p-2 border border-[#191715]/20 hover:border-[#191715] rounded-full transition text-[#191715]"
+                        className="p-2 border border-[#191715]/20 hover:border-[#191715] rounded-full transition text-[#191715] cursor-pointer"
                         aria-label="View product details"
                       >
-                        <ArrowUpRight className="w-4 h-4" />
+                        <ArrowUpRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
                   </motion.div>
