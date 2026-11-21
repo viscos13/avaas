@@ -17,9 +17,6 @@ import {
   ArrowRight,
   Printer,
   ChevronLeft,
-  Sparkles,
-  ShoppingBag,
-  Trash2,
   Lock,
 } from "lucide-react";
 
@@ -59,14 +56,6 @@ export default function CheckoutPage() {
   const [promoApplied, setPromoApplied] = useState(false);
   const [promoDiscount, setPromoDiscount] = useState(0);
   const [promoError, setPromoError] = useState("");
-
-  // Card details state
-  const [cardData, setCardData] = useState({
-    number: "•••• •••• •••• 4242",
-    expiry: "12/28",
-    cvv: "•••",
-    nameOnCard: "Aryan Malhotra",
-  });
 
   const handlePincodeChange = (pin: string) => {
     setShippingAddress((prev) => ({ ...prev, pincode: pin }));
@@ -109,97 +98,71 @@ export default function CheckoutPage() {
       setIsProcessing(false);
       setOrderPlaced(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1500);
+    }, 1200);
   };
 
   if (orderPlaced) {
     return (
-      <div className="max-w-4xl mx-auto px-6 py-20 sm:py-28 animate-in fade-in">
-        <div className="bg-[#FDFBF8] border border-[#E2D7C7] p-8 sm:p-14 rounded-xs shadow-2xl space-y-10">
-          <div className="text-center space-y-4">
-            <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto shadow-inner">
-              <CheckCircle2 className="w-10 h-10" />
-            </div>
-            <span className="text-[11px] uppercase tracking-[0.3em] text-emerald-800 font-semibold block">
-              Payment &amp; Dispatch Order Confirmed
+      <div className="max-w-[800px] mx-auto px-6 py-32 animate-in fade-in">
+        <div className="space-y-8 text-left">
+          <div className="space-y-2">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#6B655E] font-medium">
+              ORDER CONFIRMED
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl text-[#141210] font-light">
+            <h1 className="font-serif text-4xl sm:text-5xl text-[#1C1917] font-light">
               Thank You for Weaving with AAVAAS
             </h1>
-            <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto font-serif italic">
-              Your order <strong className="text-stone-900 font-mono">{orderId}</strong> has been logged directly into KT International&apos;s Panipat automated dispatch schedule.
+            <p className="text-sm text-[#6B655E] font-serif italic">
+              Order reference <strong className="text-[#1C1917] font-mono">{orderId}</strong> has been scheduled for dispatch at Panipat.
             </p>
           </div>
 
-          <div className="bg-[#FAF7F2] border border-[#E2D7C7] p-7 rounded-xs space-y-6 text-xs">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pb-6 border-b border-[#EAE3D7]">
+          <div className="py-6 border-y border-[#1C1917]/10 text-xs space-y-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-widest block">
-                  Order Number
-                </span>
-                <span className="font-mono font-medium text-stone-900 text-sm">{orderId}</span>
+                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Order ID</span>
+                <span className="font-mono text-[#1C1917] font-medium">{orderId}</span>
               </div>
               <div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-widest block">
-                  Delivery By
-                </span>
-                <span className="font-semibold text-emerald-800 text-sm">2–3 Business Days</span>
+                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Estimated Delivery</span>
+                <span className="text-[#1C1917] font-medium">2–3 Business Days</span>
               </div>
               <div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-widest block">
-                  Payment Method
-                </span>
-                <span className="font-medium text-stone-900 uppercase">
-                  {paymentMethod === "upi" ? `UPI (${selectedUpiApp.toUpperCase()})` : paymentMethod}
-                </span>
+                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Payment</span>
+                <span className="text-[#1C1917] font-medium uppercase">{paymentMethod}</span>
               </div>
               <div>
-                <span className="text-[10px] text-stone-400 uppercase tracking-widest block">
-                  Amount Paid
-                </span>
-                <span className="font-serif font-medium text-stone-900 text-base">{formatINR(grandTotal)}</span>
+                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Total Paid</span>
+                <span className="font-serif text-sm font-medium text-[#1C1917]">{formatINR(grandTotal)}</span>
               </div>
             </div>
 
-            <div>
-              <p className="text-[10px] text-stone-400 uppercase tracking-widest mb-1.5 font-semibold">
-                Delivering To:
-              </p>
-              <p className="font-semibold text-stone-900 text-sm">{shippingAddress.fullName}</p>
-              <p className="text-stone-600">
-                {shippingAddress.addressLine1}, {shippingAddress.addressLine2}
-              </p>
-              <p className="text-stone-600">
-                {shippingAddress.city}, {shippingAddress.state} — {shippingAddress.pincode}
-              </p>
-              <p className="text-stone-500 mt-1">Phone: +91 {shippingAddress.phone}</p>
+            <div className="pt-4 border-t border-[#1C1917]/10">
+              <p className="text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Delivering To:</p>
+              <p className="text-[#1C1917] font-medium">{shippingAddress.fullName}</p>
+              <p className="text-[#6B655E]">{shippingAddress.addressLine1}, {shippingAddress.city}, {shippingAddress.state} — {shippingAddress.pincode}</p>
             </div>
 
             {needsGstInvoice && (
-              <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xs text-xs text-emerald-950">
-                <p className="font-semibold">✅ Formal B2B GST Tax Invoice Enabled</p>
-                <p className="text-emerald-800 mt-1">
-                  Billed to: <strong>{gstData.companyName}</strong> (GSTIN: {gstData.gstin}). Input tax credit will reflect automatically in your GSTR-2B.
-                </p>
+              <div className="p-3 bg-[#EDE8E0] text-[11px] text-[#1C1917]">
+                ✓ B2B GST Invoice billed to: <strong>{gstData.companyName}</strong> (GSTIN: {gstData.gstin}).
               </div>
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#EAE3D7]">
+          <div className="flex items-center gap-6 pt-4 text-xs uppercase tracking-[0.2em] font-medium">
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto px-8 py-3.5 border border-stone-400 hover:border-stone-900 text-stone-800 text-xs uppercase tracking-[0.2em] font-semibold rounded-xs flex items-center justify-center gap-2.5 transition"
+              className="px-6 py-3 border border-[#1C1917] hover:bg-[#1C1917] hover:text-[#FAF8F5] transition"
             >
-              <Printer className="w-4 h-4" />
-              <span>Print Tax Invoice</span>
+              Print Receipt
             </button>
-
             <Link
               href="/"
               onClick={() => clearCart()}
-              className="w-full sm:w-auto px-10 py-4 bg-[#141210] hover:bg-stone-800 text-white text-xs uppercase tracking-[0.25em] font-semibold rounded-xs transition text-center shadow-lg"
+              className="text-[#1C1917] hover:underline"
             >
-              Return to Sanctuary
+              Return Home →
             </Link>
           </div>
         </div>
@@ -209,17 +172,14 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="max-w-xl mx-auto px-6 py-32 text-center space-y-5">
-        <div className="w-20 h-20 rounded-full bg-[#EFE8DD] border border-[#CEC0AD] flex items-center justify-center mx-auto text-stone-400">
-          <ShoppingBag className="w-8 h-8 stroke-1" />
-        </div>
-        <h2 className="font-serif text-3xl sm:text-4xl text-stone-800 font-light">Your bag is empty</h2>
-        <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-serif italic">
-          Please select pieces from our Winter &apos;26–27 collection or core bedsheets before proceeding to checkout.
+      <div className="max-w-md mx-auto px-6 py-36 text-center space-y-4">
+        <h2 className="font-serif text-3xl text-[#1C1917] font-light">Your bag is empty</h2>
+        <p className="text-xs text-[#6B655E] font-serif italic">
+          Select pieces from our catalog before proceeding to checkout.
         </p>
         <Link
           href="/shop"
-          className="inline-block mt-4 px-8 py-4 bg-[#141210] text-white text-xs uppercase tracking-[0.25em] font-semibold rounded-xs hover:bg-stone-800 transition shadow-md"
+          className="inline-block mt-2 px-6 py-3 bg-[#1C1917] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] transition"
         >
           Explore Collection
         </Link>
@@ -228,465 +188,264 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16 py-12 sm:py-18">
-      <div className="mb-8">
-        <Link
-          href="/shop"
-          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-stone-500 hover:text-stone-900 transition"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Continue Shopping</span>
-        </Link>
-      </div>
+    <div className="pt-28 pb-32">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="mb-8">
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-[#6B655E] hover:text-[#1C1917] transition"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+            <span>Continue Shopping</span>
+          </Link>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-        {/* LEFT 7 COLS: Shipping Address, GST Invoice Toggle & Payment Methods */}
-        <div className="lg:col-span-7 space-y-10">
-          {/* Section 1: Delivery Address */}
-          <div className="bg-[#FDFBF8] border border-[#E2D7C7] p-8 sm:p-10 rounded-xs space-y-6 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#EAE3D7] pb-4">
-              <h2 className="font-serif text-2xl sm:text-3xl text-stone-900 font-light flex items-center gap-3">
-                <Truck className="w-5 h-5 text-stone-700" />
-                <span>1. Delivery Destination</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* LEFT 7 COLS: Address & Payment */}
+          <div className="lg:col-span-7 space-y-10">
+            {/* Address */}
+            <div className="space-y-5">
+              <h2 className="font-serif text-2xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
+                1. Delivery Address
               </h2>
-              <span className="text-xs text-emerald-800 font-semibold uppercase tracking-wider">
-                Pan-India Express
-              </span>
-            </div>
 
-            <div className="space-y-5 text-xs">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={shippingAddress.fullName}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
-                    className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                  />
-                </div>
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                    Phone (For Courier Dispatch OTP) *
-                  </label>
-                  <input
-                    type="tel"
-                    value={shippingAddress.phone}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
-                    className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  value={shippingAddress.email}
-                  onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
-                  className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                  Street Address &amp; Suite / Villa *
-                </label>
-                <input
-                  type="text"
-                  value={shippingAddress.addressLine1}
-                  onChange={(e) => setShippingAddress({ ...shippingAddress, addressLine1: e.target.value })}
-                  className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                    Pincode *
-                  </label>
-                  <input
-                    type="text"
-                    maxLength={6}
-                    value={shippingAddress.pincode}
-                    onChange={(e) => handlePincodeChange(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900 font-mono"
-                  />
-                </div>
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                    City / District *
-                  </label>
-                  <input
-                    type="text"
-                    value={shippingAddress.city}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
-                    className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                  />
-                </div>
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1.5 uppercase tracking-wider text-[11px]">
-                    State *
-                  </label>
-                  <input
-                    type="text"
-                    value={shippingAddress.state}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
-                    className="w-full bg-[#FAF7F2] border border-[#CEC0AD] p-3 rounded-xs focus:outline-none focus:border-stone-900 text-stone-900"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* GST INVOICE TOGGLE */}
-            <div className="mt-8 pt-6 border-t border-[#EAE3D7]">
-              <label className="flex items-center gap-3.5 p-4 bg-[#EFE8DD] border border-[#CEC0AD] rounded-xs cursor-pointer hover:bg-[#E5DDCF] transition">
-                <input
-                  type="checkbox"
-                  checked={needsGstInvoice}
-                  onChange={(e) => setNeedsGstInvoice(e.target.checked)}
-                  className="w-4 h-4 rounded-xs text-stone-900 focus:ring-stone-900"
-                />
-                <div>
-                  <p className="text-xs font-semibold text-stone-900 flex items-center gap-2">
-                    <Building className="w-4 h-4 text-stone-700" />
-                    <span>Claim 12% GST Input Credit (Business / Hospitality Buyer)</span>
-                  </p>
-                  <p className="text-[11px] text-stone-600 mt-0.5">
-                    Enter your Registered Company Name &amp; GSTIN to receive a formal B2B invoice.
-                  </p>
-                </div>
-              </label>
-
-              {needsGstInvoice && (
-                <div className="mt-4 p-5 bg-[#FAF7F2] border border-[#CEC0AD] rounded-xs space-y-4 animate-in fade-in text-xs">
+              <div className="space-y-4 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-stone-700 font-medium mb-1">
-                      Registered Company / Studio Name *
-                    </label>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Full Name</label>
                     <input
                       type="text"
-                      value={gstData.companyName}
-                      onChange={(e) => setGstData({ ...gstData, companyName: e.target.value })}
-                      className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs focus:outline-none text-stone-900"
+                      value={shippingAddress.fullName}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
+                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
                     />
                   </div>
                   <div>
-                    <label className="block text-stone-700 font-medium mb-1">
-                      15-Digit GST Identification Number (GSTIN) *
-                    </label>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Phone</label>
                     <input
-                      type="text"
-                      maxLength={15}
-                      value={gstData.gstin}
-                      onChange={(e) => setGstData({ ...gstData, gstin: e.target.value.toUpperCase() })}
-                      className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs focus:outline-none text-stone-900 font-mono uppercase"
+                      type="tel"
+                      value={shippingAddress.phone}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
+                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
                     />
                   </div>
-                  <p className="text-[11px] text-emerald-900 font-medium">
-                    ✓ Verified eligible for full 12% input tax credit on commercial furnishings.
-                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Email</label>
+                  <input
+                    type="email"
+                    value={shippingAddress.email}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
+                    className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Street Address</label>
+                  <input
+                    type="text"
+                    value={shippingAddress.addressLine1}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, addressLine1: e.target.value })}
+                    className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Pincode</label>
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={shippingAddress.pincode}
+                      onChange={(e) => handlePincodeChange(e.target.value)}
+                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">City</label>
+                    <input
+                      type="text"
+                      value={shippingAddress.city}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
+                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">State</label>
+                    <input
+                      type="text"
+                      value={shippingAddress.state}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
+                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* GST Invoice Toggle */}
+              <div className="pt-4">
+                <label className="flex items-center gap-2 cursor-pointer text-xs text-[#1C1917]">
+                  <input
+                    type="checkbox"
+                    checked={needsGstInvoice}
+                    onChange={(e) => setNeedsGstInvoice(e.target.checked)}
+                    className="w-3.5 h-3.5 text-[#1C1917]"
+                  />
+                  <span>Claim 12% GST Input Tax Credit (Business / Hospitality Buyer)</span>
+                </label>
+
+                {needsGstInvoice && (
+                  <div className="mt-3 p-4 bg-[#EDE8E0] space-y-3 text-xs">
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Company Name</label>
+                      <input
+                        type="text"
+                        value={gstData.companyName}
+                        onChange={(e) => setGstData({ ...gstData, companyName: e.target.value })}
+                        className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">15-Digit GSTIN</label>
+                      <input
+                        type="text"
+                        maxLength={15}
+                        value={gstData.gstin}
+                        onChange={(e) => setGstData({ ...gstData, gstin: e.target.value.toUpperCase() })}
+                        className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs font-mono uppercase"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Payment Method */}
+            <div className="space-y-4">
+              <h2 className="font-serif text-2xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
+                2. Payment Method
+              </h2>
+
+              <div className="grid grid-cols-3 gap-3 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("upi")}
+                  className={`p-3 border text-left transition ${
+                    paymentMethod === "upi" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
+                  }`}
+                >
+                  <p className="font-medium uppercase tracking-wider text-[11px]">UPI</p>
+                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "upi" ? "text-stone-300" : "text-[#6B655E]"}`}>GPay, PhonePe</p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("card")}
+                  className={`p-3 border text-left transition ${
+                    paymentMethod === "card" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
+                  }`}
+                >
+                  <p className="font-medium uppercase tracking-wider text-[11px]">Cards</p>
+                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "card" ? "text-stone-300" : "text-[#6B655E]"}`}>Visa, Master</p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("cod")}
+                  className={`p-3 border text-left transition ${
+                    paymentMethod === "cod" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
+                  }`}
+                >
+                  <p className="font-medium uppercase tracking-wider text-[11px]">COD</p>
+                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "cod" ? "text-stone-300" : "text-[#6B655E]"}`}>At Doorstep</p>
+                </button>
+              </div>
+
+              {paymentMethod === "upi" && (
+                <div className="p-4 bg-[#EDE8E0] text-xs space-y-2">
+                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E]">Enter UPI ID / VPA</label>
+                  <input
+                    type="text"
+                    value={upiVpa}
+                    onChange={(e) => setUpiVpa(e.target.value)}
+                    placeholder="mobile@upi"
+                    className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs"
+                  />
                 </div>
               )}
             </div>
           </div>
 
-          {/* Section 2: Indian Payment Options */}
-          <div className="bg-[#FDFBF8] border border-[#E2D7C7] p-8 sm:p-10 rounded-xs space-y-6 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#EAE3D7] pb-4">
-              <h2 className="font-serif text-2xl sm:text-3xl text-stone-900 font-light flex items-center gap-3">
-                <Lock className="w-5 h-5 text-stone-700" />
-                <span>2. Select Payment Method</span>
-              </h2>
-              <span className="text-xs text-stone-500 flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                256-bit Bank Encryption
-              </span>
-            </div>
+          {/* RIGHT 5 COLS: Order Summary */}
+          <div className="lg:col-span-5">
+            <div className="border border-[#1C1917]/10 p-6 space-y-5 sticky top-28 bg-[#FAF8F5]">
+              <h3 className="font-serif text-xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
+                Summary ({cart.reduce((s, i) => s + i.quantity, 0)})
+              </h3>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("upi")}
-                className={`p-4 rounded-xs border text-left transition-all duration-300 flex flex-col justify-between ${
-                  paymentMethod === "upi"
-                    ? "border-stone-900 bg-[#141210] text-white shadow-md"
-                    : "border-[#CEC0AD] bg-[#FAF7F2] text-stone-800 hover:border-stone-800"
-                }`}
-              >
-                <QrCode className="w-6 h-6 mb-2" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider">UPI</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "upi" ? "text-stone-300" : "text-stone-500"}`}>
-                    GPay, PhonePe, Paytm
-                  </p>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("card")}
-                className={`p-4 rounded-xs border text-left transition-all duration-300 flex flex-col justify-between ${
-                  paymentMethod === "card"
-                    ? "border-stone-900 bg-[#141210] text-white shadow-md"
-                    : "border-[#CEC0AD] bg-[#FAF7F2] text-stone-800 hover:border-stone-800"
-                }`}
-              >
-                <CreditCard className="w-6 h-6 mb-2" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider">Cards</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "card" ? "text-stone-300" : "text-stone-500"}`}>
-                    Visa, Master, RuPay
-                  </p>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("cod")}
-                className={`p-4 rounded-xs border text-left transition-all duration-300 flex flex-col justify-between ${
-                  paymentMethod === "cod"
-                    ? "border-stone-900 bg-[#141210] text-white shadow-md"
-                    : "border-[#CEC0AD] bg-[#FAF7F2] text-stone-800 hover:border-stone-800"
-                }`}
-              >
-                <Banknote className="w-6 h-6 mb-2" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider">Cash on Delivery</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "cod" ? "text-stone-300" : "text-stone-500"}`}>
-                    Pay at Doorstep
-                  </p>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentMethod("netbanking")}
-                className={`p-4 rounded-xs border text-left transition-all duration-300 flex flex-col justify-between ${
-                  paymentMethod === "netbanking"
-                    ? "border-stone-900 bg-[#141210] text-white shadow-md"
-                    : "border-[#CEC0AD] bg-[#FAF7F2] text-stone-800 hover:border-stone-800"
-                }`}
-              >
-                <Building className="w-6 h-6 mb-2" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider">Net Banking</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "netbanking" ? "text-stone-300" : "text-stone-500"}`}>
-                    HDFC, ICICI, SBI
-                  </p>
-                </div>
-              </button>
-            </div>
-
-            {/* UPI view */}
-            {paymentMethod === "upi" && (
-              <div className="p-5 bg-[#FAF7F2] border border-[#CEC0AD] rounded-xs space-y-4 animate-in fade-in">
-                <div className="flex items-center gap-3">
-                  {["gpay", "phonepe", "paytm", "bhim"].map((app) => (
-                    <button
-                      key={app}
-                      type="button"
-                      onClick={() => setSelectedUpiApp(app)}
-                      className={`px-4 py-2 rounded-xs text-xs font-semibold border uppercase tracking-wider transition ${
-                        selectedUpiApp === app
-                          ? "bg-[#141210] text-white border-[#141210]"
-                          : "bg-white text-stone-700 border-[#CEC0AD] hover:border-stone-500"
-                      }`}
-                    >
-                      {app}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-                  <div>
-                    <label className="block text-xs font-medium text-stone-700 mb-1.5">
-                      Enter UPI ID / VPA
-                    </label>
-                    <input
-                      type="text"
-                      value={upiVpa}
-                      onChange={(e) => setUpiVpa(e.target.value)}
-                      placeholder="mobile@upi or user@okhdfc"
-                      className="w-full bg-white border border-[#CEC0AD] p-3 text-xs text-stone-900 rounded-xs focus:outline-none"
-                    />
-                  </div>
-                  <div className="p-4 bg-[#EFE8DD] border border-[#CEC0AD] rounded-xs text-center text-xs text-stone-700">
-                    <p className="font-semibold text-stone-950 mb-1">Instant App Notification</p>
-                    <p className="text-[11px] text-stone-600 font-serif italic">
-                      A payment request will be sent to your {selectedUpiApp.toUpperCase()} app upon placing order.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Card view */}
-            {paymentMethod === "card" && (
-              <div className="p-5 bg-[#FAF7F2] border border-[#CEC0AD] rounded-xs space-y-4 animate-in fade-in text-xs">
-                <div>
-                  <label className="block text-stone-700 font-medium mb-1">Card Number</label>
-                  <input
-                    type="text"
-                    value={cardData.number}
-                    onChange={(e) => setCardData({ ...cardData, number: e.target.value })}
-                    className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs font-mono"
-                  />
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-stone-700 font-medium mb-1">Valid Thru</label>
-                    <input
-                      type="text"
-                      value={cardData.expiry}
-                      onChange={(e) => setCardData({ ...cardData, expiry: e.target.value })}
-                      className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs font-mono text-center"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-stone-700 font-medium mb-1">CVV</label>
-                    <input
-                      type="password"
-                      maxLength={4}
-                      value={cardData.cvv}
-                      onChange={(e) => setCardData({ ...cardData, cvv: e.target.value })}
-                      className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs font-mono text-center"
-                    />
-                  </div>
-                  <div className="col-span-2 sm:col-span-1">
-                    <label className="block text-stone-700 font-medium mb-1">Name on Card</label>
-                    <input
-                      type="text"
-                      value={cardData.nameOnCard}
-                      onChange={(e) => setCardData({ ...cardData, nameOnCard: e.target.value })}
-                      className="w-full bg-white border border-[#CEC0AD] p-3 rounded-xs"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* COD view */}
-            {paymentMethod === "cod" && (
-              <div className="p-5 bg-[#FAF7F2] border border-[#CEC0AD] rounded-xs space-y-2 animate-in fade-in text-xs">
-                <div className="flex items-center gap-2 font-semibold text-stone-900 text-sm">
-                  <Banknote className="w-5 h-5 text-emerald-800" />
-                  <span>Pay Cash or UPI QR upon Delivery</span>
-                </div>
-                <p className="text-stone-600 leading-relaxed font-serif italic text-sm">
-                  Our courier executive will present a verified package. You may pay with cash or scan the delivery agent&apos;s dynamic UPI QR code on the spot.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* RIGHT 5 COLS: Order Summary */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="bg-[#FDFBF8] border border-[#E2D7C7] p-8 rounded-xs space-y-6 sticky top-28 shadow-md">
-            <h3 className="font-serif text-2xl text-stone-900 border-b border-[#EAE3D7] pb-4 font-light">
-              Order Summary ({cart.reduce((s, i) => s + i.quantity, 0)} Items)
-            </h3>
-
-            <div className="divide-y divide-[#EAE3D7] max-h-80 overflow-y-auto pr-1">
-              {cart.map((item) => (
-                <div key={item.id} className="py-4 flex gap-4">
-                  <div className="relative w-16 h-20 bg-[#EFE8DD] shrink-0 rounded-xs overflow-hidden border border-[#E2D7C7]">
-                    <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
-                  </div>
-                  <div className="flex-1 flex flex-col justify-between text-xs">
-                    <div>
-                      <h4 className="font-serif text-base text-stone-900 line-clamp-1 font-normal">
-                        {item.product.name}
-                      </h4>
-                      <p className="text-stone-500 mt-0.5">
-                        {item.selectedSize} • {item.selectedColor}
-                      </p>
+              <div className="divide-y divide-[#1C1917]/10 max-h-72 overflow-y-auto">
+                {cart.map((item) => (
+                  <div key={item.id} className="py-3 flex gap-3 text-xs">
+                    <div className="relative w-14 h-18 bg-[#EDE8E0] shrink-0">
+                      <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
                     </div>
-                    <div className="flex items-center justify-between text-stone-700">
-                      <span>Qty: {item.quantity}</span>
-                      <span className="font-serif font-medium text-stone-900 text-sm">
-                        {formatINR(item.unitPrice * item.quantity)}
-                      </span>
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <p className="font-serif text-sm text-[#1C1917] line-clamp-1">{item.product.name}</p>
+                        <p className="text-[#6B655E] text-[11px]">{item.selectedSize} • {item.selectedColor}</p>
+                      </div>
+                      <p className="font-medium text-[#1C1917]">{formatINR(item.unitPrice * item.quantity)}</p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <form onSubmit={handleApplyPromo} className="pt-4 border-t border-[#EAE3D7]">
-              <div className="flex gap-2">
+              <form onSubmit={handleApplyPromo} className="pt-2 border-t border-[#1C1917]/10 flex gap-2">
                 <input
                   type="text"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Coupon code (e.g. AAVAAS10)"
-                  className="flex-1 bg-[#FAF7F2] border border-[#CEC0AD] px-4 py-2.5 text-xs uppercase font-mono text-stone-900 rounded-xs focus:outline-none"
+                  placeholder="Coupon (e.g. AAVAAS10)"
+                  className="flex-1 bg-transparent border-b border-[#1C1917]/20 py-1.5 text-xs font-mono uppercase focus:outline-none"
                 />
-                <button
-                  type="submit"
-                  className="px-5 py-2.5 bg-[#141210] text-white text-xs uppercase tracking-wider font-semibold hover:bg-stone-800 transition rounded-xs"
-                >
+                <button type="submit" className="text-xs uppercase tracking-wider font-semibold text-[#1C1917] hover:underline">
                   Apply
                 </button>
-              </div>
-              {promoError && <p className="text-xs text-rose-600 mt-1">{promoError}</p>}
-              {promoApplied && (
-                <p className="text-xs text-emerald-800 mt-1 font-medium">
-                  ✓ Code applied! {formatINR(promoDiscount)} discount deducted.
-                </p>
-              )}
-            </form>
+              </form>
+              {promoApplied && <p className="text-[11px] text-emerald-800">✓ {formatINR(promoDiscount)} discount applied.</p>}
 
-            <div className="space-y-2.5 text-xs text-stone-600 pt-4 border-t border-[#EAE3D7]">
-              <div className="flex justify-between">
-                <span>Items Subtotal</span>
-                <span className="font-medium text-stone-900">{formatINR(cartSubtotal)}</span>
-              </div>
-
-              {promoDiscount > 0 && (
-                <div className="flex justify-between text-emerald-800 font-semibold">
-                  <span>Promo Code Savings</span>
-                  <span>- {formatINR(promoDiscount)}</span>
+              <div className="space-y-1.5 text-xs text-[#6B655E] pt-3 border-t border-[#1C1917]/10">
+                <div className="flex justify-between">
+                  <span>Subtotal</span>
+                  <span className="text-[#1C1917] font-medium">{formatINR(cartSubtotal)}</span>
                 </div>
-              )}
-
-              <div className="flex justify-between">
-                <span>Pan-India Delivery</span>
-                <span className={hasFreeShipping ? "text-emerald-800 font-semibold" : "text-stone-900"}>
-                  {hasFreeShipping ? "FREE (Orders > ₹1,999)" : "₹149"}
-                </span>
-              </div>
-
-              <div className="pt-4 border-t border-[#EAE3D7] flex justify-between items-baseline">
-                <div>
-                  <span className="text-base font-semibold text-stone-900">Total Payable</span>
-                  <p className="text-[10px] text-stone-400">All taxes &amp; shipping included</p>
+                {promoDiscount > 0 && (
+                  <div className="flex justify-between text-emerald-800">
+                    <span>Discount</span>
+                    <span>- {formatINR(promoDiscount)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span>Pan-India Delivery</span>
+                  <span className={hasFreeShipping ? "text-emerald-800" : "text-[#1C1917]"}>
+                    {hasFreeShipping ? "FREE" : "₹149"}
+                  </span>
                 </div>
-                <span className="font-serif text-3xl font-light text-stone-900">
-                  {formatINR(grandTotal)}
-                </span>
+                <div className="pt-3 border-t border-[#1C1917]/10 flex justify-between items-baseline">
+                  <span className="text-sm font-medium text-[#1C1917]">Total</span>
+                  <span className="font-serif text-2xl text-[#1C1917] font-light">{formatINR(grandTotal)}</span>
+                </div>
               </div>
+
+              <button
+                onClick={handlePlaceOrder}
+                disabled={isProcessing}
+                className="w-full py-3.5 bg-[#1C1917] hover:bg-black text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-medium transition"
+              >
+                {isProcessing ? "Confirming..." : `Place Order • ${formatINR(grandTotal)}`}
+              </button>
             </div>
-
-            <button
-              onClick={handlePlaceOrder}
-              disabled={isProcessing}
-              className="w-full py-4.5 bg-[#141210] hover:bg-[#25221F] text-white text-xs uppercase tracking-[0.25em] font-semibold rounded-xs transition-all duration-300 shadow-xl hover:shadow-2xl flex items-center justify-center gap-2.5"
-            >
-              {isProcessing ? (
-                <span>Confirming Order with Panipat Mill...</span>
-              ) : (
-                <>
-                  <span>Place Order • {formatINR(grandTotal)}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
           </div>
         </div>
       </div>

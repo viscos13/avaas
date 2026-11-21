@@ -17,7 +17,7 @@ export const CATEGORIES: Category[] = [
     slug: "bedroom",
     tagline: "Sanctuary of restful repose",
     description: "Bedsheets, comforters, dohars, mink blankets, quilts, bed covers, pillow covers, and mattress protectors woven with heritage craftsmanship.",
-    image: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Bedsheets",
       "Comforters",
@@ -36,7 +36,7 @@ export const CATEGORIES: Category[] = [
     slug: "bath",
     tagline: "Spa-grade organic cotton indulgences",
     description: "Plush Zero-Twist towels, waffle-weave bath sheets, ribbed floor mats, and combed cotton robes designed for effortless everyday pampering.",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Bath Towels",
       "Hand Towels",
@@ -53,7 +53,7 @@ export const CATEGORIES: Category[] = [
     slug: "living",
     tagline: "Architectural warmth and tactile comfort",
     description: "Sculpted textured cushion covers, heavy handloom throws, dhurries, and Panipat-tufted rugs that anchor your living spaces.",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Cushions & Covers",
       "Throws & Throws Blankets",
@@ -69,7 +69,7 @@ export const CATEGORIES: Category[] = [
     slug: "dining",
     tagline: "Subtle elegance for intimate gatherings",
     description: "Pure Belgian-finish washed linen and yarn-dyed cotton table cloths, runners, hemstitched napkins, and artisanal placemats.",
-    image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Table Covers",
       "Table Runners",
@@ -85,7 +85,7 @@ export const CATEGORIES: Category[] = [
     slug: "soft-furnishings",
     tagline: "Tailored drapery with timeless light play",
     description: "Bespoke linen curtains, light-filtering sheers, and room-darkening slub cotton drapery designed with effortless drape.",
-    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Linen Curtains",
       "Window Panels",
@@ -101,7 +101,7 @@ export const CATEGORIES: Category[] = [
     slug: "gifting",
     tagline: "Heirlooms presented with quiet luxury",
     description: "Curated wedding hampers, Diwali & festive gift suites, housewarming essentials, and corporate gift solutions packaged in bespoke linen boxes.",
-    image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=85&w=1200&auto=format&fit=crop",
     subcategories: [
       "Wedding Hampers",
       "Festive Gifting",

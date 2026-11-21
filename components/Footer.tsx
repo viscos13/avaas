@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, ShieldCheck, Truck, RefreshCw, Award } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { CATEGORIES } from "@/data/categories";
 
 export default function Footer() {
@@ -13,90 +13,46 @@ export default function Footer() {
     e.preventDefault();
     if (email.trim()) {
       setSubscribed(true);
-      setTimeout(() => {
-        setEmail("");
-      }, 3000);
+      setTimeout(() => setEmail(""), 3000);
     }
   };
 
   return (
-    <footer className="bg-[#141210] text-[#FAF6F0] pt-24 pb-16 border-t border-stone-800">
-      <div className="max-w-[1700px] mx-auto px-6 sm:px-10 lg:px-16">
-        {/* Trust Badges Strip with Generous Spacing */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-20 border-b border-stone-800/80">
-          <div className="flex items-start gap-4">
-            <Award className="w-6 h-6 text-[#D4AF37] shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-serif text-base text-stone-100 font-normal">Panipat Heritage</p>
-              <p className="text-xs text-stone-400 leading-relaxed">Woven on advanced looms by parent company KT International</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <Truck className="w-6 h-6 text-emerald-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-serif text-base text-stone-100 font-normal">Free Pan-India Delivery</p>
-              <p className="text-xs text-stone-400 leading-relaxed">Complimentary courier on orders above ₹1,999</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <RefreshCw className="w-6 h-6 text-stone-300 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-serif text-base text-stone-100 font-normal">7-Day Easy Returns</p>
-              <p className="text-xs text-stone-400 leading-relaxed">Hassle-free doorstep pickup &amp; exchanges</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <ShieldCheck className="w-6 h-6 text-amber-300 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-serif text-base text-stone-100 font-normal">GST Invoiced &amp; Verified</p>
-              <p className="text-xs text-stone-400 leading-relaxed">Full 12% input credit for hotels &amp; interior designers</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Section with Royal Spacing */}
-        <div className="py-20 border-b border-stone-800/80 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <footer className="bg-[#181614] text-[#D6D1C9] pt-20 pb-12 border-t border-white/10">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        {/* Newsletter: Bottom-Border-Only Minimalist Input */}
+        <div className="pb-16 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-6 space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#D4AF37] font-semibold">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#C5A880] font-semibold">
               The AAVAAS Journal
             </span>
-            <h3 className="font-serif text-3xl sm:text-4xl font-light text-stone-100 leading-tight">
-              Join the AAVAAS Journal — 10% off your first order
+            <h3 className="font-serif text-3xl sm:text-4xl font-light text-white leading-tight">
+              Join the Journal — 10% off your first order.
             </h3>
-            <p className="text-xs sm:text-sm text-stone-400 max-w-md leading-relaxed font-light">
-              Stories of Panipat textile heritage, new seasonal fabric releases, and private interior styling portfolios.
+            <p className="text-xs text-[#A8A29A] leading-relaxed max-w-md font-light">
+              Stories of Panipat textile heritage, seasonal collection debuts, and private styling previews.
             </p>
           </div>
 
           <div className="lg:col-span-6">
             {subscribed ? (
-              <div className="bg-stone-900 border border-stone-700 p-5 rounded-xs flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-emerald-950 text-emerald-400 flex items-center justify-center shrink-0">
-                  <Check className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-stone-100">Welcome to the AAVAAS Journal</p>
-                  <p className="text-xs text-stone-400 mt-0.5">
-                    Use code <strong className="text-[#D4AF37] font-mono">AAVAAS10</strong> at checkout for 10% off your order.
-                  </p>
-                </div>
+              <div className="p-3 border-b border-[#C5A880] text-xs text-[#C5A880] flex items-center gap-2">
+                <Check className="w-4 h-4" />
+                <span>Thank you. Use code AAVAAS10 at checkout for 10% off.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+              <form onSubmit={handleSubscribe} className="flex items-center border-b border-white/30 focus-within:border-white transition pb-2">
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="flex-1 bg-stone-900/90 border border-stone-700 px-5 py-4 text-xs text-stone-100 placeholder-stone-500 rounded-xs focus:outline-none focus:border-[#D4AF37]"
+                  placeholder="Enter your email for the journal"
+                  className="w-full bg-transparent text-xs text-white placeholder-[#8E877F] focus:outline-none tracking-wider"
                 />
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-[#FAF6F0] hover:bg-white text-[#141210] text-xs uppercase tracking-[0.25em] font-semibold rounded-xs transition-all duration-300 flex items-center justify-center gap-2 shrink-0 shadow-md"
+                  className="text-xs uppercase tracking-[0.25em] font-semibold text-white hover:text-[#C5A880] transition flex items-center gap-1.5 shrink-0 pl-4"
                 >
                   <span>Subscribe</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -106,133 +62,117 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Main Footer Links */}
-        <div className="py-20 grid grid-cols-2 md:grid-cols-5 gap-10 text-xs">
-          <div className="space-y-4">
-            <p className="font-serif text-base uppercase tracking-[0.2em] text-stone-200">Shop Sanctuary</p>
-            <ul className="space-y-2.5 text-stone-400">
+        {/* 4-Column Minimal Link Architecture */}
+        <div className="py-16 grid grid-cols-2 md:grid-cols-4 gap-10 text-xs">
+          <div className="space-y-3.5">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-white font-medium">Departments</p>
+            <ul className="space-y-2 text-[#A8A29A]">
               {CATEGORIES.map((c) => (
                 <li key={c.id}>
-                  <Link href={`/shop?category=${c.slug}`} className="hover:text-stone-100 transition">
+                  <Link href={`/shop?category=${c.slug}`} className="hover:text-white transition">
                     {c.name}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/shop?winter=true" className="text-[#B95D41] hover:underline font-medium">
-                  Winter &apos;26–27 Launch
+                <Link href="/shop?winter=true" className="text-[#C5A880] hover:underline">
+                  Winter &apos;26–27 Capsule
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <p className="font-serif text-base uppercase tracking-[0.2em] text-stone-200">Collections</p>
-            <ul className="space-y-2.5 text-stone-400">
+          <div className="space-y-3.5">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-white font-medium">Collections</p>
+            <ul className="space-y-2 text-[#A8A29A]">
               <li>
-                <Link href="/shop?collection=essential" className="hover:text-stone-100 transition">
-                  Essential Range (₹1,299–₹2,499)
+                <Link href="/shop?collection=essential" className="hover:text-white transition">
+                  Essential
                 </Link>
               </li>
               <li>
-                <Link href="/shop?collection=signature" className="hover:text-stone-100 transition">
-                  Signature Range (₹2,299–₹4,499)
+                <Link href="/shop?collection=signature" className="hover:text-white transition">
+                  Signature
                 </Link>
               </li>
               <li>
-                <Link href="/shop?collection=reserve" className="hover:text-stone-100 transition">
-                  Reserve Editions (₹4,999–₹9,999)
+                <Link href="/shop?collection=reserve" className="hover:text-white transition">
+                  Reserve
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=gifting" className="hover:text-stone-100 transition">
-                  Trousseau &amp; Wedding Suites
+                <Link href="/shop?category=gifting" className="hover:text-white transition">
+                  Gifting Suites
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <p className="font-serif text-base uppercase tracking-[0.2em] text-stone-200">Business &amp; Exports</p>
-            <ul className="space-y-2.5 text-stone-400">
+          <div className="space-y-3.5">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-white font-medium">Business &amp; Trade</p>
+            <ul className="space-y-2 text-[#A8A29A]">
               <li>
-                <Link href="/bulk-enquiries" className="hover:text-stone-100 transition font-medium text-stone-200">
-                  Bulk &amp; Institutional RFQ
+                <Link href="/bulk-enquiries" className="hover:text-white transition">
+                  Hospitality &amp; Hotel RFQ
                 </Link>
               </li>
               <li>
-                <Link href="/bulk-enquiries#hotels" className="hover:text-stone-100 transition">
-                  Hotels, Resorts &amp; Spas
+                <Link href="/bulk-enquiries" className="hover:text-white transition">
+                  Interior Designers Program
                 </Link>
               </li>
               <li>
-                <Link href="/bulk-enquiries#designers" className="hover:text-stone-100 transition">
-                  Interior Designers &amp; Architects
+                <Link href="/bulk-enquiries" className="hover:text-white transition">
+                  Corporate Gifting
                 </Link>
               </li>
               <li>
-                <Link href="/bulk-enquiries#corporate" className="hover:text-stone-100 transition">
-                  Corporate Gifting Hampers
-                </Link>
-              </li>
-              <li>
-                <Link href="/bulk-enquiries#exports" className="hover:text-stone-100 transition">
+                <Link href="/our-story" className="hover:text-white transition">
                   KT International Export Division
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <p className="font-serif text-base uppercase tracking-[0.2em] text-stone-200">Support &amp; Care</p>
-            <ul className="space-y-2.5 text-stone-400">
+          <div className="space-y-3.5">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-white font-medium">Customer Care</p>
+            <ul className="space-y-2 text-[#A8A29A]">
               <li>
-                <a href="#order-tracking" onClick={(e) => { e.preventDefault(); alert("Order tracking: Enter your AAV-XXXXX ID to view live dispatch status."); }} className="hover:text-stone-100 transition">
-                  Order Tracking
-                </a>
+                <Link href="/checkout" className="hover:text-white transition">
+                  Complimentary Pan-India Shipping
+                </Link>
               </li>
               <li>
-                <Link href="/our-story#care" className="hover:text-stone-100 transition">
+                <Link href="/our-story" className="hover:text-white transition">
                   Fabric &amp; Loom Care Guide
                 </Link>
               </li>
               <li>
-                <Link href="/checkout" className="hover:text-stone-100 transition">
-                  Shipping &amp; Delivery Matrix
-                </Link>
+                <a
+                  href="https://wa.me/919812000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition"
+                >
+                  WhatsApp Concierge
+                </a>
               </li>
               <li>
-                <a href="https://wa.me/919812000000" target="_blank" rel="noopener noreferrer" className="hover:text-stone-100 transition">
-                  WhatsApp Support Desk
-                </a>
+                <Link href="/checkout" className="hover:text-white transition">
+                  B2B GST Tax Invoicing
+                </Link>
               </li>
             </ul>
           </div>
-
-          <div className="col-span-2 md:col-span-1 space-y-4">
-            <p className="font-serif text-base uppercase tracking-[0.2em] text-stone-200">Parent Heritage</p>
-            <p className="text-stone-400 leading-relaxed text-xs font-light">
-              Parent company <strong>KT International</strong> has spearheaded Indian textile innovation for over three decades from Panipat, weaving export-grade bed and bath collections for prestigious destinations across 20+ countries.
-            </p>
-            <div className="pt-2">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] font-semibold block">
-                Flagship Works:
-              </span>
-              <p className="text-xs text-stone-400 mt-1">
-                Sector 29, Industrial Area, Panipat, Haryana 132103
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Mandatory Bottom Legal Line */}
-        <div className="pt-10 border-t border-stone-800 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-stone-400">
-          <p className="font-medium text-stone-300 tracking-wide">
+        {/* Exact Mandatory Bottom Line */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#8E877F]">
+          <p className="font-light tracking-wide text-[#A8A29A]">
             AAVAAS — A Home &amp; Living Brand by KT International | Panipat, Haryana, India.
           </p>
-          <div className="flex items-center gap-6 text-[11px] text-stone-500">
-            <span>© {new Date().getFullYear()} AAVAAS Living Pvt Ltd.</span>
-            <span>All rights reserved</span>
+          <div className="flex items-center gap-6 text-[11px]">
+            <span>© {new Date().getFullYear()} AAVAAS Living</span>
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
           </div>

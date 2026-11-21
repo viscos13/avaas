@@ -5,7 +5,7 @@ import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatINR } from "@/lib/utils";
-import { Heart, Star, ShoppingBag, Check, ArrowRight } from "lucide-react";
+import { Heart, Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,7 +28,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
   const currentSizeObj = product.sizes.find((s) => s.name === selectedSize);
   const displayPrice = product.price + (currentSizeObj?.priceModifier || 0);
-  const displayOriginalPrice = product.originalPrice + (currentSizeObj?.priceModifier || 0);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,25 +44,14 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
     toggleWishlist(product);
   };
 
-  const getCollectionBadgeStyle = (collection: string) => {
-    switch (collection) {
-      case "reserve":
-        return "bg-[#141210] text-[#D4AF37] border-[#D4AF37]/50";
-      case "signature":
-        return "bg-[#FAF7F2] text-[#B95D41] border-[#B95D41]/40";
-      default:
-        return "bg-[#EFE8DD] text-stone-800 border-[#CEC0AD]";
-    }
-  };
-
   return (
     <div
-      className="group relative flex flex-col justify-between bg-[#FDFBF8] border border-[#E2D7C7] hover:border-stone-800 hover:shadow-[0_15px_30px_-10px_rgba(20,18,16,0.1)] transition-all duration-500 rounded-xs overflow-hidden"
+      className="group relative flex flex-col justify-between bg-transparent transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Visual Image Container with Rich Aspect Ratio */}
-      <div className="relative aspect-4/5 w-full bg-[#EFE8DD] overflow-hidden">
+      {/* Tall Portrait Image Container (aspect-[3/4], completely borderless, sharp corners) */}
+      <div className="relative aspect-3/4 w-full bg-[#EDE8E0] overflow-hidden rounded-none">
         <Link href={`/products/${product.slug}`} className="block w-full h-full">
           <Image
             src={product.images[0]}
@@ -88,142 +76,94 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           )}
         </Link>
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 pointer-events-none">
-          {product.badge && (
-            <span className="bg-[#141210]/95 backdrop-blur-xs text-[#FAF6F0] px-2.5 py-1 text-[9px] uppercase font-semibold tracking-[0.2em] border border-stone-700 shadow-md">
-              {product.badge}
-            </span>
-          )}
-          <span
-            className={`px-2 py-0.5 text-[8px] uppercase tracking-[0.25em] font-medium border rounded-xs self-start backdrop-blur-xs ${getCollectionBadgeStyle(
-              product.collection
-            )}`}
-          >
-            {product.collection}
-          </span>
-        </div>
-
-        {/* Wishlist Button */}
+        {/* Minimalist Heart Icon Top Right */}
         <button
           onClick={handleWishlistToggle}
           aria-label={inWishlist ? "Saved in wishlist" : "Add to wishlist"}
-          className={`absolute top-3 right-3 z-10 p-2.5 rounded-full backdrop-blur-md transition-all duration-300 shadow-xs ${
-            inWishlist
-              ? "bg-[#141210] text-[#B95D41] shadow-md scale-105"
-              : "bg-[#FAF7F2]/90 text-stone-700 hover:text-black hover:bg-[#FAF7F2] hover:scale-105"
-          }`}
+          className="absolute top-3.5 right-3.5 z-10 p-2 text-stone-700 hover:text-black transition"
         >
           <Heart
-            className={`w-4 h-4 transition ${
-              inWishlist ? "fill-[#B95D41] stroke-[#B95D41]" : "stroke-stone-800"
+            className={`w-4 h-4 stroke-[1.25] transition ${
+              inWishlist ? "fill-[#B95D41] stroke-[#B95D41]" : "fill-white/70 stroke-stone-800"
             }`}
           />
         </button>
 
-        {/* Hover Drawer: Quick Select & Refined Luxury Action Button */}
+        {/* On-Hover Translucent Frosted Quick-Add Bar */}
         <div
-          className={`hidden md:flex absolute bottom-0 inset-x-0 bg-[#FAF7F2]/98 backdrop-blur-md border-t border-[#E2D7C7] p-3.5 flex-col gap-2.5 transition-transform duration-300 ease-out ${
-            isHovered ? "translate-y-0" : "translate-y-full"
+          className={`absolute bottom-0 inset-x-0 bg-[#FAF8F5]/92 backdrop-blur-md px-3 py-2.5 flex items-center justify-between text-[11px] transition-transform duration-300 ease-out ${
+            isHovered ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
           }`}
         >
-          {product.sizes.length > 1 && (
-            <div className="flex items-center justify-between gap-1">
-              <span className="text-[10px] text-stone-500 uppercase tracking-widest font-medium">
-                Size:
-              </span>
-              <div className="flex gap-1.5">
-                {product.sizes.map((s) => (
-                  <button
-                    key={s.name}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedSize(s.name);
-                    }}
-                    className={`px-2.5 py-1 text-[10px] font-medium transition rounded-xs border ${
-                      selectedSize === s.name
-                        ? "bg-[#141210] text-white border-[#141210]"
-                        : "bg-white text-stone-800 border-[#E2D7C7] hover:border-stone-800"
-                    }`}
-                  >
-                    {s.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Quick Size Select */}
+          <div className="flex items-center gap-1.5">
+            {product.sizes.map((s) => (
+              <button
+                key={s.name}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedSize(s.name);
+                }}
+                className={`px-1.5 py-0.5 text-[10px] uppercase font-mono transition ${
+                  selectedSize === s.name
+                    ? "text-[#1C1917] font-bold border-b border-[#1C1917]"
+                    : "text-[#6B655E] hover:text-[#1C1917]"
+                }`}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
 
-          {/* Luxury Add to Bag button */}
+          {/* Quick Add Trigger */}
           <button
             onClick={handleQuickAdd}
             disabled={isAdded}
-            className={`w-full py-2.5 px-4 text-[11px] uppercase tracking-[0.22em] font-medium transition-all duration-300 flex items-center justify-center gap-2 rounded-xs border shadow-sm ${
-              isAdded
-                ? "bg-emerald-900 text-white border-emerald-900"
-                : "bg-[#141210] hover:bg-[#25221F] hover:border-[#C5A880] text-[#FAF6F0] border-[#141210]"
-            }`}
+            className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#1C1917] hover:text-[#B95D41] transition flex items-center gap-1"
           >
             {isAdded ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-300" />
-                <span>Added to Bag</span>
+                <Check className="w-3 h-3 text-emerald-700" />
+                <span>Added</span>
               </>
             ) : (
-              <>
-                <ShoppingBag className="w-3.5 h-3.5" />
-                <span>Add to Bag</span>
-              </>
+              <span>+ Quick Add</span>
             )}
           </button>
         </div>
       </div>
 
-      {/* Information Section */}
-      <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 space-y-3">
-        <div>
-          <div className="flex items-center justify-between text-[11px] text-stone-500 mb-1">
-            <span className="uppercase tracking-[0.18em] text-[10px] font-medium">
-              {product.subcategory}
-            </span>
-            <div className="flex items-center gap-1 text-stone-700">
-              <Star className="w-3 h-3 fill-[#D4AF37] stroke-[#D4AF37]" />
-              <span className="font-semibold text-[11px]">{product.rating}</span>
-              <span className="text-stone-400">({product.reviewsCount})</span>
-            </div>
+      {/* Editorial Details Below Image (Left-aligned, zero box clutter) */}
+      <div className="pt-3.5 pb-2 text-left">
+        {/* Line 1: Collection label in tiny muted uppercase */}
+        <p className="text-[10px] tracking-[0.2em] uppercase text-[#6B655E] font-medium">
+          {product.collection}
+        </p>
+
+        {/* Line 2: Product title in refined regular font */}
+        <Link href={`/products/${product.slug}`} className="block mt-0.5">
+          <h3 className="text-sm text-[#1C1917] hover:underline font-normal line-clamp-1 leading-snug">
+            {product.name}
+          </h3>
+        </Link>
+
+        {/* Line 3: Price in clean INR + tiny circular color dots on right */}
+        <div className="mt-1 flex items-center justify-between">
+          <span className="text-xs text-[#1C1917] font-medium font-sans">
+            {formatINR(displayPrice)}
+          </span>
+
+          {/* Color swatch dots */}
+          <div className="flex items-center gap-1">
+            {product.colors.slice(0, 3).map((c) => (
+              <span
+                key={c.name}
+                className="w-2 h-2 rounded-full border border-black/15"
+                style={{ backgroundColor: c.hex }}
+                title={c.name}
+              />
+            ))}
           </div>
-
-          <Link href={`/products/${product.slug}`} className="block">
-            <h3 className="font-serif text-base sm:text-lg font-normal text-stone-900 group-hover:underline line-clamp-1 leading-snug">
-              {product.name}
-            </h3>
-          </Link>
-
-          <p className="text-xs text-stone-500 line-clamp-1 mt-1 font-serif italic">
-            {product.fabric}
-          </p>
-        </div>
-
-        {/* Pricing & Mobile Action */}
-        <div className="pt-3 border-t border-[#EAE3D7] flex items-center justify-between">
-          <div className="flex items-baseline gap-2.5">
-            <span className="font-serif text-base sm:text-lg font-medium text-stone-900">
-              {formatINR(displayPrice)}
-            </span>
-            {displayOriginalPrice > displayPrice && (
-              <span className="text-xs text-stone-400 line-through">
-                {formatINR(displayOriginalPrice)}
-              </span>
-            )}
-          </div>
-
-          {/* Mobile Button */}
-          <button
-            onClick={handleQuickAdd}
-            className="md:hidden p-2 bg-[#141210] text-white rounded-xs hover:bg-stone-800 transition"
-            aria-label="Add to bag"
-          >
-            {isAdded ? <Check className="w-4 h-4 text-emerald-300" /> : <ShoppingBag className="w-4 h-4" />}
-          </button>
         </div>
       </div>
     </div>
