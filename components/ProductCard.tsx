@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { formatINR } from "@/lib/utils";
-import { Heart, Check } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Heart, Plus } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -17,41 +17,40 @@ interface ProductCardProps {
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
   const { addItem } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]?.name || "Default");
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]?.name || "Standard");
   const [isHovered, setIsHovered] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string>(
-    product.sizes[0]?.name || "Standard"
-  );
-  const [isAdded, setIsAdded] = useState(false);
+  const [addedEffect, setAddedEffect] = useState(false);
 
   const inWishlist = isInWishlist(product.id);
-  const hasMultipleImages = product.images.length > 1;
 
-  const currentSizeObj = product.sizes.find((s) => s.name === selectedSize);
-  const displayPrice = product.price + (currentSizeObj?.priceModifier || 0);
-
-  const handleQuickAdd = (e: React.MouseEvent) => {
+  const handleQuickAdd = (sizeName: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const defaultColor = product.colors[0]?.name || "Natural";
-    addItem(product, selectedSize, defaultColor, 1, displayPrice);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
+    const sizeObj = product.sizes.find((s) => s.name === sizeName) || product.sizes[0];
+    const unitPrice = product.price + (sizeObj?.priceModifier || 0);
+
+    addItem(product, sizeName, selectedColor, 1, unitPrice);
+    setAddedEffect(true);
+    setTimeout(() => setAddedEffect(false), 1200);
   };
 
-  const handleWishlistToggle = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleWishlist(product);
-  };
+  // Subdetail label (e.g. "680 GSM Micro-Mink • Double" or "400TC Supima Cotton")
+  const subDetail = product.gsm
+    ? `${product.gsm} • ${product.subcategory}`
+    : product.threadCount
+    ? `${product.threadCount} • ${product.subcategory}`
+    : `${product.subcategory}`;
 
   return (
     <div
-      className="group relative flex flex-col justify-between bg-transparent transition-all duration-300"
+      className="group flex flex-col text-left"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Tall Portrait Image Container (aspect-[3/4], completely borderless, sharp corners) */}
-      <div className="relative aspect-3/4 w-full bg-[#EDE8E0] overflow-hidden rounded-none">
+      {/* Image Container with rounded-2xl */}
+      <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-[#EFEAE2] shadow-xs">
         <Link href={`/products/${product.slug}`} className="block w-full h-full">
           <Image
             src={product.images[0]}
@@ -59,108 +58,99 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             priority={priority}
-            className={`object-cover transition-all duration-700 ease-out ${
-              isHovered && hasMultipleImages ? "opacity-0 scale-105" : "opacity-100 scale-100"
-            }`}
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          {hasMultipleImages && (
-            <Image
-              src={product.images[1]}
-              alt={`${product.name} styled angle`}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={`object-cover absolute inset-0 transition-all duration-700 ease-out ${
-                isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
-              }`}
-            />
-          )}
+          {/* Editorial color grade overlay */}
+          <div className="absolute inset-0 bg-[#3A2E25]/5 pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
         </Link>
 
-        {/* Minimalist Heart Icon Top Right */}
+        {/* Top-Left: Subtle frosted pill tag */}
+        <div className="absolute top-3 left-3 pointer-events-none z-10">
+          <span className="bg-white/85 backdrop-blur-md rounded-full px-3 py-1 text-[10px] font-semibold tracking-[0.14em] uppercase text-[#191715] shadow-xs">
+            {product.collection}
+          </span>
+        </div>
+
+        {/* Top-Right: Circular frosted Wishlist heart button */}
         <button
-          onClick={handleWishlistToggle}
-          aria-label={inWishlist ? "Saved in wishlist" : "Add to wishlist"}
-          className="absolute top-3.5 right-3.5 z-10 p-2 text-stone-700 hover:text-black transition"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleWishlist(product);
+          }}
+          className={`absolute top-3 right-3 w-9 h-9 rounded-full bg-white/85 backdrop-blur-md flex items-center justify-center transition-all duration-300 z-10 shadow-xs ${
+            inWishlist ? "text-[#8C6B4F] scale-105" : "text-[#191715] hover:scale-110"
+          }`}
+          aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
         >
-          <Heart
-            className={`w-4 h-4 stroke-[1.25] transition ${
-              inWishlist ? "fill-[#B95D41] stroke-[#B95D41]" : "fill-white/70 stroke-stone-800"
-            }`}
-          />
+          <Heart className={`w-4 h-4 ${inWishlist ? "fill-current" : "stroke-[1.5]"}`} />
         </button>
 
-        {/* On-Hover Translucent Frosted Quick-Add Bar */}
+        {/* Hover Quick-Add Floating Bar */}
         <div
-          className={`absolute bottom-0 inset-x-0 bg-[#FAF8F5]/92 backdrop-blur-md px-3 py-2.5 flex items-center justify-between text-[11px] transition-transform duration-300 ease-out ${
-            isHovered ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
+          className={`absolute bottom-3 inset-x-3 rounded-xl bg-white/95 backdrop-blur-md p-2 shadow-lg transition-all duration-300 flex items-center justify-between gap-1.5 z-20 ${
+            isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
           }`}
         >
-          {/* Quick Size Select */}
-          <div className="flex items-center gap-1.5">
-            {product.sizes.map((s) => (
-              <button
-                key={s.name}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedSize(s.name);
-                }}
-                className={`px-1.5 py-0.5 text-[10px] uppercase font-mono transition ${
-                  selectedSize === s.name
-                    ? "text-[#1C1917] font-bold border-b border-[#1C1917]"
-                    : "text-[#6B655E] hover:text-[#1C1917]"
-                }`}
-              >
-                {s.name}
-              </button>
-            ))}
+          <div className="flex items-center gap-1">
+            {product.sizes.map((s) => {
+              const shortName = s.name.charAt(0);
+              return (
+                <button
+                  key={s.name}
+                  onClick={(e) => handleQuickAdd(s.name, e)}
+                  className={`w-7 h-7 rounded-lg text-[10px] font-semibold uppercase tracking-wider transition ${
+                    selectedSize === s.name
+                      ? "bg-[#191715] text-white"
+                      : "bg-[#F8F5F0] text-[#191715] hover:bg-[#EFEAE2]"
+                  }`}
+                  title={`Add ${s.name} size`}
+                >
+                  {shortName}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Quick Add Trigger */}
           <button
-            onClick={handleQuickAdd}
-            disabled={isAdded}
-            className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#1C1917] hover:text-[#B95D41] transition flex items-center gap-1"
+            onClick={(e) => handleQuickAdd(selectedSize, e)}
+            className="flex-1 py-1.5 px-3 bg-[#191715] text-[#F8F5F0] hover:bg-[#8C6B4F] text-[11px] font-medium tracking-wider uppercase rounded-lg transition text-center flex items-center justify-center gap-1"
           >
-            {isAdded ? (
-              <>
-                <Check className="w-3 h-3 text-emerald-700" />
-                <span>Added</span>
-              </>
-            ) : (
-              <span>+ Quick Add</span>
-            )}
+            <Plus className="w-3 h-3" />
+            <span>{addedEffect ? "Added!" : "Quick Add"}</span>
           </button>
         </div>
       </div>
 
-      {/* Editorial Details Below Image (Left-aligned, zero box clutter) */}
-      <div className="pt-3.5 pb-2 text-left">
-        {/* Line 1: Collection label in tiny muted uppercase */}
-        <p className="text-[10px] tracking-[0.2em] uppercase text-[#6B655E] font-medium">
-          {product.collection}
-        </p>
-
-        {/* Line 2: Product title in refined regular font */}
-        <Link href={`/products/${product.slug}`} className="block mt-0.5">
-          <h3 className="text-sm text-[#1C1917] hover:underline font-normal line-clamp-1 leading-snug">
+      {/* Details Container */}
+      <div className="pt-3.5 flex flex-col gap-1 text-left">
+        <Link href={`/products/${product.slug}`} className="group-hover:text-[#8C6B4F] transition">
+          <h3 className="text-[15px] font-medium text-[#191715] leading-snug line-clamp-1">
             {product.name}
           </h3>
         </Link>
 
-        {/* Line 3: Price in clean INR + tiny circular color dots on right */}
-        <div className="mt-1 flex items-center justify-between">
-          <span className="text-xs text-[#1C1917] font-medium font-sans">
-            {formatINR(displayPrice)}
+        <p className="text-xs text-[#5E5850] font-normal truncate">
+          {subDetail}
+        </p>
+
+        <div className="pt-1 flex items-center justify-between">
+          <span className="text-[15px] font-semibold text-[#191715]">
+            {formatINR(product.price)}
           </span>
 
-          {/* Color swatch dots */}
-          <div className="flex items-center gap-1">
-            {product.colors.slice(0, 3).map((c) => (
-              <span
-                key={c.name}
-                className="w-2 h-2 rounded-full border border-black/15"
-                style={{ backgroundColor: c.hex }}
-                title={c.name}
+          {/* Interactive Color Dots */}
+          <div className="flex items-center gap-1.5">
+            {product.colors.slice(0, 3).map((col) => (
+              <button
+                key={col.name}
+                onClick={() => setSelectedColor(col.name)}
+                className={`w-3.5 h-3.5 rounded-full border border-black/15 transition-transform ${
+                  selectedColor === col.name ? "scale-125 ring-1 ring-[#191715] ring-offset-1" : "hover:scale-110"
+                }`}
+                style={{ backgroundColor: col.hex }}
+                title={col.name}
+                aria-label={`Select ${col.name} color`}
               />
             ))}
           </div>

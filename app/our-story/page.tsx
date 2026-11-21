@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Compass, ShieldCheck, HeartHandshake, Layers } from "lucide-react";
+import { ArrowRight, Compass, ShieldCheck, HeartHandshake, Layers, Award } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,12 +15,12 @@ export default function OurStoryPage() {
     {
       num: "01",
       title: "Panipat Mill Mastery",
-      desc: "Direct integration with KT International's automated wide-width air-jet looms, circular raschel knitting divisions, and OEKO-TEX certified dye houses.",
+      desc: "Direct integration with KT International's automated wide-width air-jet looms, circular raschel warp-knitting divisions, and OEKO-TEX certified dye houses.",
     },
     {
       num: "02",
-      title: "Thoughtful Proportions",
-      desc: "Generous 108\" × 108\" bedsheet tuck-ins engineered to grip 14-inch heavy Indian mattresses securely without slipping overnight.",
+      title: "108\" × 108\" Indian Tuck",
+      desc: "Generous bedsheet tuck-ins specifically calibrated to grip 14-inch heavy Indian mattresses firmly without pulling loose overnight.",
     },
     {
       num: "03",
@@ -35,90 +35,89 @@ export default function OurStoryPage() {
   ];
 
   return (
-    <div className="pb-32 bg-[#FAF8F5] text-[#1C1917]">
+    <div className="bg-[#F8F5F0] text-[#191715] pt-32 pb-32 text-left">
       {/* Editorial Hero Header */}
-      <section className="pt-32 pb-20 md:py-28 border-b border-[#1C1917]/10">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 text-left">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-[#6B655E] font-medium mb-3">
-            HERITAGE &amp; LINEAGE
-          </p>
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-light text-[#1C1917] leading-[1.08] max-w-4xl">
-            The Weave of Panipat. The Soul of AAVAAS.
-          </h1>
-          <p className="text-sm sm:text-base text-[#6B655E] mt-4 max-w-2xl font-serif italic">
-            Where thirty-five years of industrial textile mastery meet contemporary residential living.
-          </p>
-        </div>
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-14 mb-16">
+        <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+          Heritage &amp; Lineage
+        </span>
+        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal text-[#191715] leading-[1.08] max-w-4xl tracking-tight">
+          The Weave of Panipat. The Soul of AAVAAS.
+        </h1>
+        <p className="text-[15px] sm:text-base text-[#5E5850] mt-4 max-w-2xl font-normal leading-relaxed">
+          Where thirty-five years of industrial textile mastery under KT International meet contemporary residential living.
+        </p>
       </section>
 
       {/* Main Narrative Split */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-20 md:py-28">
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-14 mb-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[4/5] w-full bg-[#EDE8E0] overflow-hidden">
+            <div className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden bg-[#EFEAE2] shadow-xl">
               <Image
                 src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1400&auto=format&fit=crop"
                 alt="Panipat Textile Loom Artistry"
                 fill
+                priority
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
-            <div className="absolute bottom-6 left-6 right-6 md:right-auto md:max-w-xs bg-[#181614] text-[#FAF8F5] p-6 text-left">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-[#D6D1C9]">
+            <div className="absolute bottom-6 left-6 right-6 md:right-auto md:max-w-xs bg-[#191715] text-[#F8F5F0] p-6 rounded-2xl shadow-xl">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-[#8C6B4F] font-semibold block mb-1">
                 Since 1989
-              </p>
-              <p className="font-serif text-lg mt-1 leading-snug">
+              </span>
+              <p className="font-serif text-lg font-normal leading-snug">
                 From Panipat Looms to Discerning Global Bedrooms.
               </p>
             </div>
           </div>
 
-          <div className="lg:col-span-6 space-y-6 text-[#6B655E] text-sm sm:text-base leading-relaxed font-light">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[#B95D41] font-semibold">
+          <div className="lg:col-span-6 space-y-6 text-[#5E5850] text-[15px] sm:text-base leading-relaxed font-normal">
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#8C6B4F] font-semibold block">
               OUR ORIGIN
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#1C1917] font-light leading-tight">
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#191715] font-normal leading-tight tracking-tight">
               Why AAVAAS Was Born
             </h2>
             <p>
-              For centuries, the historic city of <strong className="text-[#1C1917] font-medium">Panipat, Haryana</strong> has been revered across Asia as India&apos;s weaving heartland. Its master artisans and mill engineers have perfected the intricate physics of warp tension, ring-spun yarns, and thermal raschel knits for generations.
+              For centuries, the historic city of <strong className="text-[#191715] font-semibold">Panipat, Haryana</strong> has been revered across Asia as India&apos;s weaving heartland. Its master artisans and mill engineers have perfected the intricate physics of warp tension, ring-spun yarns, and thermal raschel knits for generations.
             </p>
             <p>
-              Under parent company <strong className="text-[#1C1917] font-medium">KT International</strong>, our mills have spent over three decades crafting world-class bedding, plush bath sheets, and luxury jacquards for five-star global hospitality chains and premium private labels across 20+ countries.
+              Under parent company <strong className="text-[#191715] font-semibold">KT International</strong>, our mills have spent over three decades crafting world-class bedding, plush bath sheets, and luxury jacquards for five-star global hospitality chains and premium private labels across 20+ countries.
             </p>
             <p>
               Yet, when shopping within India, we observed an undeniable disconnect: consumers were forced to choose between dated, overly ornate traditional bedsheet shops, or pay exorbitant 400% markups for European lifestyle brands selling goods that were often woven right here in Panipat.
             </p>
-            <blockquote className="font-serif italic text-lg sm:text-xl text-[#1C1917] border-l border-[#B95D41] pl-6 py-2 my-6">
+            <blockquote className="font-serif italic text-lg sm:text-xl text-[#191715] border-l-2 border-[#8C6B4F] pl-6 py-2 my-6">
               &ldquo;We created AAVAAS to dismantle that paradox — to deliver honest, world-class loom mastery directly from Panipat into Indian living rooms.&rdquo;
             </blockquote>
           </div>
         </div>
       </section>
 
-      {/* The 4 Principles of AAVAAS (Editorial Numbered Grid) */}
-      <section className="bg-[#EDE8E0] py-20 md:py-24 border-y border-[#1C1917]/10">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-          <div className="max-w-2xl mb-16 text-left">
-            <p className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium mb-2">
-              UNCOMPROMISING STANDARDS
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1917] font-light">
+      {/* The 4 Principles of AAVAAS (Architectural Cards) */}
+      <section className="bg-[#EFEAE2] py-20 md:py-24 border-y border-[#191715]/10">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
+          <div className="max-w-2xl mb-14 text-left">
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+              Uncompromising Standards
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl text-[#191715] font-normal tracking-tight">
               The Four Pillars of Our Craft
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {pillars.map((pillar) => (
-              <div key={pillar.num} className="pt-6 border-t border-[#1C1917]/15">
-                <span className="font-mono text-xs text-[#6B655E] tracking-widest block mb-3">
+              <div key={pillar.num} className="p-8 rounded-2xl bg-white/70 border border-[#191715]/10 space-y-3">
+                <span className="font-mono text-xs text-[#8C6B4F] tracking-widest font-semibold block">
                   {pillar.num}
                 </span>
-                <h3 className="font-serif text-xl sm:text-2xl text-[#1C1917] font-light mb-2">
+                <h3 className="font-serif text-xl sm:text-2xl text-[#191715] font-normal">
                   {pillar.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#6B655E] leading-relaxed">
+                <p className="text-xs text-[#5E5850] leading-relaxed">
                   {pillar.desc}
                 </p>
               </div>
@@ -128,29 +127,29 @@ export default function OurStoryPage() {
       </section>
 
       {/* Call to Action Banner */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12 py-24 text-center">
+      <section className="max-w-[1440px] mx-auto px-6 lg:px-14 pt-24 text-center">
         <div className="max-w-2xl mx-auto space-y-4">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-[#6B655E] font-medium">
-            DISCOVER THE COLLECTIONS
-          </p>
-          <h2 className="font-serif text-4xl sm:text-5xl text-[#1C1917] font-light">
+          <span className="text-[11px] uppercase tracking-[0.25em] text-[#8C6B4F] font-semibold block">
+            Discover the Collections
+          </span>
+          <h2 className="font-serif text-4xl sm:text-5xl text-[#191715] font-normal">
             Begin Your Sanctuary Experience
           </h2>
-          <p className="text-sm text-[#6B655E] font-serif italic max-w-lg mx-auto">
+          <p className="text-sm text-[#5E5850] max-w-lg mx-auto leading-relaxed">
             Explore our newly unveiled Winter 2026–27 collection or our signature 400TC Supima sateen bedsheets.
           </p>
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-5">
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/shop"
-              className="w-full sm:w-auto px-8 py-3.5 bg-[#1C1917] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] hover:bg-black transition"
+              className="px-8 py-3.5 bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition shadow-lg"
             >
               Explore All Pieces
             </Link>
             <Link
               href="/bulk-enquiries"
-              className="w-full sm:w-auto text-xs uppercase tracking-[0.2em] text-[#1C1917] hover:underline"
+              className="px-8 py-3.5 border border-[#191715] hover:bg-[#191715] hover:text-[#F8F5F0] text-[#191715] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition"
             >
-              Institutional &amp; Hotel Enquiries →
+              Institutional &amp; Hotel Enquiries
             </Link>
           </div>
         </div>

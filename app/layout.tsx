@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import WishlistDrawer from "@/components/WishlistDrawer";
@@ -11,24 +11,25 @@ import SearchOverlay from "@/components/SearchOverlay";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import ToastNotifications from "@/components/ToastNotifications";
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "AAVAAS — Thoughtfully Made for Modern Homes | By KT International",
   description:
-    "Accessible premium Indian Home & Living brand crafted in Panipat by parent company KT International. Explore luxury mink blankets, 400TC Supima bedsheets, reversible falalen dohars, and hotel-grade bath linens.",
+    "Accessible luxury Indian Home & Living brand crafted in Panipat by parent company KT International. Explore luxury mink blankets, 400TC Supima bedsheets, reversible falalen dohars, and spa-grade bath linens.",
   keywords: [
     "AAVAAS",
     "KT International",
@@ -47,11 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} scroll-smooth`}>
-      <body className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1C1917] antialiased selection:bg-[#EDE8E0] selection:text-[#1C1917]">
+    <html lang="en" className={`${playfair.variable} ${jakarta.variable} scroll-smooth`}>
+      <body className="min-h-screen flex flex-col bg-[#F8F5F0] text-[#191715] antialiased selection:bg-[#EFEAE2] selection:text-[#191715]">
         <CartProvider>
           <WishlistProvider>
-            <Navbar />
+            <Header />
             <main className="flex-1">{children}</main>
             <Footer />
             <CartDrawer />

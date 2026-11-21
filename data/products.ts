@@ -756,7 +756,7 @@ export const PRODUCTS: Product[] = [
     isFeatured: true,
     images: [
       "https://images.unsplash.com/photo-1617806118233-18e1de247200?q=85&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=85&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1563298723-dcfebaa392e3?q=85&w=1200&auto=format&fit=crop",
     ],
     colors: [
       { name: "Warm Stone", hex: "#DDD5CA" },

@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   Lock,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
   const { cart, cartSubtotal, hasFreeShipping, clearCart } = useCart();
@@ -47,7 +48,7 @@ export default function CheckoutPage() {
   });
 
   // Payment Method State
-  const [paymentMethod, setPaymentMethod] = useState<"upi" | "card" | "cod" | "netbanking">("upi");
+  const [paymentMethod, setPaymentMethod] = useState<"upi" | "card" | "cod">("upi");
   const [selectedUpiApp, setSelectedUpiApp] = useState("gpay");
   const [upiVpa, setUpiVpa] = useState("aryan@okhdfcbank");
 
@@ -103,66 +104,67 @@ export default function CheckoutPage() {
 
   if (orderPlaced) {
     return (
-      <div className="max-w-[800px] mx-auto px-6 py-32 animate-in fade-in">
-        <div className="space-y-8 text-left">
-          <div className="space-y-2">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#6B655E] font-medium">
-              ORDER CONFIRMED
+      <div className="max-w-[760px] mx-auto px-6 py-36 text-left">
+        <div className="bg-[#EFEAE2] p-8 sm:p-12 rounded-3xl border border-[#191715]/10 space-y-6 shadow-sm">
+          <div className="w-14 h-14 rounded-full bg-emerald-900 text-white flex items-center justify-center">
+            <CheckCircle2 className="w-7 h-7" />
+          </div>
+          <div>
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#8C6B4F] font-semibold">
+              Order Confirmed &amp; Scheduled
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl text-[#1C1917] font-light">
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#191715] font-normal mt-1">
               Thank You for Weaving with AAVAAS
             </h1>
-            <p className="text-sm text-[#6B655E] font-serif italic">
-              Order reference <strong className="text-[#1C1917] font-mono">{orderId}</strong> has been scheduled for dispatch at Panipat.
+            <p className="text-sm text-[#5E5850] mt-2 leading-relaxed">
+              Order reference <strong className="font-mono text-[#191715]">{orderId}</strong> has been logged directly with KT International&apos;s Panipat dispatch center.
             </p>
           </div>
 
-          <div className="py-6 border-y border-[#1C1917]/10 text-xs space-y-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div>
-                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Order ID</span>
-                <span className="font-mono text-[#1C1917] font-medium">{orderId}</span>
-              </div>
-              <div>
-                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Estimated Delivery</span>
-                <span className="text-[#1C1917] font-medium">2–3 Business Days</span>
-              </div>
-              <div>
-                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Payment</span>
-                <span className="text-[#1C1917] font-medium uppercase">{paymentMethod}</span>
-              </div>
-              <div>
-                <span className="text-[10px] text-[#6B655E] uppercase tracking-wider block">Total Paid</span>
-                <span className="font-serif text-sm font-medium text-[#1C1917]">{formatINR(grandTotal)}</span>
-              </div>
+          <div className="py-5 border-y border-[#191715]/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div>
+              <span className="text-[10px] text-[#5E5850] uppercase tracking-wider block">Order ID</span>
+              <span className="font-mono text-[#191715] font-semibold">{orderId}</span>
             </div>
-
-            <div className="pt-4 border-t border-[#1C1917]/10">
-              <p className="text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Delivering To:</p>
-              <p className="text-[#1C1917] font-medium">{shippingAddress.fullName}</p>
-              <p className="text-[#6B655E]">{shippingAddress.addressLine1}, {shippingAddress.city}, {shippingAddress.state} — {shippingAddress.pincode}</p>
+            <div>
+              <span className="text-[10px] text-[#5E5850] uppercase tracking-wider block">Estimated Delivery</span>
+              <span className="text-[#191715] font-semibold">2–3 Days</span>
             </div>
-
-            {needsGstInvoice && (
-              <div className="p-3 bg-[#EDE8E0] text-[11px] text-[#1C1917]">
-                ✓ B2B GST Invoice billed to: <strong>{gstData.companyName}</strong> (GSTIN: {gstData.gstin}).
-              </div>
-            )}
+            <div>
+              <span className="text-[10px] text-[#5E5850] uppercase tracking-wider block">Payment</span>
+              <span className="text-[#191715] font-semibold uppercase">{paymentMethod}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#5E5850] uppercase tracking-wider block">Total Paid</span>
+              <span className="font-semibold text-[#191715]">{formatINR(grandTotal)}</span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-6 pt-4 text-xs uppercase tracking-[0.2em] font-medium">
+          <div className="text-xs text-[#5E5850]">
+            <p className="text-[10px] uppercase tracking-wider text-[#191715] font-semibold mb-1">Delivering To:</p>
+            <p className="font-medium text-[#191715]">{shippingAddress.fullName}</p>
+            <p>{shippingAddress.addressLine1}, {shippingAddress.city}, {shippingAddress.state} — {shippingAddress.pincode}</p>
+          </div>
+
+          {needsGstInvoice && (
+            <div className="p-3 bg-white rounded-xl text-xs text-[#191715] border border-[#191715]/10">
+              ✓ B2B Tax Invoice with input credit addressed to <strong>{gstData.companyName}</strong> (GSTIN: {gstData.gstin}).
+            </div>
+          )}
+
+          <div className="pt-4 flex items-center gap-4">
             <button
               onClick={() => window.print()}
-              className="px-6 py-3 border border-[#1C1917] hover:bg-[#1C1917] hover:text-[#FAF8F5] transition"
+              className="px-6 py-3 border border-[#191715] hover:bg-[#191715] hover:text-[#F8F5F0] text-xs uppercase tracking-wider font-semibold rounded-full transition"
             >
               Print Receipt
             </button>
             <Link
               href="/"
               onClick={() => clearCart()}
-              className="text-[#1C1917] hover:underline"
+              className="px-6 py-3 bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0] text-xs uppercase tracking-wider font-semibold rounded-full transition"
             >
-              Return Home →
+              Return Home
             </Link>
           </div>
         </div>
@@ -173,13 +175,13 @@ export default function CheckoutPage() {
   if (cart.length === 0) {
     return (
       <div className="max-w-md mx-auto px-6 py-36 text-center space-y-4">
-        <h2 className="font-serif text-3xl text-[#1C1917] font-light">Your bag is empty</h2>
-        <p className="text-xs text-[#6B655E] font-serif italic">
-          Select pieces from our catalog before proceeding to checkout.
+        <h2 className="font-serif text-3xl text-[#191715]">Your bag is empty</h2>
+        <p className="text-xs text-[#5E5850]">
+          Add pieces from our catalog before proceeding to checkout.
         </p>
         <Link
           href="/shop"
-          className="inline-block mt-2 px-6 py-3 bg-[#1C1917] text-[#FAF8F5] text-xs uppercase tracking-[0.2em] transition"
+          className="inline-block mt-2 px-7 py-3.5 bg-[#191715] text-[#F8F5F0] text-xs uppercase tracking-wider font-semibold rounded-full"
         >
           Explore Collection
         </Link>
@@ -188,264 +190,294 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="pt-28 pb-32">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="mb-8">
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-[#6B655E] hover:text-[#1C1917] transition"
-          >
-            <ChevronLeft className="w-3.5 h-3.5" />
-            <span>Continue Shopping</span>
-          </Link>
-        </div>
+    <div className="pt-32 pb-32 max-w-[1440px] mx-auto px-6 lg:px-14 text-left">
+      <div className="mb-8">
+        <Link
+          href="/shop"
+          className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#5E5850] hover:text-[#191715] transition font-semibold"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span>Continue Shopping</span>
+        </Link>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* LEFT 7 COLS: Address & Payment */}
-          <div className="lg:col-span-7 space-y-10">
-            {/* Address */}
-            <div className="space-y-5">
-              <h2 className="font-serif text-2xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
-                1. Delivery Address
-              </h2>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* LEFT 7 COLS: Address, GST, Payment */}
+        <div className="lg:col-span-7 space-y-10">
+          {/* 1. Delivery Address */}
+          <div className="p-8 bg-[#EFEAE2] rounded-3xl border border-[#191715]/10 space-y-6">
+            <h2 className="font-serif text-2xl text-[#191715] font-normal border-b border-[#191715]/10 pb-3">
+              1. Delivery Address
+            </h2>
 
-              <div className="space-y-4 text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Full Name</label>
-                    <input
-                      type="text"
-                      value={shippingAddress.fullName}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
-                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Phone</label>
-                    <input
-                      type="tel"
-                      value={shippingAddress.phone}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
-                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
-                    />
-                  </div>
-                </div>
-
+            <div className="space-y-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Email</label>
-                  <input
-                    type="email"
-                    value={shippingAddress.email}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
-                    className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Street Address</label>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Full Name</label>
                   <input
                     type="text"
-                    value={shippingAddress.addressLine1}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, addressLine1: e.target.value })}
-                    className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
+                    value={shippingAddress.fullName}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
+                    className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
                   />
                 </div>
-
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Pincode</label>
-                    <input
-                      type="text"
-                      maxLength={6}
-                      value={shippingAddress.pincode}
-                      onChange={(e) => handlePincodeChange(e.target.value)}
-                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] font-mono focus:outline-none focus:border-[#1C1917]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">City</label>
-                    <input
-                      type="text"
-                      value={shippingAddress.city}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
-                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">State</label>
-                    <input
-                      type="text"
-                      value={shippingAddress.state}
-                      onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
-                      className="w-full bg-transparent border-b border-[#1C1917]/20 py-2 text-xs text-[#1C1917] focus:outline-none focus:border-[#1C1917]"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Phone</label>
+                  <input
+                    type="tel"
+                    value={shippingAddress.phone}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
+                    className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
+                  />
                 </div>
               </div>
 
-              {/* GST Invoice Toggle */}
-              <div className="pt-4">
-                <label className="flex items-center gap-2 cursor-pointer text-xs text-[#1C1917]">
-                  <input
-                    type="checkbox"
-                    checked={needsGstInvoice}
-                    onChange={(e) => setNeedsGstInvoice(e.target.checked)}
-                    className="w-3.5 h-3.5 text-[#1C1917]"
-                  />
-                  <span>Claim 12% GST Input Tax Credit (Business / Hospitality Buyer)</span>
-                </label>
+              <div>
+                <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Email for Invoice &amp; Dispatch Updates</label>
+                <input
+                  type="email"
+                  value={shippingAddress.email}
+                  onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
+                  className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
+                />
+              </div>
 
-                {needsGstInvoice && (
-                  <div className="mt-3 p-4 bg-[#EDE8E0] space-y-3 text-xs">
-                    <div>
-                      <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">Company Name</label>
-                      <input
-                        type="text"
-                        value={gstData.companyName}
-                        onChange={(e) => setGstData({ ...gstData, companyName: e.target.value })}
-                        className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] uppercase tracking-wider text-[#6B655E] mb-1">15-Digit GSTIN</label>
-                      <input
-                        type="text"
-                        maxLength={15}
-                        value={gstData.gstin}
-                        onChange={(e) => setGstData({ ...gstData, gstin: e.target.value.toUpperCase() })}
-                        className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs font-mono uppercase"
-                      />
-                    </div>
-                  </div>
-                )}
+              <div>
+                <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Street Address</label>
+                <input
+                  type="text"
+                  value={shippingAddress.addressLine1}
+                  onChange={(e) => setShippingAddress({ ...shippingAddress, addressLine1: e.target.value })}
+                  className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Pincode</label>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={shippingAddress.pincode}
+                    onChange={(e) => handlePincodeChange(e.target.value)}
+                    className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] font-mono focus:outline-none focus:border-[#191715]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">City</label>
+                  <input
+                    type="text"
+                    value={shippingAddress.city}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
+                    className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">State</label>
+                  <input
+                    type="text"
+                    value={shippingAddress.state}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
+                    className="w-full bg-white rounded-xl border border-[#191715]/15 p-3 text-xs text-[#191715] focus:outline-none focus:border-[#191715]"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Payment Method */}
-            <div className="space-y-4">
-              <h2 className="font-serif text-2xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
-                2. Payment Method
-              </h2>
+            {/* GST Invoice Toggle */}
+            <div className="pt-2">
+              <label className="flex items-center gap-2 cursor-pointer text-xs text-[#191715] font-medium">
+                <input
+                  type="checkbox"
+                  checked={needsGstInvoice}
+                  onChange={(e) => setNeedsGstInvoice(e.target.checked)}
+                  className="w-4 h-4 text-[#191715] accent-[#191715]"
+                />
+                <span>Need a GST Invoice? (Claim 12% Input Tax Credit for Business / Hospitality)</span>
+              </label>
 
-              <div className="grid grid-cols-3 gap-3 text-xs">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("upi")}
-                  className={`p-3 border text-left transition ${
-                    paymentMethod === "upi" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
-                  }`}
-                >
-                  <p className="font-medium uppercase tracking-wider text-[11px]">UPI</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "upi" ? "text-stone-300" : "text-[#6B655E]"}`}>GPay, PhonePe</p>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("card")}
-                  className={`p-3 border text-left transition ${
-                    paymentMethod === "card" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
-                  }`}
-                >
-                  <p className="font-medium uppercase tracking-wider text-[11px]">Cards</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "card" ? "text-stone-300" : "text-[#6B655E]"}`}>Visa, Master</p>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("cod")}
-                  className={`p-3 border text-left transition ${
-                    paymentMethod === "cod" ? "border-[#1C1917] bg-[#1C1917] text-white" : "border-[#1C1917]/20 text-[#1C1917]"
-                  }`}
-                >
-                  <p className="font-medium uppercase tracking-wider text-[11px]">COD</p>
-                  <p className={`text-[10px] mt-0.5 ${paymentMethod === "cod" ? "text-stone-300" : "text-[#6B655E]"}`}>At Doorstep</p>
-                </button>
-              </div>
-
-              {paymentMethod === "upi" && (
-                <div className="p-4 bg-[#EDE8E0] text-xs space-y-2">
-                  <label className="block text-[10px] uppercase tracking-wider text-[#6B655E]">Enter UPI ID / VPA</label>
-                  <input
-                    type="text"
-                    value={upiVpa}
-                    onChange={(e) => setUpiVpa(e.target.value)}
-                    placeholder="mobile@upi"
-                    className="w-full bg-white border border-[#1C1917]/20 p-2 text-xs"
-                  />
+              {needsGstInvoice && (
+                <div className="mt-4 p-4 bg-white rounded-2xl space-y-3 text-xs border border-[#191715]/10">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">Registered Company Name</label>
+                    <input
+                      type="text"
+                      value={gstData.companyName}
+                      onChange={(e) => setGstData({ ...gstData, companyName: e.target.value })}
+                      className="w-full bg-[#F8F5F0] rounded-xl border border-[#191715]/15 p-2.5 text-xs text-[#191715]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold mb-1">15-Digit GSTIN</label>
+                    <input
+                      type="text"
+                      maxLength={15}
+                      value={gstData.gstin}
+                      onChange={(e) => setGstData({ ...gstData, gstin: e.target.value.toUpperCase() })}
+                      className="w-full bg-[#F8F5F0] rounded-xl border border-[#191715]/15 p-2.5 text-xs font-mono uppercase text-[#191715]"
+                    />
+                  </div>
                 </div>
               )}
             </div>
           </div>
 
-          {/* RIGHT 5 COLS: Order Summary */}
-          <div className="lg:col-span-5">
-            <div className="border border-[#1C1917]/10 p-6 space-y-5 sticky top-28 bg-[#FAF8F5]">
-              <h3 className="font-serif text-xl text-[#1C1917] font-light border-b border-[#1C1917]/10 pb-3">
-                Summary ({cart.reduce((s, i) => s + i.quantity, 0)})
-              </h3>
+          {/* 2. Indian Payment Methods */}
+          <div className="p-8 bg-[#EFEAE2] rounded-3xl border border-[#191715]/10 space-y-6">
+            <h2 className="font-serif text-2xl text-[#191715] font-normal border-b border-[#191715]/10 pb-3">
+              2. Payment Method
+            </h2>
 
-              <div className="divide-y divide-[#1C1917]/10 max-h-72 overflow-y-auto">
-                {cart.map((item) => (
-                  <div key={item.id} className="py-3 flex gap-3 text-xs">
-                    <div className="relative w-14 h-18 bg-[#EDE8E0] shrink-0">
-                      <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
-                    </div>
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <p className="font-serif text-sm text-[#1C1917] line-clamp-1">{item.product.name}</p>
-                        <p className="text-[#6B655E] text-[11px]">{item.selectedSize} • {item.selectedColor}</p>
-                      </div>
-                      <p className="font-medium text-[#1C1917]">{formatINR(item.unitPrice * item.quantity)}</p>
-                    </div>
-                  </div>
-                ))}
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("upi")}
+                className={`p-4 rounded-2xl text-left transition ${
+                  paymentMethod === "upi"
+                    ? "bg-[#191715] text-white shadow-md"
+                    : "bg-white text-[#191715] border border-[#191715]/10 hover:border-[#191715]"
+                }`}
+              >
+                <QrCode className="w-5 h-5 mb-1" />
+                <p className="font-semibold uppercase tracking-wider text-[11px]">Instant UPI</p>
+                <p className={`text-[10px] mt-0.5 ${paymentMethod === "upi" ? "text-stone-300" : "text-[#5E5850]"}`}>GPay, PhonePe, Paytm</p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("card")}
+                className={`p-4 rounded-2xl text-left transition ${
+                  paymentMethod === "card"
+                    ? "bg-[#191715] text-white shadow-md"
+                    : "bg-white text-[#191715] border border-[#191715]/10 hover:border-[#191715]"
+                }`}
+              >
+                <CreditCard className="w-5 h-5 mb-1" />
+                <p className="font-semibold uppercase tracking-wider text-[11px]">Cards / EMI</p>
+                <p className={`text-[10px] mt-0.5 ${paymentMethod === "card" ? "text-stone-300" : "text-[#5E5850]"}`}>Visa, Mastercard, Amex</p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("cod")}
+                className={`p-4 rounded-2xl text-left transition ${
+                  paymentMethod === "cod"
+                    ? "bg-[#191715] text-white shadow-md"
+                    : "bg-white text-[#191715] border border-[#191715]/10 hover:border-[#191715]"
+                }`}
+              >
+                <Banknote className="w-5 h-5 mb-1" />
+                <p className="font-semibold uppercase tracking-wider text-[11px]">Pay on Delivery</p>
+                <p className={`text-[10px] mt-0.5 ${paymentMethod === "cod" ? "text-stone-300" : "text-[#5E5850]"}`}>Cash / UPI at Doorstep</p>
+              </button>
+            </div>
+
+            {paymentMethod === "upi" && (
+              <div className="p-4 bg-white rounded-2xl space-y-3 text-xs border border-[#191715]/10">
+                <span className="text-[10px] uppercase tracking-wider text-[#5E5850] font-semibold block">
+                  Select Your Preferred UPI Option
+                </span>
+                <div className="flex gap-2">
+                  {["gpay", "phonepe", "paytm"].map((app) => (
+                    <button
+                      key={app}
+                      type="button"
+                      onClick={() => setSelectedUpiApp(app)}
+                      className={`px-4 py-2 rounded-full uppercase text-[10px] font-semibold tracking-wider transition ${
+                        selectedUpiApp === app ? "bg-[#191715] text-white" : "bg-[#EFEAE2] text-[#191715]"
+                      }`}
+                    >
+                      {app}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={upiVpa}
+                  onChange={(e) => setUpiVpa(e.target.value)}
+                  placeholder="Enter UPI VPA (e.g. mobile@upi)"
+                  className="w-full bg-[#F8F5F0] rounded-xl border border-[#191715]/15 p-2.5 text-xs text-[#191715] font-mono"
+                />
               </div>
+            )}
+          </div>
+        </div>
 
-              <form onSubmit={handleApplyPromo} className="pt-2 border-t border-[#1C1917]/10 flex gap-2">
+        {/* RIGHT 5 COLS: Order Summary */}
+        <div className="lg:col-span-5">
+          <div className="p-8 bg-[#EFEAE2] rounded-3xl border border-[#191715]/10 space-y-6 sticky top-28">
+            <h2 className="font-serif text-2xl text-[#191715] font-normal border-b border-[#191715]/10 pb-3">
+              Order Summary
+            </h2>
+
+            {/* Cart Items */}
+            <div className="space-y-4 max-h-72 overflow-y-auto pr-1">
+              {cart.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 text-xs">
+                  <div className="relative w-14 h-16 rounded-xl overflow-hidden bg-white shrink-0">
+                    <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-[#191715] truncate">{item.product.name}</p>
+                    <p className="text-[11px] text-[#5E5850]">{item.selectedSize} • Qty {item.quantity}</p>
+                  </div>
+                  <span className="font-semibold text-[#191715]">{formatINR(item.unitPrice * item.quantity)}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Promo Code Form */}
+            <form onSubmit={handleApplyPromo} className="pt-4 border-t border-[#191715]/10">
+              <div className="flex gap-2">
                 <input
                   type="text"
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
-                  placeholder="Coupon (e.g. AAVAAS10)"
-                  className="flex-1 bg-transparent border-b border-[#1C1917]/20 py-1.5 text-xs font-mono uppercase focus:outline-none"
+                  placeholder="Promo Code (AAVAAS10)"
+                  className="w-full bg-white rounded-full px-4 py-2 text-xs uppercase tracking-wider font-mono text-[#191715] border border-[#191715]/15 focus:outline-none"
                 />
-                <button type="submit" className="text-xs uppercase tracking-wider font-semibold text-[#1C1917] hover:underline">
+                <button
+                  type="submit"
+                  className="px-5 py-2 bg-[#191715] hover:bg-[#8C6B4F] text-[#F8F5F0] rounded-full text-xs uppercase tracking-wider font-semibold transition"
+                >
                   Apply
                 </button>
-              </form>
-              {promoApplied && <p className="text-[11px] text-emerald-800">✓ {formatINR(promoDiscount)} discount applied.</p>}
-
-              <div className="space-y-1.5 text-xs text-[#6B655E] pt-3 border-t border-[#1C1917]/10">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span className="text-[#1C1917] font-medium">{formatINR(cartSubtotal)}</span>
-                </div>
-                {promoDiscount > 0 && (
-                  <div className="flex justify-between text-emerald-800">
-                    <span>Discount</span>
-                    <span>- {formatINR(promoDiscount)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between">
-                  <span>Pan-India Delivery</span>
-                  <span className={hasFreeShipping ? "text-emerald-800" : "text-[#1C1917]"}>
-                    {hasFreeShipping ? "FREE" : "₹149"}
-                  </span>
-                </div>
-                <div className="pt-3 border-t border-[#1C1917]/10 flex justify-between items-baseline">
-                  <span className="text-sm font-medium text-[#1C1917]">Total</span>
-                  <span className="font-serif text-2xl text-[#1C1917] font-light">{formatINR(grandTotal)}</span>
-                </div>
               </div>
+              {promoApplied && <p className="text-[11px] text-emerald-800 font-semibold mt-1">✓ Promo Applied: ₹{promoDiscount} off</p>}
+              {promoError && <p className="text-[11px] text-rose-700 mt-1">{promoError}</p>}
+            </form>
 
-              <button
-                onClick={handlePlaceOrder}
-                disabled={isProcessing}
-                className="w-full py-3.5 bg-[#1C1917] hover:bg-black text-[#FAF8F5] text-xs uppercase tracking-[0.22em] font-medium transition"
-              >
-                {isProcessing ? "Confirming..." : `Place Order • ${formatINR(grandTotal)}`}
-              </button>
+            {/* Totals */}
+            <div className="pt-4 border-t border-[#191715]/10 space-y-2 text-xs text-[#5E5850]">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span className="font-semibold text-[#191715]">{formatINR(cartSubtotal)}</span>
+              </div>
+              {promoApplied && (
+                <div className="flex justify-between text-emerald-800 font-semibold">
+                  <span>Discount</span>
+                  <span>- {formatINR(promoDiscount)}</span>
+                </div>
+              )}
+              <div className="flex justify-between">
+                <span>Complimentary Pan-India Shipping</span>
+                <span className="font-semibold text-emerald-900">{shippingCost === 0 ? "FREE" : "₹149"}</span>
+              </div>
+              <div className="flex justify-between text-base font-semibold text-[#191715] pt-3 border-t border-[#191715]/10">
+                <span>Total Amount</span>
+                <span>{formatINR(grandTotal)}</span>
+              </div>
             </div>
+
+            {/* Place Order Button */}
+            <button
+              onClick={handlePlaceOrder}
+              disabled={isProcessing}
+              className="w-full py-4 bg-[#191715] hover:bg-[#8C6B4F] disabled:opacity-50 text-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition shadow-xl flex items-center justify-center gap-2"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>{isProcessing ? "Authorizing Indian Payment..." : `Place Order • ${formatINR(grandTotal)}`}</span>
+            </button>
           </div>
         </div>
       </div>

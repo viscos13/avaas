@@ -1,244 +1,504 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
 import { CATEGORIES } from "@/data/categories";
 import { COLLECTIONS } from "@/data/collections";
 import ProductCard from "@/components/ProductCard";
+import ShopTheRoom from "@/components/ShopTheRoom";
+import { ParallaxHero, FadeIn, StaggerContainer, staggerChildVariant } from "@/components/MotionPrimitives";
+import {
+  ArrowRight,
+  ShieldCheck,
+  Award,
+  Layers,
+  Sparkles,
+  CheckCircle2,
+  ChevronRight,
+  ArrowUpRight,
+  Clock,
+  Compass,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function HomePage() {
-  // Exactly 8 Winter '26-27 launch items (no empty slots in 4-col grid)
-  const winterLaunchProducts = PRODUCTS.filter((p) => p.isWinterLaunch).slice(0, 8);
+  const [selectedWinterTab, setSelectedWinterTab] = useState("All Winter");
 
-  // Exactly 8 Bestsellers
-  const bestsellerProducts = PRODUCTS.filter((p) => p.isBestseller).slice(0, 8);
+  // Winter Launch Products (Exactly 8 items)
+  const winterProducts = PRODUCTS.filter((p) => p.isWinterLaunch);
+
+  // Filter Winter Products by Tab
+  const filteredWinterProducts = winterProducts.filter((p) => {
+    if (selectedWinterTab === "All Winter") return true;
+    if (selectedWinterTab === "Mink Blankets") return p.subcategory.includes("Mink");
+    if (selectedWinterTab === "Polar Fleece") return p.name.includes("Fleece") || p.fabric.includes("Fleece");
+    if (selectedWinterTab === "Comforter Sets") return p.subcategory === "Comforters";
+    if (selectedWinterTab === "Dohars") return p.subcategory === "Dohars";
+    return true;
+  });
+
+  // Core Bestsellers (4 items)
+  const bestsellers = PRODUCTS.filter((p) => p.isBestseller).slice(0, 4);
+
+  const winterTabs = [
+    "All Winter",
+    "Mink Blankets",
+    "Polar Fleece",
+    "Comforter Sets",
+    "Dohars",
+  ];
 
   return (
-    <div className="space-y-24 lg:space-y-36 pb-28">
-      {/* =========================================================
-          SECTION B: FULL-BLEED ARCHITECTURAL HERO (h-[92vh])
-      ========================================================= */}
-      <section className="relative w-full h-[92vh] flex items-end overflow-hidden">
-        {/* Full-Viewport Sunlit Bedroom Photography */}
-        <div className="absolute inset-0 z-0">
+    <div className="bg-[#F8F5F0] text-[#191715] overflow-hidden">
+      {/* ========================================================= */}
+      {/* 1. CINEMATIC FULL-BLEED HERO WITH SUBTLE PARALLAX        */}
+      {/* ========================================================= */}
+      <section className="relative min-h-[92vh] flex items-end overflow-hidden">
+        <ParallaxHero className="w-full h-full">
           <Image
-            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=90&w=2400&auto=format&fit=crop"
-            alt="AAVAAS Sunlit Luxury Sanctuary — Panipat Weaves"
+            src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=90&w=2000&auto=format&fit=crop"
+            alt="Warm sunlit luxury bedroom curated by AAVAAS"
             fill
             priority
-            className="object-cover object-center brightness-[0.92] contrast-[1.03]"
+            className="object-cover object-center"
           />
-          {/* Subtle bottom-up dark gradient scrim for effortless readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        </div>
+        </ParallaxHero>
 
-        {/* Clean Lower-Left / Center Typography with Generous Breathing Room */}
-        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 pb-16 sm:pb-20 text-white">
-          <div className="max-w-2xl space-y-4">
-            <p className="text-xs tracking-[0.25em] uppercase text-white/90 font-medium">
-              WINTER 2026–27 EDITION
-            </p>
+        {/* Bottom-Up Cinematic Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#191715]/80 via-[#191715]/30 to-transparent pointer-events-none" />
 
-            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-white leading-[1.04] tracking-tight">
+        {/* Content Container (Bottom-Left) */}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-14 pb-16 lg:pb-24 text-left">
+          <div className="max-w-2xl">
+            {/* Frosted Glass Eyebrow Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/25 rounded-full px-4 py-1.5 text-[11px] tracking-[0.2em] uppercase text-white shadow-xs"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Winter 2026–27 Collection</span>
+            </motion.div>
+
+            {/* Playfair Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="font-serif text-5xl sm:text-6xl md:text-7xl font-normal text-white leading-[1.05] tracking-tight mt-6"
+            >
               Thoughtfully Made for Modern Homes.
-            </h1>
+            </motion.h1>
 
-            <p className="text-sm sm:text-base text-white/85 font-serif italic pt-1 font-light">
-              Crafted in Panipat. Designed for contemporary living.
-            </p>
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.5 }}
+              className="text-base md:text-lg text-white/90 mt-4 max-w-lg font-normal leading-relaxed"
+            >
+              Panipat&apos;s finest loom craft, reimagined into modern essentials for living.
+            </motion.p>
 
-            {/* Minimal CTAs: Crisp off-white rectangular button + minimal underlined link */}
-            <div className="pt-6 flex flex-wrap items-center gap-6">
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.65 }}
+              className="pt-8 flex flex-wrap items-center gap-4"
+            >
               <Link
-                href="#winter-collection"
-                className="px-8 py-3.5 bg-[#FAF8F5] hover:bg-white text-[#1C1917] text-xs uppercase tracking-[0.22em] font-medium rounded-none transition duration-300 shadow-sm"
+                href="/shop?winter=true"
+                className="group px-7 py-3.5 bg-white text-[#191715] hover:bg-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition-all duration-300 shadow-xl flex items-center gap-2 hover:scale-102"
               >
-                Explore Winter &apos;26–27
+                <span>Explore Winter &apos;26–27</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
-                href="#bestsellers"
-                className="text-xs uppercase tracking-[0.22em] text-white hover:text-white/80 underline underline-offset-8 transition font-medium flex items-center gap-2"
+                href="/shop"
+                className="px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-md text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition-all duration-300"
               >
-                <span>Shop Bestsellers</span>
-                <span>→</span>
+                Shop Bestsellers
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION C: SHOP BY CATEGORY (Editorial Full-Bleed Grid)
-      ========================================================= */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="mb-10 text-left">
-          <p className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium mb-1.5">
-            DEPARTMENTS
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1917] font-light">
-            Shop by Category
-          </h2>
-        </div>
-
-        {/* 6 Categories: Tall aspect-[3/4] borderless photo tiles, zero white boxes */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
-          {CATEGORIES.map((category) => (
-            <Link
-              key={category.id}
-              href={`/shop?category=${category.slug}`}
-              className="group relative block aspect-3/4 w-full bg-[#EDE8E0] overflow-hidden rounded-none"
-            >
-              <Image
-                src={category.image}
-                alt={category.name}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              {/* Soft bottom gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-
-              {/* Overlaid Title & Count at bottom-left in warm white */}
-              <div className="absolute bottom-5 left-5 right-5 text-white">
-                <h3 className="font-serif text-2xl sm:text-3xl font-light text-white leading-tight">
-                  {category.name}
-                </h3>
-                <p className="text-[11px] tracking-[0.15em] text-white/80 uppercase mt-0.5 font-light">
-                  {category.itemCount} Designs
-                </p>
-              </div>
-            </Link>
+      {/* ========================================================= */}
+      {/* 2. INFINITE EDITORIAL MARQUEE STRIP                       */}
+      {/* ========================================================= */}
+      <section className="py-5 border-y border-[#191715]/10 bg-[#EFEAE2]/60 overflow-hidden select-none">
+        <div className="flex w-max animate-marquee">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="flex items-center gap-8 text-[11px] uppercase tracking-[0.25em] text-[#5E5850] font-medium shrink-0 px-4">
+              <span>Panipat Loom Heritage</span>
+              <span className="text-[#8C6B4F]">✦</span>
+              <span>400TC Long-Staple Cotton</span>
+              <span className="text-[#8C6B4F]">✦</span>
+              <span>680 GSM Super-Soft Mink</span>
+              <span className="text-[#8C6B4F]">✦</span>
+              <span>Accessible Premium</span>
+              <span className="text-[#8C6B4F]">✦</span>
+              <span>Export-Grade Craftsmanship</span>
+              <span className="text-[#8C6B4F]">✦</span>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION D: FEATURED SEASONAL COLLECTION — WINTER 2026–27
-      ========================================================= */}
-      <section id="winter-collection" className="w-full space-y-16">
-        {/* Full-Bleed 50/50 Editorial Split Banner on Soft Sand (#EFECE6) */}
-        <div className="w-full bg-[#EFECE6] grid grid-cols-1 lg:grid-cols-2 items-stretch">
-          {/* Left: Full-Height Cozy Textured Blanket Lifestyle Photo */}
-          <div className="relative min-h-[380px] lg:min-h-[580px] w-full bg-[#EDE8E0]">
-            <Image
-              src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1400&auto=format&fit=crop"
-              alt="Winter 2026-27 Thermal Collection"
-              fill
-              className="object-cover"
-            />
+      {/* ========================================================= */}
+      {/* 3. ASYMMETRIC BENTO EDITORIAL GRID (SHOP BY CATEGORY)      */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        <FadeIn className="text-left mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+              Curated Architecture
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#191715] font-normal tracking-tight">
+              Shop by Category
+            </h2>
+            <p className="text-[15px] text-[#5E5850] mt-2 font-normal max-w-lg">
+              Six deliberate departments designed to build an atmosphere of quiet elegance.
+            </p>
           </div>
 
-          {/* Right: Generous Negative Space, Serif Title, Brief Poetic Copy, Minimal Underlined CTA */}
-          <div className="p-10 sm:p-14 lg:p-24 flex flex-col justify-center space-y-6">
-            <span className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium">
-              WINTER 2026–27 CAMPAIGN
-            </span>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-semibold text-[#191715] hover:text-[#8C6B4F] transition"
+          >
+            <span>All Departments</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </FadeIn>
 
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[#1C1917] leading-tight">
-              The Thermal Capsule
-            </h2>
-
-            <p className="text-sm text-[#6B655E] leading-relaxed max-w-md font-light">
-              Panipat is celebrated as India&apos;s blanket capital. For Winter &apos;26–27, AAVAAS crafts 680 GSM cloud micro-mink, reversible polar fleece, and 3-layer falalen dohars with understated modern restraint.
-            </p>
-
-            <div className="pt-2">
-              <Link
-                href="/shop?winter=true"
-                className="text-xs uppercase tracking-[0.25em] text-[#1C1917] hover:text-[#B95D41] underline underline-offset-8 transition font-medium"
-              >
-                Discover the Full Capsule →
-              </Link>
+        {/* 12-Column Asymmetric Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+          {/* 1. Bedroom (Hero Tile, span-7) */}
+          <Link
+            href="/shop?category=bedroom"
+            className="md:col-span-7 h-[460px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=85&w=1400&auto=format&fit=crop"
+              alt="Bedroom category sanctuary"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[11px] tracking-[0.2em] uppercase text-white/80 font-medium block mb-1">
+                  24 Products
+                </span>
+                <h3 className="font-serif text-3xl sm:text-4xl text-white font-normal">
+                  Bedroom
+                </h3>
+                <p className="text-xs text-white/80 mt-1 max-w-md hidden sm:block">
+                  Bedsheets, comforters, dohars, and cloud mink blankets.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#191715] transition-colors shrink-0">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </div>
             </div>
+          </Link>
+
+          {/* 2. Living (span-5) */}
+          <Link
+            href="/shop?category=living"
+            className="md:col-span-5 h-[460px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=85&w=1200&auto=format&fit=crop"
+              alt="Living category"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[11px] tracking-[0.2em] uppercase text-white/80 font-medium block mb-1">
+                  18 Products
+                </span>
+                <h3 className="font-serif text-3xl sm:text-4xl text-white font-normal">
+                  Living
+                </h3>
+                <p className="text-xs text-white/80 mt-1 hidden sm:block">
+                  Hand-tufted bouclé cushions and textural throws.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#191715] transition-colors shrink-0">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 3. Bath (span-4) */}
+          <Link
+            href="/shop?category=bath"
+            className="md:col-span-4 h-[380px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1617806118233-18e1de247200?q=85&w=1200&auto=format&fit=crop"
+              alt="Bath spa towels"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[11px] tracking-[0.2em] uppercase text-white/80 font-medium block mb-1">
+                  16 Products
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+                  Bath
+                </h3>
+                <p className="text-xs text-white/80 mt-0.5">
+                  700 GSM Zero-Twist Turkish terry sheets.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#191715] transition-colors shrink-0">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 4. Dining (span-4) */}
+          <Link
+            href="/shop?category=dining"
+            className="md:col-span-4 h-[380px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?q=85&w=1200&auto=format&fit=crop"
+              alt="Dining table linen"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[11px] tracking-[0.2em] uppercase text-white/80 font-medium block mb-1">
+                  12 Products
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+                  Dining
+                </h3>
+                <p className="text-xs text-white/80 mt-0.5">
+                  Washed linen runners and mitered napkins.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#191715] transition-colors shrink-0">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 5. Soft Furnishings (span-4) */}
+          <Link
+            href="/shop?category=soft-furnishings"
+            className="md:col-span-4 h-[380px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=85&w=1200&auto=format&fit=crop"
+              alt="Soft Furnishings drapes"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+              <div>
+                <span className="text-[11px] tracking-[0.2em] uppercase text-white/80 font-medium block mb-1">
+                  10 Products
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-normal">
+                  Soft Furnishings
+                </h3>
+                <p className="text-xs text-white/80 mt-0.5">
+                  Light-filtering Belgian flax linen curtains.
+                </p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#191715] transition-colors shrink-0">
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </div>
+            </div>
+          </Link>
+
+          {/* 6. Gifting (Full-width horizontal banner, span-12) */}
+          <Link
+            href="/shop?category=gifting"
+            className="md:col-span-12 h-[260px] rounded-2xl overflow-hidden relative group shadow-sm block text-left"
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=85&w=1600&auto=format&fit=crop"
+              alt="Gifting hampers"
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-103"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+            <div className="absolute inset-0 p-8 sm:p-12 flex flex-col justify-center max-w-xl">
+              <span className="text-[11px] tracking-[0.25em] uppercase text-white/80 font-medium mb-1 block">
+                Trousseau &amp; Celebrations
+              </span>
+              <h3 className="font-serif text-3xl sm:text-4xl text-white font-normal">
+                Curated Gifting Suites
+              </h3>
+              <p className="text-xs sm:text-sm text-white/85 mt-2 leading-relaxed">
+                Handcrafted linen-wrapped keepsake boxes for wedding trousseaus, corporate milestones, and housewarmings.
+              </p>
+              <div className="pt-4 flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-white">
+                <span>Explore The Gift Studio</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 4. INTERACTIVE "SHOP THE ROOM" HOTSPOT SECTION            */}
+      {/* ========================================================= */}
+      <ShopTheRoom />
+
+      {/* ========================================================= */}
+      {/* 5. FEATURED SEASONAL COLLECTION — WINTER 2026–27          */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        {/* Editorial Split Header & Filter Tabs */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 text-left">
+          <div>
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+              Limited Seasonal Capsule
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#191715] font-normal tracking-tight">
+              Winter 2026–27 Launch
+            </h2>
+            <p className="text-[15px] text-[#5E5850] mt-2 font-normal max-w-xl">
+              Engineered for northern winter chill: 680 GSM high-density mink blankets, brushed cloud fleece, and 3-layer falalen dohars.
+            </p>
+          </div>
+
+          {/* Interactive Sliding Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {winterTabs.map((tab) => {
+              const isActive = selectedWinterTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setSelectedWinterTab(tab)}
+                  className={`relative px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold transition shrink-0 ${
+                    isActive ? "text-[#191715]" : "text-[#5E5850] hover:text-[#191715]"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeWinterTab"
+                      className="absolute inset-0 bg-[#EFEAE2] rounded-full -z-10 shadow-xs"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <span>{tab}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Exactly 8 Winter Products in Clean 4-Column Desktop Grid (No orphan slot!) */}
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-            {winterLaunchProducts.map((product) => (
+        {/* 4-Column Product Grid */}
+        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+          {filteredWinterProducts.map((product) => (
+            <motion.div key={product.id} variants={staggerChildVariant}>
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
+        </StaggerContainer>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 6. BESTSELLERS GRID                                       */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 bg-[#EFEAE2]/40 border-y border-[#191715]/10">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-14">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 text-left">
+            <div>
+              <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+                Everyday Favorites
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-[#191715] font-normal tracking-tight">
+                Living Room &amp; Bedding Bestsellers
+              </h2>
+            </div>
+            <Link
+              href="/shop"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#191715]/20 hover:border-[#191715] text-xs uppercase tracking-[0.18em] font-semibold text-[#191715] transition"
+            >
+              <span>View All Bestsellers</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+            {bestsellers.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION E: BESTSELLERS GRID
-      ========================================================= */}
-      <section id="bestsellers" className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#1C1917]/10">
-          <div>
-            <p className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium mb-1.5">
-              TIMELESS STAPLES
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1917] font-light">
-              Bestsellers
-            </h2>
-          </div>
-          <Link
-            href="/shop"
-            className="mt-3 sm:mt-0 text-xs uppercase tracking-[0.2em] text-[#1C1917] hover:underline underline-offset-8 transition font-medium"
-          >
-            View All Pieces →
-          </Link>
-        </div>
-
-        {/* 4-column desktop / 2-column mobile borderless product cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-          {bestsellerProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
-
-      {/* =========================================================
-          SECTION F: THE THREE COLLECTIONS (3 Tall Full-Bleed Portrait Panels)
-      ========================================================= */}
-      <section className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="mb-10 text-left">
-          <p className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium mb-1.5">
-            ARCHITECTURAL TIERS
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1C1917] font-light">
-            The Three Collections
+      {/* ========================================================= */}
+      {/* 7. THREE COLLECTIONS — INTERACTIVE EXPANDING PANELS       */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        <div className="text-left mb-12">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+            The Three Tiers
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#191715] font-normal tracking-tight">
+            Our Woven Collections
           </h2>
+          <p className="text-[15px] text-[#5E5850] mt-2 font-normal max-w-lg">
+            From resilient daily cottons to limited small-batch reserve jacquards.
+          </p>
         </div>
 
-        {/* 3 tall, edge-to-edge full-bleed portrait panels (min-h-[540px]) side-by-side */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* 3 Interactive Expanding Portrait Panels */}
+        <div className="flex flex-col lg:flex-row gap-5 min-h-[560px]">
           {COLLECTIONS.map((col) => (
             <div
               key={col.id}
-              className="relative min-h-[540px] w-full bg-[#EDE8E0] overflow-hidden rounded-none flex items-end p-8 group"
+              className="relative rounded-2xl overflow-hidden h-[420px] lg:h-auto lg:flex-1 lg:hover:flex-[1.55] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group shadow-md"
             >
               <Image
                 src={col.image}
-                alt={`${col.name} Collection`}
+                alt={col.name}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              {/* Soft bottom gradient scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
 
-              {/* Minimal Overlaid Editorial Content */}
-              <div className="relative z-10 text-white space-y-2">
-                <h3 className="font-serif text-3xl sm:text-4xl font-light text-white">
+              <div className="absolute inset-0 p-8 sm:p-10 flex flex-col justify-end text-left text-white">
+                <span className="text-[10px] tracking-[0.25em] uppercase text-white/80 font-medium mb-1 block">
+                  {col.priceRange}
+                </span>
+                <h3 className="font-serif text-3xl sm:text-4xl font-normal leading-tight">
                   {col.name}
                 </h3>
-                <p className="text-xs text-white/80 font-light leading-relaxed max-w-xs font-serif italic">
-                  {col.tagline}
+                <p className="text-xs sm:text-sm text-white/85 mt-2 line-clamp-2 leading-relaxed max-w-md">
+                  {col.philosophy}
                 </p>
-                <div className="pt-2">
+
+                <div className="pt-5">
                   <Link
                     href={`/shop?collection=${col.id}`}
-                    className="text-xs uppercase tracking-[0.25em] text-white hover:text-white/80 underline underline-offset-8 transition font-medium"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#191715] backdrop-blur-md text-[11px] uppercase tracking-[0.18em] font-semibold transition-all duration-300"
                   >
-                    Discover Collection →
+                    <span>Explore Collection</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -247,140 +507,161 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION G: LIFESTYLE & BRAND STORY (Warm Editorial Split on #EDE8E0)
-      ========================================================= */}
-      <section className="w-full bg-[#EDE8E0]">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-stretch">
-          {/* Left: Full-bleed close-up photography of woven linen craftsmanship */}
-          <div className="relative min-h-[420px] lg:min-h-[600px] w-full bg-[#E5DDCF]">
+      {/* ========================================================= */}
+      {/* 8. BRAND STORY — PANIPAT HERITAGE & KT INTERNATIONAL      */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        <div className="bg-[#EFEAE2] rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 shadow-sm">
+          {/* Left Photo */}
+          <div className="lg:col-span-6 relative min-h-[440px] lg:min-h-full">
             <Image
-              src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=85&w=1200&auto=format&fit=crop"
-              alt="Linen craftsmanship at Panipat looms"
+              src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=85&w=1400&auto=format&fit=crop"
+              alt="Panipat weaving loom mastery"
               fill
               className="object-cover"
             />
+            <div className="absolute bottom-6 left-6 bg-[#191715] text-[#F8F5F0] p-6 rounded-2xl max-w-xs text-left shadow-xl hidden sm:block">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-[#8C6B4F] font-semibold block mb-1">
+                Parent Heritage
+              </span>
+              <p className="font-serif text-lg font-normal leading-snug">
+                KT International · Three Decades of Loom Mastery
+              </p>
+            </div>
           </div>
 
-          {/* Right: Generous whitespace, eyebrow, heading, 2-paragraph story, hairline stats */}
-          <div className="py-16 sm:py-20 px-8 lg:px-20 flex flex-col justify-center space-y-6">
-            <span className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium">
-              ROOTED IN PANIPAT • BUILT FOR THE WORLD
+          {/* Right Copy */}
+          <div className="lg:col-span-6 p-8 sm:p-12 lg:p-20 flex flex-col justify-center text-left">
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-3">
+              Panipat Weaving Heritage
             </span>
-
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[#1C1917] leading-tight">
-              Where Loom Heritage Meets Contemporary Restraint.
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#191715] font-normal leading-[1.12]">
+              Rooted in Panipat. Designed for Modern Living.
             </h2>
-
-            <p className="text-sm text-[#6B655E] leading-relaxed font-light">
-              For generations, the historic city of Panipat has anchored Indian textile craft. Backed by parent enterprise <strong>KT International</strong>&apos;s 35-year manufacturing legacy, AAVAAS unites traditional raschel warp-knits and long-staple cotton spinning with architectural simplicity.
+            <p className="text-[15px] text-[#5E5850] mt-5 leading-relaxed font-normal">
+              For centuries, the historic hub of <strong>Panipat, Haryana</strong> has stood as the weaving capital of India. Under parent company <strong>KT International</strong>, our automated air-jet looms and circular raschel mills have produced millions of meters of premium textiles for world-class hospitality chains across 20+ countries.
+            </p>
+            <p className="text-[15px] text-[#5E5850] mt-3 leading-relaxed font-normal">
+              With AAVAAS, we deliver this honest mill mastery directly into your bedroom — omitting multi-tier markups to make genuine luxury everyday accessible.
             </p>
 
-            <p className="text-sm text-[#6B655E] leading-relaxed font-light">
-              We eliminate intermediaries and synthetic compromises, delivering export-grade bedding, blankets, and living textiles directly from Haryana mills to modern homes.
-            </p>
+            {/* 3 Typographic Pillars */}
+            <div className="mt-8 pt-8 border-t border-[#191715]/10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div>
+                <span className="font-serif text-2xl text-[#191715] block font-normal">50,000+</span>
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#5E5850] block mt-0.5">Monthly Loom Capacity</span>
+              </div>
+              <div>
+                <span className="font-serif text-2xl text-[#191715] block font-normal">20+ Nations</span>
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#5E5850] block mt-0.5">Export Quality Tested</span>
+              </div>
+              <div>
+                <span className="font-serif text-2xl text-[#191715] block font-normal">100% Cotton</span>
+                <span className="text-[10px] uppercase tracking-[0.16em] text-[#5E5850] block mt-0.5">OEKO-TEX Certified</span>
+              </div>
+            </div>
 
-            {/* Clean hairline-separated typographic stats */}
-            <div className="pt-6 border-t border-[#1C1917]/15 grid grid-cols-3 gap-6 text-xs text-[#1C1917]">
-              <div>
-                <span className="font-serif text-2xl sm:text-3xl font-light block">30+ Yrs</span>
-                <span className="text-[10px] tracking-[0.15em] text-[#6B655E] uppercase block mt-1">Textile Legacy</span>
-              </div>
-              <div>
-                <span className="font-serif text-2xl sm:text-3xl font-light block">Panipat</span>
-                <span className="text-[10px] tracking-[0.15em] text-[#6B655E] uppercase block mt-1">Craftsmanship</span>
-              </div>
-              <div>
-                <span className="font-serif text-2xl sm:text-3xl font-light block">20+ Nations</span>
-                <span className="text-[10px] tracking-[0.15em] text-[#6B655E] uppercase block mt-1">Export Standards</span>
-              </div>
+            <div className="pt-8">
+              <Link
+                href="/our-story"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#191715] text-[#F8F5F0] hover:bg-[#8C6B4F] text-xs uppercase tracking-[0.18em] font-semibold transition"
+              >
+                <span>Read the Full Journal</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION H: WHY AAVAAS (Minimal Architectural Strip)
-      ========================================================= */}
-      <section className="w-full border-y border-[#1C1917]/15 py-14 bg-[#FAF8F5]">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 text-left">
-          <div className="space-y-1.5">
-            <span className="font-serif text-2xl font-light text-[#1C1917]/40 block">01</span>
-            <h3 className="font-serif text-lg text-[#1C1917] font-normal">Thoughtful Design</h3>
-            <p className="text-xs text-[#6B655E] leading-relaxed font-light">
-              108&quot; × 108&quot; extra deep tuck-in sheets and reversible dual-tone colorways.
+      {/* ========================================================= */}
+      {/* 9. WHY AAVAAS (MINIMAL 4-COLUMN ARCHITECTURAL GRID)       */}
+      {/* ========================================================= */}
+      <section className="py-20 lg:py-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        <div className="text-left mb-14">
+          <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block mb-2">
+            The Standard
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#191715] font-normal tracking-tight">
+            Why Discerning Homes Choose AAVAAS
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="rounded-2xl bg-[#EFEAE2]/60 border border-[#191715]/8 p-8 text-left space-y-4">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#191715] shadow-xs">
+              <Award className="w-5 h-5 stroke-[1.5]" />
+            </div>
+            <h3 className="font-serif text-xl text-[#191715] font-normal">Direct Mill Lineage</h3>
+            <p className="text-xs text-[#5E5850] leading-relaxed">
+              Weaving mastery backed by KT International&apos;s Panipat mills, bypassing middleman markups.
             </p>
           </div>
 
-          <div className="space-y-1.5">
-            <span className="font-serif text-2xl font-light text-[#1C1917]/40 block">02</span>
-            <h3 className="font-serif text-lg text-[#1C1917] font-normal">Panipat Craftsmanship</h3>
-            <p className="text-xs text-[#6B655E] leading-relaxed font-light">
-              Master looms and finishing divisions under parent company KT International.
+          <div className="rounded-2xl bg-[#EFEAE2]/60 border border-[#191715]/8 p-8 text-left space-y-4">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#191715] shadow-xs">
+              <Layers className="w-5 h-5 stroke-[1.5]" />
+            </div>
+            <h3 className="font-serif text-xl text-[#191715] font-normal">108&quot; × 108&quot; Indian Tuck</h3>
+            <p className="text-xs text-[#5E5850] leading-relaxed">
+              Generously sized bedsheets tailored specifically to grip heavy 14-inch Indian mattresses firmly.
             </p>
           </div>
 
-          <div className="space-y-1.5">
-            <span className="font-serif text-2xl font-light text-[#1C1917]/40 block">03</span>
-            <h3 className="font-serif text-lg text-[#1C1917] font-normal">Accessible Premium</h3>
-            <p className="text-xs text-[#6B655E] leading-relaxed font-light">
-              Direct-from-loom pricing without distributor margins or inflated retailer markups.
+          <div className="rounded-2xl bg-[#EFEAE2]/60 border border-[#191715]/8 p-8 text-left space-y-4">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#191715] shadow-xs">
+              <ShieldCheck className="w-5 h-5 stroke-[1.5]" />
+            </div>
+            <h3 className="font-serif text-xl text-[#191715] font-normal">OEKO-TEX Certified</h3>
+            <p className="text-xs text-[#5E5850] leading-relaxed">
+              AZO-free pigments and reactive dyes, gentle on sensitive skin and safe for family nurseries.
             </p>
           </div>
 
-          <div className="space-y-1.5">
-            <span className="font-serif text-2xl font-light text-[#1C1917]/40 block">04</span>
-            <h3 className="font-serif text-lg text-[#1C1917] font-normal">Elevated Comfort</h3>
-            <p className="text-xs text-[#6B655E] leading-relaxed font-light">
-              400TC Supima sateen, cloud-plush mink, and breathable 3-layer falalen cotton.
+          <div className="rounded-2xl bg-[#EFEAE2]/60 border border-[#191715]/8 p-8 text-left space-y-4">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center text-[#191715] shadow-xs">
+              <Clock className="w-5 h-5 stroke-[1.5]" />
+            </div>
+            <h3 className="font-serif text-xl text-[#191715] font-normal">Pan-India Express</h3>
+            <p className="text-xs text-[#5E5850] leading-relaxed">
+              Complimentary dispatch on orders above ₹2,999 with verified courier tracking to 19,000+ pincodes.
             </p>
           </div>
         </div>
       </section>
 
-      {/* =========================================================
-          SECTION I: GIFTING & BULK ENQUIRIES BANNER
-      ========================================================= */}
-      <section className="w-full bg-[#E9E4DC]">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 items-stretch">
-          {/* Editorial copy and clean links */}
-          <div className="p-10 sm:p-14 lg:p-20 flex flex-col justify-center space-y-6">
-            <span className="text-[10px] tracking-[0.25em] uppercase text-[#6B655E] font-medium">
-              CURATED GIVING &amp; TRADE
+      {/* ========================================================= */}
+      {/* 10. BULK & TRADE HOSPITALITY BANNER                       */}
+      {/* ========================================================= */}
+      <section className="pb-20 lg:pb-28 max-w-[1440px] mx-auto px-6 lg:px-14">
+        <div className="rounded-3xl bg-[#191715] text-[#F8F5F0] p-10 sm:p-14 lg:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 text-left shadow-xl">
+          <div className="max-w-xl space-y-3">
+            <span className="text-[11px] tracking-[0.25em] uppercase text-[#8C6B4F] font-semibold block">
+              KT International Institutional Division
             </span>
-
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[#1C1917] leading-tight">
-              Trousseau Suites &amp; Institutional Procurement
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-normal leading-tight">
+              Direct Mill Procurement for Hospitality &amp; Design
             </h2>
-
-            <p className="text-sm text-[#6B655E] leading-relaxed font-light max-w-md">
-              Celebrate weddings and milestones with linen-wrapped keepsake boxes, or engage our Panipat manufacturing works for boutique hotels, resorts, and corporate gifting.
+            <p className="text-sm text-stone-300 leading-relaxed font-normal pt-1">
+              Equipping boutique hotels, resorts, architects, and corporate gifting with custom thread counts, bespoke dimensions, and GST input tax credit.
             </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-6 text-xs uppercase tracking-[0.2em] font-medium">
-              <Link
-                href="/shop?category=gifting"
-                className="px-6 py-3 bg-[#1C1917] hover:bg-black text-[#FAF8F5] transition"
-              >
-                Explore Gift Sets
-              </Link>
-              <Link
-                href="/bulk-enquiries"
-                className="text-[#1C1917] hover:underline underline-offset-8 transition"
-              >
-                Bulk &amp; Business Enquiries →
-              </Link>
-            </div>
           </div>
 
-          {/* Warm, neutral luxury gifting photo (NO PINK BOX) */}
-          <div className="relative min-h-[380px] lg:min-h-[500px] w-full bg-[#E5DDCF]">
-            <Image
-              src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=85&w=1200&auto=format&fit=crop"
-              alt="Linen-wrapped luxury gift suite"
-              fill
-              className="object-cover"
-            />
+          <div className="shrink-0 flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <Link
+              href="/bulk-enquiries"
+              className="px-8 py-4 bg-white text-[#191715] hover:bg-[#F8F5F0] text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition text-center shadow-lg"
+            >
+              Request Commercial RFQ
+            </Link>
+            <a
+              href="https://wa.me/919812000000?text=Hello%20AAVAAS%20B2B%20Desk,%20I%20have%20an%20institutional%20enquiry"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs uppercase tracking-[0.18em] font-semibold rounded-full transition text-center"
+            >
+              WhatsApp B2B Desk
+            </a>
           </div>
         </div>
       </section>
